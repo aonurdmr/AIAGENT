@@ -88,6 +88,8 @@ const Dashboard = ({ agents }) => {
     if (!imagePrompt.trim()) return;
     
     setIsGeneratingImage(true);
+    setGeneratedImage(null); // Reset previous image
+    
     try {
       const response = await axios.post(`${API}/generate-image`, {
         prompt: imagePrompt
@@ -96,7 +98,8 @@ const Dashboard = ({ agents }) => {
       setGeneratedImage(response.data.image_base64);
     } catch (error) {
       console.error('Error generating image:', error);
-      alert('Görsel üretiminde hata oluştu. Lütfen tekrar deneyin.');
+      setGeneratedImage(null);
+      // Don't show alert, error message will be shown in UI
     } finally {
       setIsGeneratingImage(false);
     }

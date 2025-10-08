@@ -211,6 +211,14 @@ const Dashboard = ({ agents }) => {
                       />
                     </div>
                   )}
+                  {isGeneratingImage === false && !generatedImage && imagePrompt && (
+                    <div className="mt-4 p-3 bg-red-500/10 border border-red-500/30 rounded-lg" data-testid="image-error-message">
+                      <p className="text-red-400 text-sm">
+                        <i className="fas fa-exclamation-triangle mr-2"></i>
+                        Görsel üretilemedi. Lütfen farklı bir açıklama deneyin.
+                      </p>
+                    </div>
+                  )}
                 </div>
               </div>
             )}

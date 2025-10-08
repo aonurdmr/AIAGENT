@@ -284,15 +284,34 @@ async def get_messages(session_id: str):
 async def generate_image(input: ImageGenerationRequest):
     """Generate image using AI"""
     try:
-        # Initialize image generator
+        # Initialize image generator with specific configuration to avoid extra_headers issue
         image_gen = OpenAIImageGeneration(api_key=EMERGENT_LLM_KEY)
         
-        # Generate image
-        images = await image_gen.generate_images(
-            prompt=input.prompt,
-            model="gpt-image-1",
-            number_of_images=1
-        )
+        # Try to generate image with error handling for API parameter issues
+        try:
+            images = await image_gen.generate_images(
+                prompt=input.prompt,
+                model="gpt-image-1",
+                number_of_images=1
+            )
+        except Exception as api_error:
+            # If gpt-image-1 fails, try with dall-e-3 as fallback
+            if "extra_headers" in str(api_error) or "Unknown parameter" in str(api_error):
+                logger.warning(f"gpt-image-1 failed with parameter error, trying dall-e-3: {api_error}")
+                try:
+                    images = await image_gen.generate_images(
+                        prompt=input.prompt,
+                        model="dall-e-3",
+                        number_of_images=1
+                    )
+                except Exception as fallback_error:
+                    logger.error(f"Both gpt-image-1 and dall-e-3 failed: {fallback_error}")
+                    raise HTTPException(
+                        status_code=500, 
+                        detail=f"Image generation failed with both models. gpt-image-1 error: {api_error}. dall-e-3 error: {fallback_error}"
+                    )
+            else:
+                raise api_error
         
         if not images or len(images) == 0:
             raise HTTPException(status_code=500, detail="No image was generated")
@@ -313,8 +332,12 @@ async def generate_image(input: ImageGenerationRequest):
         
         return response
         
+    except HTTPException:
+        # Re-raise HTTP exceptions as-is
+        raise
     except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Error generating image: {str(e)}")
+        logger.error(f"Unexpected error in image generation: {e}")
+        raise HTTPException(status_code=500, detail=f"Unexpected error generating image: {str(e)}")
 
 # Include the router in the main app
 app.include_router(api_router)

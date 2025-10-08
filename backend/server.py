@@ -285,7 +285,11 @@ async def generate_image(input: ImageGenerationRequest):
     """Generate image using AI - Direct OpenAI integration"""
     try:
         # Use direct OpenAI SDK to avoid emergentintegrations extra_headers issue
-        client = AsyncOpenAI(api_key=EMERGENT_LLM_KEY)
+        # For Emergent LLM key, we need to use a specific base URL
+        client = AsyncOpenAI(
+            api_key=EMERGENT_LLM_KEY,
+            base_url="https://api.emergent.sh/v1"  # Emergent API endpoint
+        )
         
         # Generate image using DALL-E 3
         response = await client.images.generate(

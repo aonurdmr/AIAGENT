@@ -282,44 +282,31 @@ async def get_messages(session_id: str):
 
 @api_router.post("/generate-image", response_model=ImageGenerationResponse)
 async def generate_image(input: ImageGenerationRequest):
-    """Generate image using AI"""
+    """Generate image using AI - Direct OpenAI integration"""
     try:
-        # Initialize image generator with specific configuration to avoid extra_headers issue
-        image_gen = OpenAIImageGeneration(api_key=EMERGENT_LLM_KEY)
+        # Use direct OpenAI SDK to avoid emergentintegrations extra_headers issue
+        client = AsyncOpenAI(api_key=EMERGENT_LLM_KEY)
         
-        # Try to generate image with error handling for API parameter issues
-        try:
-            images = await image_gen.generate_images(
-                prompt=input.prompt,
-                model="gpt-image-1",
-                number_of_images=1
-            )
-        except Exception as api_error:
-            # If gpt-image-1 fails, try with dall-e-3 as fallback
-            if "extra_headers" in str(api_error) or "Unknown parameter" in str(api_error):
-                logger.warning(f"gpt-image-1 failed with parameter error, trying dall-e-3: {api_error}")
-                try:
-                    images = await image_gen.generate_images(
-                        prompt=input.prompt,
-                        model="dall-e-3",
-                        number_of_images=1
-                    )
-                except Exception as fallback_error:
-                    logger.error(f"Both gpt-image-1 and dall-e-3 failed: {fallback_error}")
-                    raise HTTPException(
-                        status_code=500, 
-                        detail=f"Image generation failed with both models. gpt-image-1 error: {api_error}. dall-e-3 error: {fallback_error}"
-                    )
-            else:
-                raise api_error
+        # Generate image using DALL-E 3
+        response = await client.images.generate(
+            model="dall-e-3",
+            prompt=input.prompt,
+            size="1024x1024",
+            quality="standard",
+            n=1,
+            response_format="b64_json"
+        )
         
-        if not images or len(images) == 0:
+        if not response.data or len(response.data) == 0:
             raise HTTPException(status_code=500, detail="No image was generated")
         
-        # Convert to base64
-        image_base64 = base64.b64encode(images[0]).decode('utf-8')
+        # Get the base64 image data
+        image_base64 = response.data[0].b64_json
         
-        response = ImageGenerationResponse(
+        if not image_base64:
+            raise HTTPException(status_code=500, detail="Invalid image data received")
+        
+        response_obj = ImageGenerationResponse(
             image_base64=image_base64,
             prompt=input.prompt,
             timestamp=datetime.now(timezone.utc)
@@ -327,17 +314,25 @@ async def generate_image(input: ImageGenerationRequest):
         
         # Optionally store in database if session_id is provided
         if input.agent_session_id:
-            image_dict = prepare_for_mongo(response.model_dump())
+            image_dict = prepare_for_mongo(response_obj.model_dump())
             await db.generated_images.insert_one(image_dict)
         
-        return response
+        return response_obj
         
-    except HTTPException:
-        # Re-raise HTTP exceptions as-is
-        raise
     except Exception as e:
-        logger.error(f"Unexpected error in image generation: {e}")
-        raise HTTPException(status_code=500, detail=f"Unexpected error generating image: {str(e)}")
+        logger.error(f"Error in image generation: {e}")
+        # Provide more specific error messages
+        error_message = str(e)
+        if "api_key" in error_message.lower():
+            error_message = "API key authentication failed"
+        elif "quota" in error_message.lower() or "billing" in error_message.lower():
+            error_message = "API quota exceeded or billing issue"
+        elif "content_policy" in error_message.lower() or "safety" in error_message.lower():
+            error_message = "Image content violates safety policies"
+        else:
+            error_message = f"Image generation failed: {error_message}"
+        
+        raise HTTPException(status_code=500, detail=error_message)
 
 # Include the router in the main app
 app.include_router(api_router)

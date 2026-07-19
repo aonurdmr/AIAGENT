@@ -15,8 +15,20 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-client = anthropic.Anthropic(api_key=os.environ.get("ANTHROPIC_API_KEY"))
+API_KEY = os.environ.get("ANTHROPIC_API_KEY")
+client = anthropic.Anthropic(api_key=API_KEY) if API_KEY else None
 MODEL = "claude-opus-4-8"
+
+MOCK_YORUMLAR = {
+    "kahve": "Fincanınızda derin ve anlamlı şekiller görüyorum... Sol tarafta bir kuş silueti var; bu yakında gelecek iyi haberların işareti. Telvede belirgin bir yol şekli dikkat çekiyor — önünüzde yeni fırsatlar sizi bekliyor.\n\nKalbinizde uzun süredir taşıdığınız bir karar var gibi görünüyor. Yıldızlar bu kararı vermek için doğru zamanın geldiğini söylüyor. Çevrenizde size destek olacak insanlar mevcut.\n\nGelecek ay maddi konularda olumlu gelişmeler yaşanabilir. Sabırlı olun, emekleriniz karşılığını bulacak. ✨",
+    "el": "Yaşam çizginiz güçlü ve belirgin; bu uzun ve sağlıklı bir ömrün işareti. Kalp çizginiz ise duygusal derinliğinizi ve sevme kapasitenizin büyüklüğünü gösteriyor.\n\nKader çizginiz orta yaşlardan itibaren daha da güçleniyor — kariyerinizde önemli bir dönüm noktası yaklaşıyor. Akıl çizginizin uzunluğu analitik düşünce gücünüzü ortaya koyuyor.\n\nBaş parmağınızın şekli liderlik vasıflarınıza işaret ediyor. Yakın dönemde önemli kararlar almanız gerekecek — içgüdülerinize güvenin. 🤚",
+    "tarot": "Seçtiğiniz kartlar birbirleriyle derin bir uyum içinde. Bu kombinasyon, hayatınızda büyük bir dönüşüm döneminin eşiğinde olduğunuzu gösteriyor.\n\nBirincilik kartı geçmişinizi, ikincisi şimdiki durumunuzu, üçüncüsü ise geleceğinizi sembolize ediyor. Kartların enerjisi birleşince güçlü bir dönüşüm potansiyeli ortaya çıkıyor.\n\nEvren size mesaj gönderiyor: eski kalıpları bırakın, yeni başlangıçlara açık olun. Cesaretiniz ve inancınız bu yolculukta en büyük yoldaşlarınız olacak. 🃏",
+    "burc": "Yıldızların sizin için yazdığı hikaye oldukça ilgi çekici. Güneşin bulunduğu konum, önümüzdeki dönemde enerjinizin zirveye çıkacağına işaret ediyor.\n\nAşk hayatınızda beklenmedik gelişmeler yaşanabilir. Venüs'ün etkisiyle romantik enerjiniz artacak. Kariyer cephesinde ise Jüpiter'in koruyucu etkisi altındasınız.\n\nSağlık açısından dinlenmeye önem verin. Mali konularda temkinli olmak bu ay daha avantajlı olacak. Genel olarak bakıldığında, bu dönem sizin için yeniden doğuşu simgeliyor. ⭐",
+}
+
+
+def get_mock_response(tip: str) -> str:
+    return MOCK_YORUMLAR.get(tip, "Gizemli güçler şu an konuşmuyor... Lütfen daha sonra tekrar deneyin.")
 
 
 class FortuneResponse(BaseModel):
@@ -106,7 +118,7 @@ async def kahve_fali(req: KahveRequest):
     user = f"Bu kahve fincanındaki şekilleri yorumla.{soru_eki}"
 
     try:
-        yorum = call_claude_vision(system, user, req.image_base64)
+        yorum = call_claude_vision(system, user, req.image_base64) if client else get_mock_response("kahve")
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
@@ -129,7 +141,7 @@ async def el_fali(req: ElRequest):
     user = f"Bu el fotoğrafındaki çizgileri ve işaretleri yorumla.{soru_eki}"
 
     try:
-        yorum = call_claude_vision(system, user, req.image_base64)
+        yorum = call_claude_vision(system, user, req.image_base64) if client else get_mock_response("el")
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
@@ -154,7 +166,7 @@ async def tarot_fali(req: TarotRequest):
     user = f"Seçilen tarot kartları: {kartlar_str}\n\nBu kartları yorumla.{soru_eki}"
 
     try:
-        yorum = call_claude_text(system, user)
+        yorum = call_claude_text(system, user) if client else get_mock_response("tarot")
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
@@ -179,7 +191,7 @@ async def burc_fali(req: BurcRequest):
     user = f"{req.burc} burcu yorumu yap.{tarih_eki}{soru_eki}"
 
     try:
-        yorum = call_claude_text(system, user)
+        yorum = call_claude_text(system, user) if client else get_mock_response("burc")
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 

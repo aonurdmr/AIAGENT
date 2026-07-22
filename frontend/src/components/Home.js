@@ -4,158 +4,217 @@ import axios from 'axios';
 
 const API = process.env.REACT_APP_BACKEND_URL + '/api';
 
-const QUICK_ACTIONS = [
-  { icon: '🔍', label: 'AI Tanımla', desc: 'Tür tanımlama', path: '/tani', color: '#22c55e' },
-  { icon: '🗺️', label: 'Harita',     desc: 'Nokta bul',     path: '/harita', color: '#3b82f6' },
-  { icon: '💬', label: 'AI Asistan', desc: 'Soru sor',       path: '/ai-asistan', color: '#8b5cf6' },
-  { icon: '📋', label: 'Aktivite',   desc: 'Kayıt tut',      path: '/aktivite', color: '#f59e0b' },
+const COND_ICON = { 'Açık': '☀️', 'Parçalı bulutlu': '⛅', 'Bulutlu': '☁️', 'Hafif yağmur': '🌦️' };
+const SCORE_COLOR = s => s >= 75 ? '#34d399' : s >= 50 ? '#fbbf24' : '#f87171';
+
+const ACTIONS = [
+  { icon: '🔍', label: 'AI Tanımla', sub: 'Fotoğrafla tür bul', path: '/tani',       accent: '#22c55e' },
+  { icon: '🗺️', label: 'Harita',     sub: 'Nokta keşfet',       path: '/harita',     accent: '#60a5fa' },
+  { icon: '🤖', label: 'AI Asistan', sub: 'Soru sor',            path: '/ai-asistan', accent: '#c084fc' },
+  { icon: '📋', label: 'Aktivite',   sub: 'Kayıt tut',           path: '/aktivite',   accent: '#fbbf24' },
 ];
 
-const WEATHER_ICONS = { 'Açık': '☀️', 'Parçalı bulutlu': '⛅', 'Bulutlu': '☁️', 'Hafif yağmur': '🌦️' };
+const CATS = [
+  { icon: '🎣', label: 'Balık',  q: 'fishing' },
+  { icon: '🏹', label: 'Av',     q: 'hunting' },
+  { icon: '⛺', label: 'Kamp',   q: 'camping' },
+  { icon: '🦋', label: 'Doğa',   q: 'wildlife' },
+];
+
+function WeatherScore({ score }) {
+  const color = SCORE_COLOR(score);
+  return (
+    <div style={{
+      width: 64, height: 64, borderRadius: '50%', flexShrink: 0,
+      border: `3px solid ${color}`,
+      background: color + '12',
+      display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
+      boxShadow: `0 0 16px ${color}33`,
+    }}>
+      <span style={{ fontWeight: 800, fontSize: 20, color, lineHeight: 1 }}>{score}</span>
+      <span style={{ fontSize: 9, color: 'var(--t-mute)', letterSpacing: '.04em' }}>SKOR</span>
+    </div>
+  );
+}
 
 export default function Home() {
   const navigate = useNavigate();
-  const [stats, setStats] = useState({ total_spots: 0, total_activities: 0, total_posts: 0, active_users: 0, species_identified: 0 });
+  const [stats,   setStats]   = useState(null);
   const [weather, setWeather] = useState(null);
-  const [posts, setPosts] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [posts,   setPosts]   = useState([]);
 
   useEffect(() => {
     Promise.all([
       axios.get(`${API}/stats`).then(r => setStats(r.data)).catch(() => {}),
       axios.post(`${API}/weather`, { lat: 41.0, lng: 29.0, activity: 'fishing' }).then(r => setWeather(r.data)).catch(() => {}),
       axios.get(`${API}/posts?limit=3`).then(r => setPosts(r.data)).catch(() => {}),
-    ]).finally(() => setLoading(false));
+    ]);
   }, []);
-
-  const scoreColor = (s) => s >= 75 ? '#22c55e' : s >= 50 ? '#f59e0b' : '#ef4444';
 
   return (
     <div className="page fade-in">
-      {/* Hero */}
+
+      {/* ── Hero ─────────────────────────────────────────── */}
       <div style={{
-        background: 'linear-gradient(160deg, #0a2e0a 0%, #0f1f0f 50%, #122212 100%)',
-        padding: '52px 20px 24px',
-        borderBottom: '1px solid #22c55e22',
+        background: 'linear-gradient(160deg, #051205 0%, #0a1a0a 55%, #0d1f0d 100%)',
+        padding: '54px 20px 22px',
+        borderBottom: '1px solid var(--border)',
         position: 'relative',
         overflow: 'hidden',
       }}>
-        <div style={{
-          position: 'absolute', top: -40, right: -40,
-          width: 200, height: 200, borderRadius: '50%',
-          background: 'radial-gradient(circle, #22c55e15, transparent 70%)',
-        }} />
-        <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 16 }}>
+        <div className="hero-mesh" />
+
+        {/* App identity */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: 14, marginBottom: 18, position: 'relative' }}>
           <div style={{
-            width: 48, height: 48, borderRadius: 14,
-            background: 'linear-gradient(135deg, #22c55e, #16a34a)',
+            width: 52, height: 52, borderRadius: 15,
+            background: 'linear-gradient(135deg, #22c55e 0%, #16a34a 60%, #15803d 100%)',
             display: 'flex', alignItems: 'center', justifyContent: 'center',
-            fontSize: 24, boxShadow: '0 4px 16px #22c55e44',
+            fontSize: 26,
+            boxShadow: '0 4px 20px rgba(34,197,94,.4), 0 1px 0 rgba(255,255,255,.15) inset',
           }}>🎣</div>
           <div>
-            <h1 style={{ fontSize: 26, fontWeight: 800, color: '#fff' }}>DoğaAI</h1>
-            <p style={{ color: '#86efac', fontSize: 13 }}>Akıllı Outdoor Platformu</p>
+            <h1 style={{ fontSize: 26, fontWeight: 800, color: '#fff', letterSpacing: '-.03em', lineHeight: 1 }}>
+              DoğaAI
+            </h1>
+            <div style={{ fontSize: 12, color: 'var(--a-light)', opacity: .7, marginTop: 2 }}>
+              Akıllı Outdoor Platformu
+            </div>
+          </div>
+          {/* Live indicator */}
+          <div style={{
+            marginLeft: 'auto',
+            display: 'flex', alignItems: 'center', gap: 5,
+            background: 'rgba(34,197,94,.1)', border: '1px solid rgba(34,197,94,.2)',
+            borderRadius: 20, padding: '4px 10px',
+          }}>
+            <div style={{
+              width: 6, height: 6, borderRadius: '50%', background: '#22c55e',
+              boxShadow: '0 0 6px #22c55e',
+              animation: 'fadeIn 1s ease infinite alternate',
+            }} />
+            <span style={{ fontSize: 10, color: '#86efac', fontWeight: 600 }}>CANLI</span>
           </div>
         </div>
 
-        <p style={{ color: '#a0c4a0', fontSize: 14, lineHeight: 1.6, marginBottom: 20 }}>
-          Balıkçılık, avcılık ve kamp için yapay zeka destekli rehberiniz.
-        </p>
-
-        {/* Quick actions */}
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }}>
-          {QUICK_ACTIONS.map(a => (
+        {/* Quick action grid */}
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10, position: 'relative' }}>
+          {ACTIONS.map(a => (
             <button key={a.path} onClick={() => navigate(a.path)} style={{
-              background: '#1a2e1a', border: `1px solid ${a.color}33`,
-              borderRadius: 14, padding: '14px 12px', cursor: 'pointer',
-              display: 'flex', alignItems: 'center', gap: 10, transition: 'all 0.2s',
+              background: 'rgba(18,34,18,.7)',
+              backdropFilter: 'blur(12px)',
+              border: `1px solid ${a.accent}22`,
+              borderRadius: 16, padding: '14px 12px',
+              cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 10,
+              transition: 'all .2s',
+              textAlign: 'left',
             }}>
-              <span style={{
-                fontSize: 22, width: 40, height: 40, borderRadius: 10,
-                background: `${a.color}20`, display: 'flex', alignItems: 'center', justifyContent: 'center',
-              }}>{a.icon}</span>
-              <div style={{ textAlign: 'left' }}>
-                <div style={{ fontWeight: 700, fontSize: 13, color: '#e2e8f0' }}>{a.label}</div>
-                <div style={{ fontSize: 11, color: '#4a6741' }}>{a.desc}</div>
+              <div style={{
+                width: 42, height: 42, borderRadius: 12, flexShrink: 0,
+                background: a.accent + '18',
+                border: `1px solid ${a.accent}25`,
+                display: 'flex', alignItems: 'center', justifyContent: 'center',
+                fontSize: 20,
+              }}>{a.icon}</div>
+              <div>
+                <div style={{ fontSize: 13, fontWeight: 700, color: '#fff', letterSpacing: '-.01em' }}>{a.label}</div>
+                <div style={{ fontSize: 11, color: 'var(--t-mute)', marginTop: 1 }}>{a.sub}</div>
               </div>
             </button>
           ))}
         </div>
       </div>
 
-      <div style={{ padding: '16px 16px 0' }}>
+      <div style={{ padding: '14px 16px 0' }}>
 
-        {/* Stats */}
-        <div style={{ marginBottom: 16 }}>
-          <div className="stat-grid">
-            <div className="stat-card"><div className="num">{stats.total_spots}</div><div className="label">Nokta</div></div>
-            <div className="stat-card"><div className="num">{(stats.species_identified / 1000).toFixed(1)}K</div><div className="label">Tür Tanındı</div></div>
-            <div className="stat-card"><div className="num">{(stats.active_users / 1000).toFixed(1)}K</div><div className="label">Kullanıcı</div></div>
-          </div>
-        </div>
-
-        {/* Weather Card */}
-        {weather && (
-          <div className="card" style={{ marginBottom: 16 }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 12 }}>
-              <div>
-                <div style={{ fontSize: 12, color: '#4a6741', marginBottom: 2 }}>🌤️ BUGÜN HAVA</div>
-                <div style={{ fontSize: 26, fontWeight: 800, color: '#fff' }}>
-                  {WEATHER_ICONS[weather.conditions] || '🌡️'} {weather.temperature}°C
-                </div>
-                <div style={{ fontSize: 12, color: '#86efac', marginTop: 2 }}>
-                  {weather.conditions} · 💨 {weather.wind_speed} km/s · 🌊 %{weather.humidity}
-                </div>
-              </div>
-              <div style={{
-                width: 64, height: 64, borderRadius: '50%',
-                border: `3px solid ${scoreColor(weather.activity_score)}`,
-                display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
-              }}>
-                <span style={{ fontWeight: 800, fontSize: 18, color: scoreColor(weather.activity_score) }}>
-                  {weather.activity_score}
-                </span>
-                <span style={{ fontSize: 9, color: '#4a6741' }}>SKOR</span>
-              </div>
+        {/* ── Stats ──────────────────────────────────────── */}
+        {stats && (
+          <div className="stat-grid" style={{ marginBottom: 14 }}>
+            <div className="stat-card">
+              <div className="num">{stats.total_spots}</div>
+              <div className="label">Nokta</div>
             </div>
-            {weather.tips.length > 0 && (
-              <div style={{ fontSize: 12, color: '#86efac', display: 'flex', alignItems: 'center', gap: 6 }}>
-                <span>💡</span> {weather.tips[0]}
+            <div className="stat-card">
+              <div className="num">{(stats.species_identified / 1000).toFixed(1)}K</div>
+              <div className="label">Tür Tanındı</div>
+            </div>
+            <div className="stat-card">
+              <div className="num">{(stats.active_users / 1000).toFixed(1)}K</div>
+              <div className="label">Kullanıcı</div>
+            </div>
+          </div>
+        )}
+
+        {/* ── Weather ────────────────────────────────────── */}
+        {weather && (
+          <div className="card" style={{ marginBottom: 14 }}>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 10 }}>
+              <div>
+                <div style={{ fontSize: 10, color: 'var(--t-mute)', fontWeight: 700, letterSpacing: '.08em', marginBottom: 3 }}>
+                  ⛅ BUGÜN HAVA
+                </div>
+                <div style={{ fontSize: 28, fontWeight: 800, color: '#fff', letterSpacing: '-.02em', lineHeight: 1 }}>
+                  {COND_ICON[weather.conditions] || '🌡️'} {weather.temperature}°C
+                </div>
+                <div style={{ fontSize: 12, color: 'var(--a-light)', marginTop: 4 }}>
+                  {weather.conditions} · 💨 {weather.wind_speed} km/s · 🌙 {weather.moon_phase}
+                </div>
+              </div>
+              <WeatherScore score={weather.activity_score} />
+            </div>
+            {weather.tips?.[0] && (
+              <div style={{
+                background: 'var(--s1)', border: '1px solid var(--border)',
+                borderRadius: 10, padding: '8px 12px',
+                fontSize: 12, color: 'var(--t-mid)', display: 'flex', gap: 6, alignItems: 'flex-start',
+              }}>
+                <span>💡</span><span style={{ lineHeight: 1.5 }}>{weather.tips[0]}</span>
               </div>
             )}
-            <button className="btn-ghost" style={{ marginTop: 10, width: '100%', fontSize: 12 }}
+            {weather.warning && (
+              <div style={{
+                background: 'rgba(251,191,36,.08)', border: '1px solid rgba(251,191,36,.2)',
+                borderRadius: 10, padding: '6px 10px', marginTop: 6,
+                fontSize: 12, color: '#fde68a', display: 'flex', gap: 6,
+              }}>
+                <span>⚠️</span>{weather.warning}
+              </div>
+            )}
+            <button className="btn-ghost" style={{ marginTop: 10, width: '100%', justifyContent: 'center', fontSize: 12 }}
               onClick={() => navigate('/harita')}>
-              Hava + Nokta Haritası Gör →
+              Harita ve Noktaları Gör →
             </button>
           </div>
         )}
 
-        {/* Activity categories */}
-        <div style={{ marginBottom: 16 }}>
-          <h3 style={{ color: '#e2e8f0', fontSize: 14, fontWeight: 700, marginBottom: 10 }}>Kategori Seç</h3>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 8 }}>
-            {[
-              { icon: '🎣', label: 'Balıkçılık', q: 'fishing' },
-              { icon: '🏹', label: 'Avcılık', q: 'hunting' },
-              { icon: '⛺', label: 'Kamp', q: 'camping' },
-              { icon: '🦋', label: 'Doğa', q: 'wildlife' },
-            ].map(c => (
+        {/* ── Category grid ──────────────────────────────── */}
+        <div style={{ marginBottom: 14 }}>
+          <div style={{ fontSize: 12, fontWeight: 700, color: 'var(--t-mute)', letterSpacing: '.08em', marginBottom: 10 }}>
+            KATEGORİ SEÇ
+          </div>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: 8 }}>
+            {CATS.map(c => (
               <button key={c.q} onClick={() => navigate(`/harita?type=${c.q}`)} style={{
-                background: '#1a2e1a', border: '1px solid #22c55e22', borderRadius: 12,
-                padding: '12px 6px', cursor: 'pointer', textAlign: 'center', transition: 'all 0.2s',
+                background: 'var(--s2)', border: '1px solid var(--border)',
+                borderRadius: 14, padding: '14px 6px',
+                cursor: 'pointer', textAlign: 'center', transition: 'all .2s',
               }}>
-                <div style={{ fontSize: 22 }}>{c.icon}</div>
-                <div style={{ fontSize: 10, color: '#86efac', marginTop: 4, fontWeight: 600 }}>{c.label}</div>
+                <div style={{ fontSize: 24, lineHeight: 1 }}>{c.icon}</div>
+                <div style={{ fontSize: 10, color: 'var(--a-light)', marginTop: 5, fontWeight: 700, letterSpacing: '.04em' }}>
+                  {c.label}
+                </div>
               </button>
             ))}
           </div>
         </div>
 
-        {/* Recent community posts */}
-        <div style={{ marginBottom: 16 }}>
+        {/* ── Community preview ──────────────────────────── */}
+        <div style={{ marginBottom: 14 }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 10 }}>
-            <h3 style={{ color: '#e2e8f0', fontSize: 14, fontWeight: 700 }}>Topluluktan</h3>
-            <button className="btn-ghost" style={{ fontSize: 11, padding: '4px 10px' }}
+            <div style={{ fontSize: 12, fontWeight: 700, color: 'var(--t-mute)', letterSpacing: '.08em' }}>
+              TOPLULUKTAN
+            </div>
+            <button className="btn-ghost" style={{ fontSize: 11, padding: '3px 10px' }}
               onClick={() => navigate('/topluluk')}>Tümü →</button>
           </div>
           {posts.slice(0, 2).map(post => (
@@ -165,30 +224,46 @@ export default function Home() {
                   {post.username[0]}
                 </div>
                 <div style={{ flex: 1, minWidth: 0 }}>
-                  <div style={{ fontSize: 13, fontWeight: 700, color: '#e2e8f0', marginBottom: 2 }}>{post.title}</div>
-                  <div style={{ fontSize: 12, color: '#4a6741', marginBottom: 4 }}>@{post.username} · {post.location}</div>
-                  <div style={{ fontSize: 12, color: '#a0c4a0', lineHeight: 1.5 }}>
-                    {post.content.length > 80 ? post.content.slice(0, 80) + '…' : post.content}
+                  <div style={{ fontSize: 13, fontWeight: 700, color: 'var(--text)', marginBottom: 2 }}>
+                    {post.title}
                   </div>
-                  <div style={{ fontSize: 11, color: '#4a6741', marginTop: 6 }}>❤️ {post.likes} beğeni</div>
+                  <div style={{ fontSize: 11, color: 'var(--t-mute)', marginBottom: 4 }}>
+                    @{post.username}{post.location && ` · 📍 ${post.location}`}
+                  </div>
+                  <div style={{ fontSize: 12, color: 'var(--t-mid)', lineHeight: 1.5 }}>
+                    {post.content.length > 90 ? post.content.slice(0, 90) + '…' : post.content}
+                  </div>
+                  <div style={{ fontSize: 11, color: 'var(--t-mute)', marginTop: 6 }}>❤️ {post.likes}</div>
                 </div>
               </div>
             </div>
           ))}
         </div>
 
-        {/* AI Assistant promo */}
+        {/* ── AI Asistan promo ────────────────────────────── */}
         <div style={{
-          background: 'linear-gradient(135deg, #1a1a3a, #12122a)',
-          border: '1px solid #8b5cf633', borderRadius: 16, padding: 16, marginBottom: 16,
+          background: 'linear-gradient(135deg, rgba(15,12,40,.9), rgba(20,10,35,.9))',
+          border: '1px solid rgba(192,132,252,.2)',
+          borderRadius: 18, padding: 18, marginBottom: 14,
+          position: 'relative', overflow: 'hidden',
         }}>
-          <div style={{ fontSize: 20, marginBottom: 8 }}>🤖</div>
-          <div style={{ fontWeight: 700, color: '#c4b5fd', fontSize: 14, marginBottom: 4 }}>DoğaAI Asistanı</div>
-          <div style={{ fontSize: 12, color: '#a0a0c0', marginBottom: 12, lineHeight: 1.5 }}>
-            Balık türleri, av mevsimleri, kamp yerleri, ekipman tavsiyeleri ve daha fazlası için sorun.
+          <div style={{
+            position: 'absolute', top: -20, right: -20,
+            width: 100, height: 100, borderRadius: '50%',
+            background: 'radial-gradient(circle, rgba(192,132,252,.12), transparent 70%)',
+          }} />
+          <div style={{ fontSize: 24, marginBottom: 8, position: 'relative' }}>🤖</div>
+          <div style={{ fontWeight: 800, fontSize: 15, color: '#e9d5ff', marginBottom: 5, position: 'relative' }}>
+            DoğaAI Asistanı
           </div>
-          <button className="btn-primary" style={{ background: 'linear-gradient(135deg, #8b5cf6, #6d28d9)' }}
-            onClick={() => navigate('/ai-asistan')}>
+          <div style={{ fontSize: 12, color: 'rgba(192,132,252,.7)', lineHeight: 1.6, marginBottom: 14, position: 'relative' }}>
+            Balık türleri, av mevsimleri, kamp yerleri ve ekipman tavsiyeleri için GPT-4o destekli asistanınız.
+          </div>
+          <button
+            className="btn-primary"
+            style={{ background: 'linear-gradient(135deg, #8b5cf6, #6d28d9)', position: 'relative' }}
+            onClick={() => navigate('/ai-asistan')}
+          >
             AI ile Konuş →
           </button>
         </div>

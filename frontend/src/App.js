@@ -21,7 +21,8 @@ import Search       from '@/components/Search';
 import WeatherDetail from '@/components/WeatherDetail';
 import Analytics      from '@/components/Analytics';
 import Notifications  from '@/components/Notifications';
-import Achievements   from '@/components/Achievements';
+import Achievements      from '@/components/Achievements';
+import SeasonalCalendar from '@/components/SeasonalCalendar';
 import { ToastProvider } from '@/components/Toast';
 import '@/App.css';
 
@@ -54,6 +55,7 @@ function AppInner() {
         <Route path="/analiz"      element={<Analytics />} />
         <Route path="/bildirimler" element={<Notifications />} />
         <Route path="/basarilar"   element={<Achievements />} />
+        <Route path="/takvim"      element={<SeasonalCalendar />} />
       </Routes>
       {!hideNav && <Navbar />}
     </div>

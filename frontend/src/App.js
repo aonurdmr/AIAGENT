@@ -21,6 +21,7 @@ import Search       from '@/components/Search';
 import WeatherDetail from '@/components/WeatherDetail';
 import Analytics      from '@/components/Analytics';
 import Notifications  from '@/components/Notifications';
+import Achievements   from '@/components/Achievements';
 import { ToastProvider } from '@/components/Toast';
 import '@/App.css';
 
@@ -52,6 +53,7 @@ function AppInner() {
         <Route path="/hava"        element={<WeatherDetail />} />
         <Route path="/analiz"      element={<Analytics />} />
         <Route path="/bildirimler" element={<Notifications />} />
+        <Route path="/basarilar"   element={<Achievements />} />
       </Routes>
       {!hideNav && <Navbar />}
     </div>

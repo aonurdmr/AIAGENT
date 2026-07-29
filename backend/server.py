@@ -1200,6 +1200,60 @@ async def get_leaderboard(period: str = "all"):
     return board[:20]
 
 
+ACHIEVEMENTS_DEF = [
+    {"id": "first_activity",    "icon": "🎣", "title": "İlk Atış",       "desc": "İlk aktiviteni kaydet",            "color": "#22c55e"},
+    {"id": "fishing_master",    "icon": "🏆", "title": "Balık Ustası",    "desc": "10+ balıkçılık aktivitesi",        "color": "#fbbf24"},
+    {"id": "hunting_expert",    "icon": "🏹", "title": "Av Uzmanı",       "desc": "10+ avcılık aktivitesi",           "color": "#ef4444"},
+    {"id": "camping_lover",     "icon": "⛺", "title": "Kamp Sevdalısı",  "desc": "10+ kamp aktivitesi",              "color": "#f97316"},
+    {"id": "first_post",        "icon": "📝", "title": "İlk Paylaşım",    "desc": "Toplulukta ilk paylaşımını yap",   "color": "#3b82f6"},
+    {"id": "social_butterfly",  "icon": "💬", "title": "Sosyal Kelebek",  "desc": "10+ topluluk paylaşımı",           "color": "#a78bfa"},
+    {"id": "explorer",          "icon": "📍", "title": "Kaşif",           "desc": "5+ farklı lokasyonda aktivite",    "color": "#06b6d4"},
+    {"id": "species_hunter",    "icon": "🐟", "title": "Tür Avcısı",      "desc": "5+ farklı tür yakala/gözlemle",    "color": "#34d399"},
+    {"id": "big_catch",         "icon": "⚖️", "title": "Büyük Av",        "desc": "5kg+ ağırlığında balık yakala",    "color": "#fb923c"},
+    {"id": "active_member",     "icon": "🌟", "title": "Aktif Üye",       "desc": "25+ toplam aktivite",              "color": "#f59e0b"},
+    {"id": "centurion",         "icon": "💯", "title": "Yüzüncü",         "desc": "100+ toplam aktivite",             "color": "#e11d48"},
+    {"id": "community_star",    "icon": "⭐", "title": "Topluluk Yıldızı", "desc": "25+ topluluk paylaşımı",          "color": "#fbbf24"},
+]
+
+
+@api_router.get("/achievements")
+async def get_achievements(current_user: dict = Depends(get_optional_user)):
+    uid = current_user["id"] if current_user else None
+    if not uid:
+        return [{"earned": False, "progress": 0, **a} for a in ACHIEVEMENTS_DEF]
+
+    acts   = await db.activities.find({"user_id": uid}, {"_id": 0}).to_list(1000)
+    posts  = await db.posts.count_documents({"user_id": uid})
+
+    fish_count   = sum(1 for a in acts if a.get("type") == "fishing")
+    hunt_count   = sum(1 for a in acts if a.get("type") == "hunting")
+    camp_count   = sum(1 for a in acts if a.get("type") == "camping")
+    locations    = {(a.get("location_name") or "").strip() for a in acts if (a.get("location_name") or "").strip()}
+    species_set  = {(a.get("species") or "").strip() for a in acts if (a.get("species") or "").strip()}
+    max_weight   = max((a.get("weight") or 0 for a in acts if a.get("type") == "fishing"), default=0)
+
+    conds = {
+        "first_activity":   (len(acts) >= 1,   min(len(acts), 1),       1),
+        "fishing_master":   (fish_count >= 10,  fish_count,              10),
+        "hunting_expert":   (hunt_count >= 10,  hunt_count,              10),
+        "camping_lover":    (camp_count >= 10,  camp_count,              10),
+        "first_post":       (posts >= 1,         min(posts, 1),           1),
+        "social_butterfly": (posts >= 10,         posts,                  10),
+        "explorer":         (len(locations) >= 5, len(locations),         5),
+        "species_hunter":   (len(species_set) >= 5, len(species_set),     5),
+        "big_catch":        (max_weight >= 5,   min(int(max_weight), 5),  5),
+        "active_member":    (len(acts) >= 25,   len(acts),               25),
+        "centurion":        (len(acts) >= 100,  len(acts),              100),
+        "community_star":   (posts >= 25,        posts,                  25),
+    }
+
+    result = []
+    for a in ACHIEVEMENTS_DEF:
+        earned, progress, target = conds.get(a["id"], (False, 0, 1))
+        result.append({**a, "earned": earned, "progress": min(progress, target), "target": target})
+    return result
+
+
 @api_router.get("/notifications")
 async def get_notifications(current_user: dict = Depends(get_current_user)):
     uid = current_user["id"]

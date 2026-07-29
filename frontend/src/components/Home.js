@@ -27,6 +27,7 @@ const TOOLS = [
   { icon: '📅', label: 'Sezon Takvimi',     sub: 'Av ve balık sezonu',     path: '/takvim',    accent: '#f97316' },
   { icon: '📓', label: 'Hızlı Notlar',      sub: 'Saha gözlem notları',    path: '/notlar',    accent: '#a78bfa' },
   { icon: '⚙️', label: 'Ayarlar',           sub: 'Tercihler ve hesap',     path: '/ayarlar',   accent: '#94a3b8' },
+  { icon: '🤖', label: 'AI Öneri',          sub: 'Bugün nereye gideyim?',  path: '/oneri',     accent: '#22c55e' },
 ];
 
 const CATS = [

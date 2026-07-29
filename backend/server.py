@@ -561,6 +561,23 @@ async def update_profile(
     return {**current_user, **update}
 
 
+@api_router.get("/settings")
+async def get_settings(current_user: dict = Depends(get_current_user)):
+    return current_user.get('settings', {
+        'units': 'metric', 'default_activity': 'fishing',
+        'profile_public': True, 'notif_likes': True,
+        'notif_comments': True, 'notif_system': True,
+    })
+
+
+@api_router.put("/settings")
+async def update_settings(body: dict, current_user: dict = Depends(get_current_user)):
+    allowed = {'units', 'default_activity', 'profile_public', 'notif_likes', 'notif_comments', 'notif_system'}
+    clean = {k: v for k, v in body.items() if k in allowed}
+    await db.users.update_one({'id': current_user['id']}, {'$set': {'settings': clean}})
+    return clean
+
+
 # ── Stats ──────────────────────────────────────────────────────────────────────
 
 @api_router.get("/stats")

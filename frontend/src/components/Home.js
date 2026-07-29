@@ -22,6 +22,7 @@ const TOOLS = [
   { icon: '🏆', label: 'Liderboard',        sub: 'Topluluk sıralaması',  path: '/liderboard',accent: '#fbbf24' },
   { icon: '🔍', label: 'Global Arama',      sub: 'Tüm içerikte ara',     path: '/arama',     accent: '#a855f7' },
   { icon: '🌡️', label: 'Hava Durumu',       sub: 'Aktivite bazlı skor',  path: '/hava',      accent: '#38bdf8' },
+  { icon: '📊', label: 'Analizler',         sub: 'Kişisel istatistikler', path: '/analiz',    accent: '#34d399' },
 ];
 
 const CATS = [

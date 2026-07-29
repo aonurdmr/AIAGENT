@@ -1173,6 +1173,79 @@ async def get_leaderboard(period: str = "all"):
     return board[:20]
 
 
+@api_router.get("/analytics")
+async def get_analytics(current_user: dict = Depends(get_optional_user)):
+    uid = current_user["id"] if current_user else None
+    query = {"user_id": uid} if uid else {}
+
+    acts = await db.activities.find(query, {"_id": 0}).to_list(1000)
+
+    # monthly counts — last 6 months
+    now = datetime.now(timezone.utc)
+    monthly: Dict[str, int] = {}
+    for i in range(5, -1, -1):
+        mo = (now.replace(day=1) - timedelta(days=i * 28)).strftime("%Y-%m")
+        monthly[mo] = 0
+    for a in acts:
+        raw = a.get("date") or a.get("created_at", "")
+        if not raw:
+            continue
+        try:
+            d = datetime.fromisoformat(str(raw).replace("Z", "+00:00"))
+            mo = d.strftime("%Y-%m")
+            if mo in monthly:
+                monthly[mo] += 1
+        except Exception:
+            pass
+    monthly_list = [{"month": k, "count": v} for k, v in monthly.items()]
+
+    # type distribution
+    type_counts: Dict[str, int] = {}
+    for a in acts:
+        t = a.get("type", "other")
+        type_counts[t] = type_counts.get(t, 0) + 1
+
+    # top locations
+    loc_counts: Dict[str, int] = {}
+    for a in acts:
+        loc = (a.get("location_name") or "").strip()
+        if loc:
+            loc_counts[loc] = loc_counts.get(loc, 0) + 1
+    top_locations = sorted(loc_counts.items(), key=lambda x: -x[1])[:5]
+
+    # top species
+    species_counts: Dict[str, int] = {}
+    for a in acts:
+        sp = (a.get("species") or "").strip()
+        if sp:
+            species_counts[sp] = species_counts.get(sp, 0) + 1
+    top_species = sorted(species_counts.items(), key=lambda x: -x[1])[:5]
+
+    # personal records (fishing)
+    records = {"best_weight": None, "best_length": None, "best_species": None}
+    fishing_acts = [a for a in acts if a.get("type") == "fishing"]
+    for a in fishing_acts:
+        w = a.get("weight")
+        if w and (records["best_weight"] is None or w > records["best_weight"]):
+            records["best_weight"] = w
+            records["best_species"] = a.get("species") or "Balık"
+        l = a.get("length")
+        if l and (records["best_length"] is None or l > records["best_length"]):
+            records["best_length"] = l
+
+    post_count = await db.posts.count_documents({"user_id": uid}) if uid else 0
+
+    return {
+        "total_activities": len(acts),
+        "total_posts": post_count,
+        "monthly": monthly_list,
+        "type_counts": type_counts,
+        "top_locations": [{"name": n, "count": c} for n, c in top_locations],
+        "top_species": [{"name": n, "count": c} for n, c in top_species],
+        "records": records,
+    }
+
+
 @api_router.get("/")
 async def root():
     return {"message": "DoğaAI Platform API v3", "models": {"chat": CHAT_MODEL, "vision": VISION_MODEL}}

@@ -1,4 +1,5 @@
-from fastapi import FastAPI, APIRouter, HTTPException, UploadFile, File, Form
+from fastapi import FastAPI, APIRouter, HTTPException, Depends, UploadFile, File, Form
+from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from dotenv import load_dotenv
 from starlette.middleware.cors import CORSMiddleware
 from motor.motor_asyncio import AsyncIOMotorClient
@@ -8,11 +9,13 @@ import base64
 import json
 import random
 from pathlib import Path
-from pydantic import BaseModel, Field, ConfigDict
+from pydantic import BaseModel, Field, ConfigDict, EmailStr
 from typing import List, Optional, Dict, Any
 import uuid
-from datetime import datetime, timezone
+from datetime import datetime, timezone, timedelta
 from emergentintegrations.llm.chat import LlmChat, UserMessage
+from passlib.context import CryptContext
+from jose import JWTError, jwt
 
 ROOT_DIR = Path(__file__).parent
 load_dotenv(ROOT_DIR / '.env')
@@ -25,11 +28,79 @@ app = FastAPI(title="DoğaAI Platform API")
 api_router = APIRouter(prefix="/api")
 
 EMERGENT_LLM_KEY = os.environ.get('EMERGENT_LLM_KEY', '')
+SECRET_KEY        = os.environ.get('JWT_SECRET', 'dogaai-super-secret-key-change-in-prod-2024')
+ALGORITHM         = 'HS256'
+ACCESS_TOKEN_EXPIRE_MINUTES = 60 * 24 * 7  # 7 days
+
+pwd_ctx   = CryptContext(schemes=['bcrypt'], deprecated='auto')
+security  = HTTPBearer(auto_error=False)
 
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 logger = logging.getLogger(__name__)
 
+# ── Auth helpers ──────────────────────────────────────────────────────────────
+
+def hash_password(pw: str) -> str:
+    return pwd_ctx.hash(pw)
+
+def verify_password(plain: str, hashed: str) -> bool:
+    return pwd_ctx.verify(plain, hashed)
+
+def create_token(data: dict) -> str:
+    payload = data.copy()
+    payload['exp'] = datetime.now(timezone.utc) + timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
+    return jwt.encode(payload, SECRET_KEY, algorithm=ALGORITHM)
+
+def decode_token(token: str) -> Optional[dict]:
+    try:
+        return jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
+    except JWTError:
+        return None
+
+async def get_current_user(creds: HTTPAuthorizationCredentials = Depends(security)):
+    if not creds:
+        raise HTTPException(status_code=401, detail='Token gerekli')
+    payload = decode_token(creds.credentials)
+    if not payload:
+        raise HTTPException(status_code=401, detail='Geçersiz veya süresi dolmuş token')
+    user = await db.users.find_one({'id': payload.get('sub')}, {'_id': 0, 'password': 0})
+    if not user:
+        raise HTTPException(status_code=401, detail='Kullanıcı bulunamadı')
+    return user
+
+async def get_optional_user(creds: HTTPAuthorizationCredentials = Depends(security)):
+    if not creds:
+        return None
+    payload = decode_token(creds.credentials)
+    if not payload:
+        return None
+    return await db.users.find_one({'id': payload.get('sub')}, {'_id': 0, 'password': 0})
+
 # ── Models ────────────────────────────────────────────────────────────────────
+
+class UserRegister(BaseModel):
+    username: str = Field(min_length=3, max_length=30)
+    email: str
+    password: str = Field(min_length=6)
+    full_name: str = ''
+
+class UserLogin(BaseModel):
+    email: str
+    password: str
+
+class UserPublic(BaseModel):
+    model_config = ConfigDict(extra='ignore')
+    id: str
+    username: str
+    email: str
+    full_name: str = ''
+    avatar_color: str = '#22c55e'
+    bio: str = ''
+    activity_count: int = 0
+    created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
+
+class UserDB(UserPublic):
+    password: str
 
 class Spot(BaseModel):
     model_config = ConfigDict(extra="ignore")
@@ -231,6 +302,67 @@ async def seed_initial_data():
 @api_router.get("/")
 async def root():
     return {"message": "DoğaAI Platform API - Active", "version": "2.0"}
+
+
+# ── Auth endpoints ────────────────────────────────────────────────────────────
+
+@api_router.post("/auth/register")
+async def register(req: UserRegister):
+    existing = await db.users.find_one({'email': req.email})
+    if existing:
+        raise HTTPException(status_code=409, detail='Bu e-posta zaten kayıtlı')
+    existing_u = await db.users.find_one({'username': req.username})
+    if existing_u:
+        raise HTTPException(status_code=409, detail='Bu kullanıcı adı alınmış')
+
+    AVATAR_COLORS = ['#22c55e', '#3b82f6', '#f59e0b', '#ef4444', '#8b5cf6', '#06b6d4', '#ec4899']
+    user_id = str(uuid.uuid4())
+    user = {
+        'id':           user_id,
+        'username':     req.username,
+        'email':        req.email,
+        'full_name':    req.full_name,
+        'password':     hash_password(req.password),
+        'avatar_color': random.choice(AVATAR_COLORS),
+        'bio':          '',
+        'activity_count': 0,
+        'created_at':   datetime.now(timezone.utc).isoformat(),
+    }
+    await db.users.insert_one(user)
+    token = create_token({'sub': user_id, 'username': req.username})
+    user.pop('password', None)
+    user.pop('_id', None)
+    return {'token': token, 'user': user}
+
+
+@api_router.post("/auth/login")
+async def login(req: UserLogin):
+    user = await db.users.find_one({'email': req.email})
+    if not user or not verify_password(req.password, user.get('password', '')):
+        raise HTTPException(status_code=401, detail='E-posta veya şifre hatalı')
+    token = create_token({'sub': user['id'], 'username': user['username']})
+    user.pop('password', None)
+    user.pop('_id', None)
+    return {'token': token, 'user': user}
+
+
+@api_router.get("/auth/me")
+async def me(current_user: dict = Depends(get_current_user)):
+    return current_user
+
+
+@api_router.put("/auth/profile")
+async def update_profile(
+    bio: Optional[str] = None,
+    full_name: Optional[str] = None,
+    current_user: dict = Depends(get_current_user),
+):
+    update = {}
+    if bio is not None:        update['bio'] = bio
+    if full_name is not None:  update['full_name'] = full_name
+    if update:
+        await db.users.update_one({'id': current_user['id']}, {'$set': update})
+    return {**current_user, **update}
 
 
 @api_router.get("/stats")

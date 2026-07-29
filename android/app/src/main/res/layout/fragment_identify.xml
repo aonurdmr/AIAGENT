@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg">
+
+    <LinearLayout android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <ImageView android:id="@+id/iv_preview"
+            android:layout_width="match_parent"
+            android:layout_height="240dp"
+            android:scaleType="centerCrop"
+            android:background="@color/surface2"
+            android:layout_marginBottom="16dp" />
+
+        <LinearLayout android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="16dp">
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_gallery"
+                android:layout_width="0dp" android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="Galeri"
+                app:backgroundTint="@color/surface2"
+                android:layout_marginEnd="8dp" />
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_camera"
+                android:layout_width="0dp" android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="Kamera"
+                app:backgroundTint="@color/surface2" />
+        </LinearLayout>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_identify"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="AI ile Tanımla"
+            android:enabled="false"
+            app:backgroundTint="@color/accent"
+            android:layout_marginBottom="16dp" />
+
+        <ProgressBar android:id="@+id/progressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:visibility="gone"
+            android:layout_marginBottom="16dp" />
+
+        <!-- Result card -->
+        <LinearLayout android:id="@+id/card_result"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@color/surface1"
+            android:padding="16dp"
+            android:visibility="gone">
+
+            <TextView android:id="@+id/tv_species"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:textColor="@color/accent" android:textSize="22sp" android:textStyle="bold" />
+            <TextView android:id="@+id/tv_scientific"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:textColor="@color/text_mute" android:textStyle="italic"
+                android:layout_marginBottom="8dp" />
+            <TextView android:id="@+id/tv_confidence"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:textColor="@color/teal" android:layout_marginBottom="8dp" />
+            <TextView android:id="@+id/tv_description"
+                android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:textColor="@color/text_mid" android:layout_marginBottom="8dp" />
+            <TextView android:id="@+id/tv_habitat"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:textColor="@color/text_mute" android:layout_marginBottom="4dp" />
+            <TextView android:id="@+id/tv_season"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:textColor="@color/text_mute" android:layout_marginBottom="8dp" />
+            <TextView android:id="@+id/tv_tips"
+                android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:textColor="@color/text_mid" android:layout_marginBottom="8dp" />
+            <TextView android:id="@+id/tv_protected"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:text="⚠️ Koruma altında tür"
+                android:textColor="@color/red"
+                android:visibility="gone" />
+        </LinearLayout>
+
+    </LinearLayout>
+</ScrollView>

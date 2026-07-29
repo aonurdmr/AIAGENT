@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="activity_types">
+        <item>fishing</item>
+        <item>hunting</item>
+        <item>camping</item>
+        <item>wildlife</item>
+        <item>hiking</item>
+    </string-array>
+</resources>

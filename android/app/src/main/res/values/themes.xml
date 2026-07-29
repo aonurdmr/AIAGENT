@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Theme.DoğaAI" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/accent</item>
+        <item name="colorPrimaryVariant">@color/accent_dark</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <item name="colorSecondary">@color/accent_light</item>
+        <item name="colorSurface">@color/surface1</item>
+        <item name="colorOnSurface">@color/text_primary</item>
+        <item name="android:colorBackground">@color/bg</item>
+        <item name="android:windowBackground">@color/bg</item>
+        <item name="android:statusBarColor">@color/bg</item>
+        <item name="android:navigationBarColor">@color/surface1</item>
+        <item name="android:windowLightStatusBar">false</item>
+        <item name="postSplashScreenTheme">@style/Theme.DoğaAI</item>
+    </style>
+
+    <style name="Theme.DoğaAI.Splash" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenBackground">@color/bg</item>
+        <item name="windowSplashScreenAnimatedIcon">@mipmap/ic_launcher</item>
+        <item name="postSplashScreenTheme">@style/Theme.DoğaAI</item>
+    </style>
+</resources>

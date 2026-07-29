@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <ProgressBar android:id="@+id/progressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:visibility="gone" />
+
+        <!-- Stats -->
+        <LinearLayout android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="16dp">
+            <TextView android:id="@+id/tv_stat_spots"
+                android:layout_width="0dp" android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:textColor="@color/accent"
+                android:textSize="24sp" android:textStyle="bold"
+                android:gravity="center" android:text="--" />
+            <TextView android:id="@+id/tv_stat_species"
+                android:layout_width="0dp" android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:textColor="@color/accent"
+                android:textSize="24sp" android:textStyle="bold"
+                android:gravity="center" android:text="--" />
+            <TextView android:id="@+id/tv_stat_users"
+                android:layout_width="0dp" android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:textColor="@color/accent"
+                android:textSize="24sp" android:textStyle="bold"
+                android:gravity="center" android:text="--" />
+        </LinearLayout>
+
+        <!-- Weather card -->
+        <LinearLayout android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@color/surface1"
+            android:padding="16dp"
+            android:layout_marginBottom="16dp">
+            <TextView android:id="@+id/tv_temp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/text_primary"
+                android:textSize="32sp" android:textStyle="bold"
+                android:text="--°C" />
+            <TextView android:id="@+id/tv_conditions"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/text_mid" android:text="--" />
+            <TextView android:id="@+id/tv_activity_score"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/accent"
+                android:textSize="20sp" android:textStyle="bold"
+                android:text="--" />
+            <TextView android:id="@+id/tv_weather_tip"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/text_mid" android:text="" />
+            <TextView android:id="@+id/tv_weather_warning"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/amber"
+                android:visibility="gone" android:text="" />
+        </LinearLayout>
+
+        <!-- Quick action buttons -->
+        <GridLayout android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:columnCount="2"
+            android:rowCount="2"
+            android:layout_marginBottom="16dp">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_identify"
+                android:layout_width="0dp"
+                android:layout_columnWeight="1"
+                android:layout_height="wrap_content"
+                android:layout_margin="4dp"
+                android:text="AI Tanımla"
+                app:backgroundTint="@color/surface2"
+                xmlns:app="http://schemas.android.com/apk/res-auto"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_map"
+                android:layout_width="0dp"
+                android:layout_columnWeight="1"
+                android:layout_height="wrap_content"
+                android:layout_margin="4dp"
+                android:text="Harita"
+                app:backgroundTint="@color/surface2"
+                xmlns:app="http://schemas.android.com/apk/res-auto"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_chat"
+                android:layout_width="0dp"
+                android:layout_columnWeight="1"
+                android:layout_height="wrap_content"
+                android:layout_margin="4dp"
+                android:text="AI Asistan"
+                app:backgroundTint="@color/surface2"
+                xmlns:app="http://schemas.android.com/apk/res-auto"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_activity"
+                android:layout_width="0dp"
+                android:layout_columnWeight="1"
+                android:layout_height="wrap_content"
+                android:layout_margin="4dp"
+                android:text="Aktivite"
+                app:backgroundTint="@color/surface2"
+                xmlns:app="http://schemas.android.com/apk/res-auto"/>
+        </GridLayout>
+
+    </LinearLayout>
+</ScrollView>

@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg">
+
+    <LinearLayout android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <Spinner android:id="@+id/spinner_type"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:entries="@array/activity_types"
+            android:layout_marginBottom="12dp" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:hint="Tür / Cins" android:layout_marginBottom="12dp"
+            app:boxStrokeColor="@color/accent">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_species"
+                android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:textColor="@color/text_primary" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:hint="Konum" android:layout_marginBottom="12dp"
+            app:boxStrokeColor="@color/accent">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_location"
+                android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:textColor="@color/text_primary" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:hint="Adet" android:layout_marginBottom="12dp"
+            app:boxStrokeColor="@color/accent">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_count"
+                android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:inputType="number" android:text="1"
+                android:textColor="@color/text_primary" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:hint="Ağırlık (kg)" android:layout_marginBottom="12dp"
+            app:boxStrokeColor="@color/accent">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_weight"
+                android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:inputType="numberDecimal"
+                android:textColor="@color/text_primary" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:hint="Notlar" android:layout_marginBottom="24dp"
+            app:boxStrokeColor="@color/accent">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_notes"
+                android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:inputType="textMultiLine" android:minLines="3"
+                android:textColor="@color/text_primary" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_log"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Aktiviteyi Kaydet"
+            app:backgroundTint="@color/accent" />
+
+    </LinearLayout>
+</ScrollView>

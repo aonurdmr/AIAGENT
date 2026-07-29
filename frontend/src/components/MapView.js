@@ -3,6 +3,8 @@ import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import axios from 'axios';
+import { useAuth } from '@/context/AuthContext';
+import { toast } from '@/components/Toast';
 
 const API = process.env.REACT_APP_BACKEND_URL + '/api';
 
@@ -65,6 +67,7 @@ function ScoreRing({ score }) {
 }
 
 export default function MapView() {
+  const { user } = useAuth();
   const [spots, setSpots]       = useState([]);
   const [filter, setFilter]     = useState('all');
   const [selected, setSelected] = useState(null);
@@ -72,6 +75,7 @@ export default function MapView() {
   const [showAdd, setShowAdd]   = useState(false);
   const [loading, setLoading]   = useState(true);
   const [mapCenter, setMapCenter] = useState([39.0, 35.0]);
+  const [favSet, setFavSet]     = useState(new Set());
   const [newSpot, setNewSpot] = useState({
     name: '', description: '', type: 'fishing', lat: 39, lng: 35,
     species: '', facilities: '', difficulty: 'orta', season: 'Tüm yıl',
@@ -83,7 +87,29 @@ export default function MapView() {
       axios.post(`${API}/weather`, { lat: 41, lng: 29, activity: 'fishing' })
         .then(r => setWeather(r.data)).catch(() => {}),
     ]).finally(() => setLoading(false));
-  }, []);
+    if (user) {
+      axios.get(`${API}/favorites`).then(r => {
+        const ids = new Set(r.data.filter(f => f.item_type === 'spot').map(f => f.item_id));
+        setFavSet(ids);
+      }).catch(() => {});
+    }
+  }, [user]);
+
+  const toggleFavSpot = async (spot, e) => {
+    if (e) e.stopPropagation();
+    if (!user) { toast('Favorilere eklemek için giriş yapın', 'info'); return; }
+    try {
+      const { data } = await axios.post(`${API}/favorites`, {
+        item_type: 'spot', item_id: spot.id, item_name: spot.name,
+      });
+      setFavSet(prev => {
+        const next = new Set(prev);
+        if (data.favorited) { next.add(spot.id); toast(`${spot.name} favorilere eklendi ⭐`); }
+        else { next.delete(spot.id); toast(`${spot.name} favorilerden çıkarıldı`, 'info'); }
+        return next;
+      });
+    } catch { toast('Hata oluştu', 'error'); }
+  };
 
   const filtered = filter === 'all' ? spots : spots.filter(s => s.type === filter);
 
@@ -227,10 +253,17 @@ export default function MapView() {
                     }}>{selected.difficulty}</span>
                   </div>
                 </div>
-                <button onClick={() => setSelected(null)} style={{
-                  background: 'none', border: 'none', color: '#4a7a4a', fontSize: 18,
-                  cursor: 'pointer', padding: '0 4px',
-                }}>✕</button>
+                <div style={{ display: 'flex', gap: 6 }}>
+                  <button onClick={(e) => toggleFavSpot(selected, e)} style={{
+                    background: 'none', border: 'none', cursor: 'pointer', fontSize: 20,
+                    color: favSet.has(selected.id) ? '#fbbf24' : '#4a7a4a',
+                    transition: 'color .2s',
+                  }}>⭐</button>
+                  <button onClick={() => setSelected(null)} style={{
+                    background: 'none', border: 'none', color: '#4a7a4a', fontSize: 18,
+                    cursor: 'pointer', padding: '0 4px',
+                  }}>✕</button>
+                </div>
               </div>
             </div>
             <div style={{ padding: '12px 16px' }}>
@@ -309,8 +342,15 @@ export default function MapView() {
                       </div>
                     )}
                   </div>
-                  <span style={{ fontSize: 16, color: '#4a7a4a', transition: 'transform .2s',
-                    transform: isSel ? 'rotate(90deg)' : 'none' }}>›</span>
+                  <div style={{ display: 'flex', gap: 8, alignItems: 'center', flexShrink: 0 }}>
+                    <button onClick={(e) => toggleFavSpot(spot, e)} style={{
+                      background: 'none', border: 'none', cursor: 'pointer', fontSize: 16,
+                      color: favSet.has(spot.id) ? '#fbbf24' : '#4a7a4a',
+                      transition: 'color .2s',
+                    }}>⭐</button>
+                    <span style={{ fontSize: 16, color: '#4a7a4a', transition: 'transform .2s',
+                      transform: isSel ? 'rotate(90deg)' : 'none' }}>›</span>
+                  </div>
                 </div>
               </div>
             );

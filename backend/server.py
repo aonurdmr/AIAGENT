@@ -1216,6 +1216,69 @@ ACHIEVEMENTS_DEF = [
 ]
 
 
+class Note(BaseModel):
+    model_config = ConfigDict(extra="ignore")
+    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    user_id: str
+    content: str
+    tags: List[str] = []
+    location_name: str = ""
+    lat: float = 0.0
+    lng: float = 0.0
+    pinned: bool = False
+    created_at: str = Field(default_factory=lambda: datetime.now(timezone.utc).isoformat())
+    updated_at: str = Field(default_factory=lambda: datetime.now(timezone.utc).isoformat())
+
+class NoteCreate(BaseModel):
+    content: str
+    tags: List[str] = []
+    location_name: str = ""
+    lat: float = 0.0
+    lng: float = 0.0
+
+
+@api_router.get("/notes")
+async def get_notes(current_user: dict = Depends(get_current_user)):
+    uid = current_user["id"]
+    return await db.notes.find({"user_id": uid}, {"_id": 0}).sort([("pinned", -1), ("created_at", -1)]).to_list(200)
+
+
+@api_router.post("/notes")
+async def create_note(req: NoteCreate, current_user: dict = Depends(get_current_user)):
+    uid = current_user["id"]
+    note = Note(**req.model_dump(), user_id=uid)
+    await db.notes.insert_one(note.model_dump())
+    return note
+
+
+@api_router.put("/notes/{note_id}")
+async def update_note(note_id: str, req: NoteCreate, current_user: dict = Depends(get_current_user)):
+    uid = current_user["id"]
+    await db.notes.update_one(
+        {"id": note_id, "user_id": uid},
+        {"$set": {**req.model_dump(), "updated_at": datetime.now(timezone.utc).isoformat()}},
+    )
+    return await db.notes.find_one({"id": note_id}, {"_id": 0})
+
+
+@api_router.patch("/notes/{note_id}/pin")
+async def toggle_pin(note_id: str, current_user: dict = Depends(get_current_user)):
+    uid = current_user["id"]
+    note = await db.notes.find_one({"id": note_id, "user_id": uid})
+    if not note:
+        raise HTTPException(404, "Not bulunamadı")
+    new_pin = not note.get("pinned", False)
+    await db.notes.update_one({"id": note_id}, {"$set": {"pinned": new_pin}})
+    return {"pinned": new_pin}
+
+
+@api_router.delete("/notes/{note_id}")
+async def delete_note(note_id: str, current_user: dict = Depends(get_current_user)):
+    uid = current_user["id"]
+    await db.notes.delete_one({"id": note_id, "user_id": uid})
+    return {"ok": True}
+
+
 @api_router.get("/achievements")
 async def get_achievements(current_user: dict = Depends(get_optional_user)):
     uid = current_user["id"] if current_user else None

@@ -25,6 +25,7 @@ const TOOLS = [
   { icon: '📊', label: 'Analizler',         sub: 'Kişisel istatistikler', path: '/analiz',    accent: '#34d399' },
   { icon: '🏅', label: 'Başarılar',         sub: '12 başarı rozeti',       path: '/basarilar', accent: '#fbbf24' },
   { icon: '📅', label: 'Sezon Takvimi',     sub: 'Av ve balık sezonu',     path: '/takvim',    accent: '#f97316' },
+  { icon: '📓', label: 'Hızlı Notlar',      sub: 'Saha gözlem notları',    path: '/notlar',    accent: '#a78bfa' },
 ];
 
 const CATS = [

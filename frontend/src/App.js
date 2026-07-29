@@ -23,6 +23,7 @@ import Analytics      from '@/components/Analytics';
 import Notifications  from '@/components/Notifications';
 import Achievements      from '@/components/Achievements';
 import SeasonalCalendar from '@/components/SeasonalCalendar';
+import Notes           from '@/components/Notes';
 import { ToastProvider } from '@/components/Toast';
 import '@/App.css';
 
@@ -56,6 +57,7 @@ function AppInner() {
         <Route path="/bildirimler" element={<Notifications />} />
         <Route path="/basarilar"   element={<Achievements />} />
         <Route path="/takvim"      element={<SeasonalCalendar />} />
+        <Route path="/notlar"      element={<Notes />} />
       </Routes>
       {!hideNav && <Navbar />}
     </div>

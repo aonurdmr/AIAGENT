@@ -270,6 +270,39 @@ class AgentMessage(BaseModel):
     content: str
     agent_type: str = "genel"
 
+class Equipment(BaseModel):
+    model_config = ConfigDict(extra="ignore")
+    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    user_id: str = "anonymous"
+    name: str
+    category: str  # fishing | hunting | camping | general
+    brand: str = ""
+    model_name: str = ""
+    condition: str = "iyi"  # mükemmel | iyi | orta | kötü
+    purchase_date: str = ""
+    notes: str = ""
+    emoji: str = "🎒"
+    created_at: str = Field(default_factory=lambda: datetime.now(timezone.utc).isoformat())
+
+class EquipmentCreate(BaseModel):
+    name: str
+    category: str
+    brand: str = ""
+    model_name: str = ""
+    condition: str = "iyi"
+    purchase_date: str = ""
+    notes: str = ""
+    emoji: str = "🎒"
+
+class Favorite(BaseModel):
+    model_config = ConfigDict(extra="ignore")
+    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    user_id: str
+    item_type: str  # spot | post | species
+    item_id: str
+    item_name: str = ""
+    created_at: str = Field(default_factory=lambda: datetime.now(timezone.utc).isoformat())
+
 
 # ── Phase-3 agent definitions ──────────────────────────────────────────────────
 
@@ -1012,6 +1045,132 @@ async def get_species(category: str = "all"):
     if category == "all":
         return SPECIES_DB
     return [s for s in SPECIES_DB if s["category"] == category]
+
+
+# ── Equipment ──────────────────────────────────────────────────────────────────
+
+@api_router.get("/equipment")
+async def get_equipment(current_user: dict = Depends(get_optional_user)):
+    uid = current_user['id'] if current_user else "anonymous"
+    return await db.equipment.find({"user_id": uid}, {"_id": 0}).sort("created_at", -1).to_list(200)
+
+
+@api_router.post("/equipment")
+async def create_equipment(req: EquipmentCreate, current_user: dict = Depends(get_optional_user)):
+    uid = current_user['id'] if current_user else "anonymous"
+    item = Equipment(**req.model_dump(), user_id=uid)
+    await db.equipment.insert_one(item.model_dump())
+    return item
+
+
+@api_router.put("/equipment/{item_id}")
+async def update_equipment(item_id: str, req: EquipmentCreate, current_user: dict = Depends(get_optional_user)):
+    uid = current_user['id'] if current_user else "anonymous"
+    update_data = {**req.model_dump()}
+    result = await db.equipment.update_one({"id": item_id, "user_id": uid}, {"$set": update_data})
+    if result.matched_count == 0:
+        raise HTTPException(404, "Ekipman bulunamadı")
+    return {"updated": True}
+
+
+@api_router.delete("/equipment/{item_id}")
+async def delete_equipment(item_id: str, current_user: dict = Depends(get_optional_user)):
+    uid = current_user['id'] if current_user else "anonymous"
+    result = await db.equipment.delete_one({"id": item_id, "user_id": uid})
+    if result.deleted_count == 0:
+        raise HTTPException(404, "Ekipman bulunamadı")
+    return {"deleted": True}
+
+
+# ── Favorites ──────────────────────────────────────────────────────────────────
+
+@api_router.get("/favorites")
+async def get_favorites(current_user: dict = Depends(get_current_user)):
+    favs = await db.favorites.find({"user_id": current_user['id']}, {"_id": 0}).sort("created_at", -1).to_list(200)
+    return favs
+
+
+@api_router.post("/favorites")
+async def toggle_favorite(body: dict, current_user: dict = Depends(get_current_user)):
+    uid = current_user['id']
+    item_type = body.get("item_type")
+    item_id   = body.get("item_id")
+    item_name = body.get("item_name", "")
+    existing = await db.favorites.find_one({"user_id": uid, "item_type": item_type, "item_id": item_id})
+    if existing:
+        await db.favorites.delete_one({"_id": existing["_id"]})
+        return {"favorited": False}
+    fav = Favorite(user_id=uid, item_type=item_type, item_id=item_id, item_name=item_name)
+    await db.favorites.insert_one(fav.model_dump())
+    return {"favorited": True}
+
+
+@api_router.get("/favorites/check")
+async def check_favorite(item_type: str, item_id: str, current_user: dict = Depends(get_optional_user)):
+    if not current_user:
+        return {"favorited": False}
+    existing = await db.favorites.find_one({"user_id": current_user['id'], "item_type": item_type, "item_id": item_id})
+    return {"favorited": bool(existing)}
+
+
+# ── Global Search ──────────────────────────────────────────────────────────────
+
+@api_router.get("/search")
+async def global_search(q: str = "", type: str = "all"):
+    if not q or len(q.strip()) < 2:
+        return {"results": [], "query": q}
+    query_str = q.strip().lower()
+    results = []
+
+    if type in ("all", "spots"):
+        spots = await db.spots.find({}, {"_id": 0}).to_list(200)
+        for s in spots:
+            if (query_str in s.get("name", "").lower() or
+                query_str in s.get("description", "").lower() or
+                any(query_str in sp.lower() for sp in s.get("species", []))):
+                results.append({**s, "_type": "spot"})
+
+    if type in ("all", "posts"):
+        posts = await db.posts.find({}, {"_id": 0}).to_list(500)
+        for p in posts:
+            if (query_str in p.get("title", "").lower() or
+                query_str in p.get("content", "").lower() or
+                query_str in p.get("username", "").lower()):
+                results.append({**p, "_type": "post"})
+
+    if type in ("all", "species"):
+        for s in SPECIES_DB:
+            if (query_str in s.get("name", "").lower() or
+                query_str in s.get("scientific", "").lower() or
+                query_str in s.get("description", "").lower()):
+                results.append({**s, "_type": "species"})
+
+    return {"results": results[:30], "query": q, "total": len(results)}
+
+
+# ── Leaderboard ────────────────────────────────────────────────────────────────
+
+@api_router.get("/leaderboard")
+async def get_leaderboard(period: str = "all"):
+    users = await db.users.find({}, {"_id": 0, "password": 0}).to_list(500)
+    board = []
+    for u in users:
+        uid = u.get("id", "")
+        act_count = await db.activities.count_documents({"user_id": uid})
+        post_count = await db.posts.count_documents({"user_id": uid})
+        points = act_count * 10 + post_count * 5
+        board.append({
+            "user_id": uid,
+            "username": u.get("username", "Kullanıcı"),
+            "avatar_color": u.get("avatar_color", "#22c55e"),
+            "activity_count": act_count,
+            "post_count": post_count,
+            "points": points,
+        })
+    board.sort(key=lambda x: -x["points"])
+    for i, entry in enumerate(board):
+        entry["rank"] = i + 1
+    return board[:20]
 
 
 @api_router.get("/")

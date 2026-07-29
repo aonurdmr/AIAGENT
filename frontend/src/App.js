@@ -15,6 +15,9 @@ import Planner      from '@/components/Planner';
 import SpeciesDB    from '@/components/SpeciesDB';
 import NLPTools     from '@/components/NLPTools';
 import ImageGen     from '@/components/ImageGen';
+import Equipment    from '@/components/Equipment';
+import Leaderboard  from '@/components/Leaderboard';
+import Search       from '@/components/Search';
 import '@/App.css';
 
 const HIDE_NAV = ['/ai-asistan', '/giris', '/ajanlar'];
@@ -26,19 +29,22 @@ function AppInner() {
   return (
     <div className="app-container">
       <Routes>
-        <Route path="/"          element={<Home />} />
-        <Route path="/tani"      element={<AIIdentify />} />
-        <Route path="/harita"    element={<MapView />} />
-        <Route path="/topluluk"  element={<Community />} />
-        <Route path="/aktivite"  element={<ActivityLog />} />
-        <Route path="/ai-asistan" element={<AIChat />} />
-        <Route path="/profil"    element={<Profile />} />
-        <Route path="/giris"     element={<Login />} />
-        <Route path="/ajanlar"   element={<AgentCenter />} />
-        <Route path="/planlama"  element={<Planner />} />
-        <Route path="/turler"    element={<SpeciesDB />} />
-        <Route path="/nlp"       element={<NLPTools />} />
-        <Route path="/gorsel"    element={<ImageGen />} />
+        <Route path="/"            element={<Home />} />
+        <Route path="/tani"        element={<AIIdentify />} />
+        <Route path="/harita"      element={<MapView />} />
+        <Route path="/topluluk"    element={<Community />} />
+        <Route path="/aktivite"    element={<ActivityLog />} />
+        <Route path="/ai-asistan"  element={<AIChat />} />
+        <Route path="/profil"      element={<Profile />} />
+        <Route path="/giris"       element={<Login />} />
+        <Route path="/ajanlar"     element={<AgentCenter />} />
+        <Route path="/planlama"    element={<Planner />} />
+        <Route path="/turler"      element={<SpeciesDB />} />
+        <Route path="/nlp"         element={<NLPTools />} />
+        <Route path="/gorsel"      element={<ImageGen />} />
+        <Route path="/ekipman"     element={<Equipment />} />
+        <Route path="/liderboard"  element={<Leaderboard />} />
+        <Route path="/arama"       element={<Search />} />
       </Routes>
       {!hideNav && <Navbar />}
     </div>

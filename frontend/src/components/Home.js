@@ -15,9 +15,12 @@ const ACTIONS = [
 ];
 
 const TOOLS = [
-  { icon: '📖', label: 'Tür Ansiklopedisi', sub: '12+ tür detayı',    path: '/turler',  accent: '#22c55e' },
-  { icon: '🧠', label: 'NLP Araçları',      sub: 'Metin analizi',      path: '/nlp',     accent: '#f59e0b' },
-  { icon: '🎨', label: 'Görsel Oluştur',    sub: 'AI ile doğa görseli', path: '/gorsel', accent: '#ec4899' },
+  { icon: '📖', label: 'Tür Ansiklopedisi', sub: '12+ tür detayı',      path: '/turler',    accent: '#22c55e' },
+  { icon: '🧠', label: 'NLP Araçları',      sub: 'Metin analizi',        path: '/nlp',       accent: '#f59e0b' },
+  { icon: '🎨', label: 'Görsel Oluştur',    sub: 'AI ile doğa görseli',  path: '/gorsel',    accent: '#ec4899' },
+  { icon: '🎒', label: 'Ekipman Takibi',    sub: 'Gear yönetimi',        path: '/ekipman',   accent: '#06b6d4' },
+  { icon: '🏆', label: 'Liderboard',        sub: 'Topluluk sıralaması',  path: '/liderboard',accent: '#fbbf24' },
+  { icon: '🔍', label: 'Global Arama',      sub: 'Tüm içerikte ara',     path: '/arama',     accent: '#a855f7' },
 ];
 
 const CATS = [

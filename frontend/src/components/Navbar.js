@@ -2,11 +2,11 @@ import React from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 
 const TABS = [
-  { path: '/',         icon: '🏠', label: 'Ana Sayfa' },
-  { path: '/tani',     icon: '🔍', label: 'AI Tanı' },
-  { path: '/ajanlar',  icon: '🤖', label: 'Ajanlar' },
-  { path: '/harita',   icon: '🗺️', label: 'Harita' },
-  { path: '/profil',   icon: '👤', label: 'Profil' },
+  { path: '/',          icon: '🏠', label: 'Ana Sayfa' },
+  { path: '/arama',     icon: '🔍', label: 'Arama' },
+  { path: '/ajanlar',   icon: '🤖', label: 'Ajanlar' },
+  { path: '/liderboard',icon: '🏆', label: 'Lider' },
+  { path: '/profil',    icon: '👤', label: 'Profil' },
 ];
 
 export default function Navbar() {

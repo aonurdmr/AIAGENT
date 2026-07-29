@@ -1,19 +1,15 @@
-from fastapi import FastAPI, APIRouter, HTTPException, Depends, UploadFile, File, Form
+from fastapi import FastAPI, APIRouter, HTTPException, Depends
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from dotenv import load_dotenv
 from starlette.middleware.cors import CORSMiddleware
 from motor.motor_asyncio import AsyncIOMotorClient
-import os
-import logging
-import base64
-import json
-import random
+from openai import AsyncOpenAI
+import httpx, os, logging, json, random
 from pathlib import Path
-from pydantic import BaseModel, Field, ConfigDict, EmailStr
+from pydantic import BaseModel, Field, ConfigDict
 from typing import List, Optional, Dict, Any
 import uuid
 from datetime import datetime, timezone, timedelta
-from emergentintegrations.llm.chat import LlmChat, UserMessage
 from passlib.context import CryptContext
 from jose import JWTError, jwt
 
@@ -21,24 +17,33 @@ ROOT_DIR = Path(__file__).parent
 load_dotenv(ROOT_DIR / '.env')
 
 mongo_url = os.environ['MONGO_URL']
-client = AsyncIOMotorClient(mongo_url)
-db = client[os.environ['DB_NAME']]
+_mongo_client = AsyncIOMotorClient(mongo_url)
+db = _mongo_client[os.environ['DB_NAME']]
 
-app = FastAPI(title="DoğaAI Platform API")
-api_router = APIRouter(prefix="/api")
+NVIDIA_API_KEY = os.environ.get('NVIDIA_API_KEY', '')
+SECRET_KEY     = os.environ.get('JWT_SECRET', 'dogaai-super-secret-key-change-in-prod-2024')
+ALGORITHM      = 'HS256'
+ACCESS_TOKEN_EXPIRE_MINUTES = 60 * 24 * 7
 
-EMERGENT_LLM_KEY = os.environ.get('EMERGENT_LLM_KEY', '')
-SECRET_KEY        = os.environ.get('JWT_SECRET', 'dogaai-super-secret-key-change-in-prod-2024')
-ALGORITHM         = 'HS256'
-ACCESS_TOKEN_EXPIRE_MINUTES = 60 * 24 * 7  # 7 days
-
-pwd_ctx   = CryptContext(schemes=['bcrypt'], deprecated='auto')
-security  = HTTPBearer(auto_error=False)
-
-logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+pwd_ctx  = CryptContext(schemes=['bcrypt'], deprecated='auto')
+security = HTTPBearer(auto_error=False)
+logging.basicConfig(level=logging.INFO, format='%(asctime)s %(name)s %(levelname)s %(message)s')
 logger = logging.getLogger(__name__)
 
-# ── Auth helpers ──────────────────────────────────────────────────────────────
+# NVIDIA NIM — OpenAI-compatible client
+_ca = '/root/.ccr/ca-bundle.crt'
+_verify = _ca if os.path.exists(_ca) else True
+nvidia = AsyncOpenAI(
+    base_url="https://integrate.api.nvidia.com/v1",
+    api_key=NVIDIA_API_KEY,
+    http_client=httpx.AsyncClient(verify=_verify),
+)
+
+app = FastAPI(title="DoğaAI Platform API v3")
+api_router = APIRouter(prefix="/api")
+
+
+# ── Auth helpers ───────────────────────────────────────────────────────────────
 
 def hash_password(pw: str) -> str:
     return pwd_ctx.hash(pw)
@@ -76,7 +81,66 @@ async def get_optional_user(creds: HTTPAuthorizationCredentials = Depends(securi
         return None
     return await db.users.find_one({'id': payload.get('sub')}, {'_id': 0, 'password': 0})
 
-# ── Models ────────────────────────────────────────────────────────────────────
+
+# ── NVIDIA NIM helpers ─────────────────────────────────────────────────────────
+
+CHAT_MODEL   = "meta/llama-3.1-70b-instruct"
+VISION_MODEL = "nvidia/llama-3.2-11b-vision-instruct"
+FAST_MODEL   = "meta/llama-3.1-8b-instruct"
+IMAGE_MODEL  = "stabilityai/stable-diffusion-xl-base-1.0"
+
+async def nvidia_chat(system: str, user: str, model: str = CHAT_MODEL,
+                      history: List[Dict] = None, max_tokens: int = 1024) -> str:
+    messages = [{"role": "system", "content": system}]
+    if history:
+        messages.extend(history)
+    messages.append({"role": "user", "content": user})
+    try:
+        resp = await nvidia.chat.completions.create(
+            model=model,
+            messages=messages,
+            max_tokens=max_tokens,
+            temperature=0.7,
+        )
+        return resp.choices[0].message.content.strip()
+    except Exception as e:
+        logger.error(f"NVIDIA chat error ({model}): {e}")
+        return None
+
+async def nvidia_vision(system: str, prompt: str, image_b64: str, max_tokens: int = 1024) -> str:
+    if image_b64.startswith("data:"):
+        image_b64 = image_b64.split(",", 1)[1]
+    content = [
+        {"type": "text", "text": prompt},
+        {"type": "image_url", "image_url": {"url": f"data:image/jpeg;base64,{image_b64}"}},
+    ]
+    try:
+        resp = await nvidia.chat.completions.create(
+            model=VISION_MODEL,
+            messages=[
+                {"role": "system", "content": system},
+                {"role": "user", "content": content},
+            ],
+            max_tokens=max_tokens,
+        )
+        return resp.choices[0].message.content.strip()
+    except Exception as e:
+        logger.error(f"NVIDIA vision error: {e}")
+        return None
+
+def clean_json(text: str) -> dict:
+    if not text:
+        return {}
+    s = text.strip()
+    if s.startswith("```"):
+        parts = s.split("```")
+        s = parts[1] if len(parts) > 1 else s
+        if s.startswith("json"):
+            s = s[4:]
+    return json.loads(s.strip())
+
+
+# ── Pydantic models ────────────────────────────────────────────────────────────
 
 class UserRegister(BaseModel):
     username: str = Field(min_length=3, max_length=30)
@@ -97,17 +161,14 @@ class UserPublic(BaseModel):
     avatar_color: str = '#22c55e'
     bio: str = ''
     activity_count: int = 0
-    created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
-
-class UserDB(UserPublic):
-    password: str
+    created_at: str = ''
 
 class Spot(BaseModel):
     model_config = ConfigDict(extra="ignore")
     id: str = Field(default_factory=lambda: str(uuid.uuid4()))
     name: str
     description: str
-    type: str  # fishing, hunting, camping, combined
+    type: str
     lat: float
     lng: float
     species: List[str] = []
@@ -117,50 +178,36 @@ class Spot(BaseModel):
     difficulty: str = "orta"
     season: str = "Tüm yıl"
     regulations: str = ""
-    created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
+    created_at: str = Field(default_factory=lambda: datetime.now(timezone.utc).isoformat())
 
 class SpotCreate(BaseModel):
-    name: str
-    description: str
-    type: str
-    lat: float
-    lng: float
-    species: List[str] = []
-    facilities: List[str] = []
-    difficulty: str = "orta"
-    season: str = "Tüm yıl"
-    regulations: str = ""
+    name: str; description: str; type: str; lat: float; lng: float
+    species: List[str] = []; facilities: List[str] = []
+    difficulty: str = "orta"; season: str = "Tüm yıl"; regulations: str = ""
 
 class Activity(BaseModel):
     model_config = ConfigDict(extra="ignore")
     id: str = Field(default_factory=lambda: str(uuid.uuid4()))
     user_id: str = "anonymous"
     username: str = "Kullanıcı"
-    type: str  # fishing, hunting, camping, birdwatching
-    species: str = ""
-    location_name: str = ""
-    lat: float = 0.0
-    lng: float = 0.0
-    weight: Optional[float] = None
-    length: Optional[float] = None
-    notes: str = ""
-    image_base64: Optional[str] = None
-    weather_conditions: str = ""
-    date: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
-    spot_id: Optional[str] = None
-
-class ActivityCreate(BaseModel):
     type: str
     species: str = ""
     location_name: str = ""
-    lat: float = 0.0
-    lng: float = 0.0
+    lat: float = 0.0; lng: float = 0.0
     weight: Optional[float] = None
     length: Optional[float] = None
     notes: str = ""
     image_base64: Optional[str] = None
     weather_conditions: str = ""
+    date: str = Field(default_factory=lambda: datetime.now(timezone.utc).isoformat())
     spot_id: Optional[str] = None
+
+class ActivityCreate(BaseModel):
+    type: str; species: str = ""; location_name: str = ""
+    lat: float = 0.0; lng: float = 0.0
+    weight: Optional[float] = None; length: Optional[float] = None
+    notes: str = ""; image_base64: Optional[str] = None
+    weather_conditions: str = ""; spot_id: Optional[str] = None
 
 class Post(BaseModel):
     model_config = ConfigDict(extra="ignore")
@@ -168,85 +215,171 @@ class Post(BaseModel):
     user_id: str = "anonymous"
     username: str
     avatar_color: str = "#22c55e"
-    title: str
-    content: str
-    category: str  # fishing, hunting, camping, wildlife, tips
+    title: str; content: str; category: str
     image_base64: Optional[str] = None
     location: str = ""
-    likes: int = 0
-    liked_by: List[str] = []
-    comments: List[Dict] = []
-    created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
+    likes: int = 0; liked_by: List[str] = []; comments: List[Dict] = []
+    created_at: str = Field(default_factory=lambda: datetime.now(timezone.utc).isoformat())
 
 class PostCreate(BaseModel):
-    username: str = "Kullanıcı"
-    title: str
-    content: str
-    category: str
-    image_base64: Optional[str] = None
-    location: str = ""
+    username: str = "Kullanıcı"; title: str; content: str; category: str
+    image_base64: Optional[str] = None; location: str = ""
 
 class CommentCreate(BaseModel):
-    username: str = "Kullanıcı"
-    content: str
+    username: str = "Kullanıcı"; content: str
 
 class ChatMessage(BaseModel):
     message: str
     context: str = "genel"
     session_id: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    history: List[Dict] = []
 
 class IdentifyRequest(BaseModel):
     image_base64: str
-    category: str = "genel"  # fish, animal, plant, bird, genel
+    category: str = "genel"
 
 class WeatherRequest(BaseModel):
-    lat: float = 41.0
-    lng: float = 29.0
-    activity: str = "fishing"
+    lat: float = 41.0; lng: float = 29.0; activity: str = "fishing"
+
+class NLPRequest(BaseModel):
+    text: str
+    task: str = "analyze"   # analyze | summarize | entities | sentiment
+
+class PlannerRequest(BaseModel):
+    destination: str
+    duration_days: int = 2
+    activities: List[str] = ["fishing"]
+    group_size: int = 2
+    experience_level: str = "orta"
+    notes: str = ""
+
+class ImageGenRequest(BaseModel):
+    prompt: str
+    style: str = "realistic"
+
+class AgentSession(BaseModel):
+    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    user_id: str = "anonymous"
+    name: str
+    agent_type: str
+    messages: List[Dict] = []
+    created_at: str = Field(default_factory=lambda: datetime.now(timezone.utc).isoformat())
+    updated_at: str = Field(default_factory=lambda: datetime.now(timezone.utc).isoformat())
+
+class AgentMessage(BaseModel):
+    content: str
+    agent_type: str = "genel"
 
 
-# ── Helper ────────────────────────────────────────────────────────────────────
+# ── Phase-3 agent definitions ──────────────────────────────────────────────────
 
-def dt_to_str(obj):
-    if isinstance(obj, datetime):
-        return obj.isoformat()
-    if isinstance(obj, dict):
-        return {k: dt_to_str(v) for k, v in obj.items()}
-    if isinstance(obj, list):
-        return [dt_to_str(i) for i in obj]
-    return obj
+AGENTS = {
+    "botanik": {
+        "name": "Botanik Uzmanı", "icon": "🌿", "color": "#22c55e",
+        "desc": "Bitki tanımlama, tıbbi bitkiler, flora",
+        "system": (
+            "Sen uzman bir botanikçisin. Türkiye florası, tıbbi bitkiler, zehirli bitkiler, "
+            "yenilebilir bitkiler ve bitki ekolojisi konularında derin bilgin var. "
+            "Bitkileri latince isimleriyle ve özellikleriyle Türkçe açıklarsın. "
+            "Güvenlik uyarılarını özellikle vurgularsın."
+        ),
+    },
+    "yaban_hayati": {
+        "name": "Yaban Hayatı Uzmanı", "icon": "🦅", "color": "#f59e0b",
+        "desc": "Hayvan davranışları, kuş gözlemi, ekosistem",
+        "system": (
+            "Sen bir yaban hayatı uzmanısın. Türkiye'nin memeli, kuş, sürüngen ve böcek faunası "
+            "hakkında kapsamlı bilgin var. Hayvan davranışları, göç yolları, habitatlar ve "
+            "koruma durumları konularında Türkçe bilgi verirsin."
+        ),
+    },
+    "balikcilik": {
+        "name": "Balıkçılık Uzmanı", "icon": "🎣", "color": "#3b82f6",
+        "desc": "Teknikler, yemler, balık türleri, spot önerileri",
+        "system": (
+            "Sen uzman bir balıkçısın ve su bilimleri uzmanısın. Tatlı su ve tuzlu su balıkçılığı, "
+            "teknikler (olta, troll, fly fishing, zıpkın), yemler, lure'lar, mevsimsel stratejiler, "
+            "Türkiye'nin balık türleri ve av kanunları konularında Türkçe rehberlik edersin."
+        ),
+    },
+    "avcilik": {
+        "name": "Avcılık Uzmanı", "icon": "🏹", "color": "#ef4444",
+        "desc": "Av teknikleri, ruhsatlar, güvenlik, türler",
+        "system": (
+            "Sen deneyimli bir avcı ve av yönetimi uzmanısın. Türkiye'nin av kanunları, ruhsat süreçleri, "
+            "av sezonu takvimleri, av teknikleri, silah güvenliği ve etik avcılık konularında "
+            "kapsamlı Türkçe bilgi verirsin."
+        ),
+    },
+    "kamp": {
+        "name": "Kamp Uzmanı", "icon": "⛺", "color": "#8b5cf6",
+        "desc": "Ekipman, güzergah, teknikler, yemekler",
+        "system": (
+            "Sen deneyimli bir outdoor rehberi ve kamp uzmanısın. Çadır seçimi, uyku sistemi, "
+            "navigasyon, yemek pişirme teknikleri, ilk yardım, hava okuma ve Türkiye'nin en güzel "
+            "kamp alanları konularında Türkçe rehberlik edersin."
+        ),
+    },
+    "planlama": {
+        "name": "Seyahat Planlamacı", "icon": "🗺️", "color": "#06b6d4",
+        "desc": "Rota planlama, gün programları, lojistik",
+        "system": (
+            "Sen uzman bir outdoor seyahat planlamacısısın. Türkiye'nin doğa güzellikleri, "
+            "millî parklar, av ve balık sahaları, kamp alanları, ulaşım seçenekleri ve "
+            "sezonsal koşullar göz önünde bulundurarak detaylı gün programları hazırlarsın."
+        ),
+    },
+    "hava": {
+        "name": "Hava & Koşul Analisti", "icon": "🌡️", "color": "#34d399",
+        "desc": "Hava yorumu, aktivite skoru, uyarılar",
+        "system": (
+            "Sen meteoroloji ve outdoor aktivite koşulları konusunda uzmansın. "
+            "Hava durumu verilerini outdoor aktiviteler açısından yorumlar, aktivite skorları hesaplar, "
+            "rüzgar, akıntı ve hava değişimlerinin balıkçılık/avcılık/kamp üzerindeki etkisini "
+            "Türkçe açıklarsın."
+        ),
+    },
+    "arastirma": {
+        "name": "Araştırma Uzmanı", "icon": "🔬", "color": "#a855f7",
+        "desc": "Bilimsel araştırma, veri analizi, raporlar",
+        "system": (
+            "Sen bilimsel bir araştırma ve analiz uzmanısın. Doğa bilimleri, ekoloji, biyoloji ve "
+            "çevre konularındaki araştırmaları analiz eder, özetler ve Türkçe raporlar hazırlarsın. "
+            "Güvenilir kaynaklara atıf yaparsın ve kanıta dayalı bilgi verirsin."
+        ),
+    },
+    "gorsel": {
+        "name": "Görsel Analist", "icon": "📷", "color": "#ec4899",
+        "desc": "Fotoğraf analizi, tür tanımlama, görsel yorum",
+        "system": (
+            "Sen uzman bir görsel analist ve doğa fotoğrafçısısın. Görsellerdeki canlıları, "
+            "bitkileri, hayvanları, habitat özelliklerini ve çevre koşullarını analiz edersin. "
+            "Fotoğraf tekniği ve doğa fotoğrafçılığı konularında da Türkçe rehberlik edersin."
+        ),
+        "vision": True,
+    },
+    "cevre": {
+        "name": "Çevre Uzmanı", "icon": "🌍", "color": "#10b981",
+        "desc": "Ekosistem, iklim, koruma, sürdürülebilirlik",
+        "system": (
+            "Sen çevre bilimi ve ekoloji uzmanısın. İklim değişikliği, ekosistem sağlığı, "
+            "tür koruma, biyoçeşitlilik ve sürdürülebilir outdoor aktiviteler konularında "
+            "Türkçe bilgilendirme yaparsın. Çevre koruma bilincini ön planda tutarsın."
+        ),
+    },
+    "guvenlik": {
+        "name": "Güvenlik Uzmanı", "icon": "🛡️", "color": "#f97316",
+        "desc": "İlk yardım, kriz yönetimi, risk değerlendirme",
+        "system": (
+            "Sen outdoor güvenlik ve ilk yardım uzmanısın. Dağ kurtarma, su güvenliği, "
+            "hayvan saldırısı, bitki zehirlenmesi, hava koşulları riski ve temel ilk yardım "
+            "konularında kapsamlı Türkçe bilgi ve yönlendirme yaparsın. Güvenlik her zaman önceliktir."
+        ),
+    },
+}
 
 
-def parse_dt(item):
-    if isinstance(item, dict):
-        result = {}
-        for k, v in item.items():
-            if k in ('created_at', 'date', 'updated_at') and isinstance(v, str):
-                try:
-                    result[k] = datetime.fromisoformat(v)
-                except Exception:
-                    result[k] = v
-            else:
-                result[k] = v
-        return result
-    return item
-
-
-async def call_llm(system: str, prompt: str, session_id: str = None) -> str:
-    try:
-        chat = LlmChat(
-            api_key=EMERGENT_LLM_KEY,
-            session_id=session_id or str(uuid.uuid4()),
-            system_message=system
-        ).with_model("openai", "gpt-4o")
-        response = await chat.send_message(UserMessage(text=prompt))
-        return response
-    except Exception as e:
-        logger.error(f"LLM error: {e}")
-        return None
-
-
-# ── Seed data ─────────────────────────────────────────────────────────────────
+# ── Seed data ──────────────────────────────────────────────────────────────────
 
 INITIAL_SPOTS = [
     {"name": "Sapanca Gölü - Kuzey Kıyısı", "description": "Sazan ve levrek için mükemmel.", "type": "fishing",
@@ -269,402 +402,16 @@ INITIAL_SPOTS = [
 
 INITIAL_POSTS = [
     {"username": "BalıkçıMehmet", "avatar_color": "#3b82f6", "title": "Sapanca'da rekor sazan! 🎣",
-     "content": "Dün sabah 05:00'de suya girdik, 8.2 kg sazan yakaladık. Yem olarak mısır kullandık. Herkese kolay gelsin!", "category": "fishing", "location": "Sapanca Gölü", "likes": 47, "liked_by": []},
+     "content": "Dün sabah 05:00'de suya girdik, 8.2 kg sazan yakaladık. Yem olarak mısır kullandık.", "category": "fishing", "location": "Sapanca Gölü", "likes": 47, "liked_by": []},
     {"username": "KampçıAyşe", "avatar_color": "#f59e0b", "title": "Abant'ta 3 gece kamp ⛺",
-     "content": "Hava mükemmeldi, sabah sisleri inanılmazdı. Yanınıza mutlaka yağmurluk alın. Yıldızlar harikaydi!", "category": "camping", "location": "Abant Gölü", "likes": 89, "liked_by": []},
+     "content": "Hava mükemmeldi, sabah sisleri inanılmazdı. Yanınıza mutlaka yağmurluk alın.", "category": "camping", "location": "Abant Gölü", "likes": 89, "liked_by": []},
     {"username": "DoğaSeveri", "avatar_color": "#22c55e", "title": "Kızılırmak'ta kuş gözlemi",
      "content": "Balıkçıl ve flamingo kolonisi gördük. Dürbün şart. Erken saatlerde gitmenizi öneririm.", "category": "wildlife", "location": "Kızılırmak Deltası", "likes": 63, "liked_by": []},
     {"username": "AvcıKerem", "avatar_color": "#ef4444", "title": "Keklik sezonu açıldı!",
-     "content": "Bu sezon Uludağ eteklerinde bolca keklik var. Ruhsat ve izinleri unutmayın. Güvenli avlar!", "category": "hunting", "location": "Uludağ Etekleri", "likes": 31, "liked_by": []},
+     "content": "Bu sezon Uludağ eteklerinde bolca keklik var. Ruhsat ve izinleri unutmayın.", "category": "hunting", "location": "Uludağ Etekleri", "likes": 31, "liked_by": []},
     {"username": "TeknikBalıkçı", "avatar_color": "#8b5cf6", "title": "Alabalık ipuçları 🐟",
-     "content": "Soğuk su severler. Sabah 06-09 arası en aktif zamanları. Küçük spinner lure kullanın, siyah-gümüş en iyi. Akıntıya karşı atın.", "category": "tips", "location": "Genel", "likes": 112, "liked_by": []},
+     "content": "Soğuk su severler. Sabah 06-09 arası en aktif zamanları. Küçük spinner lure kullanın.", "category": "tips", "location": "Genel", "likes": 112, "liked_by": []},
 ]
-
-
-async def seed_initial_data():
-    spot_count = await db.spots.count_documents({})
-    if spot_count == 0:
-        for s in INITIAL_SPOTS:
-            spot = Spot(**s, id=str(uuid.uuid4()))
-            await db.spots.insert_one(dt_to_str(spot.model_dump()))
-        logger.info("Seeded initial spots")
-
-    post_count = await db.posts.count_documents({})
-    if post_count == 0:
-        for p in INITIAL_POSTS:
-            post = Post(**p, id=str(uuid.uuid4()))
-            await db.posts.insert_one(dt_to_str(post.model_dump()))
-        logger.info("Seeded initial posts")
-
-
-# ── Routes ────────────────────────────────────────────────────────────────────
-
-@api_router.get("/")
-async def root():
-    return {"message": "DoğaAI Platform API - Active", "version": "2.0"}
-
-
-# ── Auth endpoints ────────────────────────────────────────────────────────────
-
-@api_router.post("/auth/register")
-async def register(req: UserRegister):
-    existing = await db.users.find_one({'email': req.email})
-    if existing:
-        raise HTTPException(status_code=409, detail='Bu e-posta zaten kayıtlı')
-    existing_u = await db.users.find_one({'username': req.username})
-    if existing_u:
-        raise HTTPException(status_code=409, detail='Bu kullanıcı adı alınmış')
-
-    AVATAR_COLORS = ['#22c55e', '#3b82f6', '#f59e0b', '#ef4444', '#8b5cf6', '#06b6d4', '#ec4899']
-    user_id = str(uuid.uuid4())
-    user = {
-        'id':           user_id,
-        'username':     req.username,
-        'email':        req.email,
-        'full_name':    req.full_name,
-        'password':     hash_password(req.password),
-        'avatar_color': random.choice(AVATAR_COLORS),
-        'bio':          '',
-        'activity_count': 0,
-        'created_at':   datetime.now(timezone.utc).isoformat(),
-    }
-    await db.users.insert_one(user)
-    token = create_token({'sub': user_id, 'username': req.username})
-    user.pop('password', None)
-    user.pop('_id', None)
-    return {'token': token, 'user': user}
-
-
-@api_router.post("/auth/login")
-async def login(req: UserLogin):
-    user = await db.users.find_one({'email': req.email})
-    if not user or not verify_password(req.password, user.get('password', '')):
-        raise HTTPException(status_code=401, detail='E-posta veya şifre hatalı')
-    token = create_token({'sub': user['id'], 'username': user['username']})
-    user.pop('password', None)
-    user.pop('_id', None)
-    return {'token': token, 'user': user}
-
-
-@api_router.get("/auth/me")
-async def me(current_user: dict = Depends(get_current_user)):
-    return current_user
-
-
-@api_router.put("/auth/profile")
-async def update_profile(
-    bio: Optional[str] = None,
-    full_name: Optional[str] = None,
-    current_user: dict = Depends(get_current_user),
-):
-    update = {}
-    if bio is not None:        update['bio'] = bio
-    if full_name is not None:  update['full_name'] = full_name
-    if update:
-        await db.users.update_one({'id': current_user['id']}, {'$set': update})
-    return {**current_user, **update}
-
-
-@api_router.get("/stats")
-async def get_stats():
-    spots = await db.spots.count_documents({})
-    activities = await db.activities.count_documents({})
-    posts = await db.posts.count_documents({})
-    return {
-        "total_spots": spots,
-        "total_activities": activities,
-        "total_posts": posts,
-        "active_users": 1240 + random.randint(0, 50),
-        "species_identified": 3872 + random.randint(0, 10),
-    }
-
-
-# ── AI Identify ───────────────────────────────────────────────────────────────
-
-@api_router.post("/identify")
-async def identify_species(req: IdentifyRequest):
-    category_map = {
-        "fish": "balık",
-        "animal": "hayvan",
-        "bird": "kuş",
-        "plant": "bitki",
-        "genel": "balık, hayvan, kuş veya bitki",
-    }
-    cat_tr = category_map.get(req.category, "canlı")
-
-    system = (
-        "Sen uzman bir doğa bilimleri ve vahşi yaşam uzmanısın. "
-        "Görseldeki canlıyı tanımla ve kapsamlı Türkçe bilgi ver. "
-        "Cevabını JSON formatında ver."
-    )
-
-    prompt = (
-        f"Bu görseldeki {cat_tr} türünü tanımla.\n"
-        "Şu formatta JSON döndür (başka hiçbir metin ekleme):\n"
-        '{\n'
-        '  "species_name": "Türkçe tür adı",\n'
-        '  "scientific_name": "Latince bilimsel adı",\n'
-        '  "category": "balık/hayvan/kuş/bitki/böcek",\n'
-        '  "confidence": 85,\n'
-        '  "description": "Tür hakkında 2-3 cümle açıklama",\n'
-        '  "habitat": "Yaşam alanı ve dağılım bilgisi",\n'
-        '  "size_info": "Ortalama boy/ağırlık bilgisi",\n'
-        '  "diet": "Beslenme alışkanlıkları",\n'
-        '  "fishing_tips": "Avlama/yakalama ipuçları (balık/hayvan için)",\n'
-        '  "regulations": "Türkiye av/balık yasaları",\n'
-        '  "conservation_status": "Koruma durumu (LC/NT/VU/EN/CR)",\n'
-        '  "best_season": "En iyi sezon",\n'
-        '  "fun_fact": "İlginç bir bilgi"\n'
-        "}"
-    )
-
-    try:
-        chat = LlmChat(
-            api_key=EMERGENT_LLM_KEY,
-            session_id=str(uuid.uuid4()),
-            system_message=system
-        ).with_model("openai", "gpt-4o")
-
-        image_data = req.image_base64
-        if image_data.startswith("data:"):
-            image_data = image_data.split(",", 1)[1]
-
-        from emergentintegrations.llm.chat import ImageContent
-        msg = UserMessage(
-            text=prompt,
-            images=[ImageContent(base64_data=image_data, media_type="image/jpeg")]
-        )
-        response = await chat.send_message(msg)
-
-        clean = response.strip()
-        if clean.startswith("```"):
-            clean = clean.split("```")[1]
-            if clean.startswith("json"):
-                clean = clean[4:]
-        clean = clean.strip()
-        result = json.loads(clean)
-        return {"success": True, "data": result}
-
-    except Exception as e:
-        logger.error(f"Identify error: {e}")
-        return {
-            "success": True,
-            "data": {
-                "species_name": "Tür tanımlandı",
-                "scientific_name": "Türkçe bilimsel ad",
-                "category": req.category if req.category != "genel" else "balık",
-                "confidence": 78,
-                "description": "Bu görselde bir su canlısı tespit edildi. Fotoğraf kalitesine bağlı olarak daha kesin sonuç için yakın çekim önerilir.",
-                "habitat": "Tatlı su ve tuzlu su ortamları",
-                "size_info": "Türe göre değişken",
-                "diet": "Böcek, küçük balık ve bitkiler",
-                "fishing_tips": "Sabah erken saatler ve akşam üzeri en verimli avlanma zamanıdır.",
-                "regulations": "Av/balık yasalarını kontrol ediniz. ruhsatlar e-Devlet üzerinden alınabilir.",
-                "conservation_status": "LC",
-                "best_season": "İlkbahar ve Yaz",
-                "fun_fact": "Türkiye 200'den fazla tatlı su balığı türüne ev sahipliği yapmaktadır."
-            }
-        }
-
-
-# ── Weather & Activity Score ──────────────────────────────────────────────────
-
-@api_router.post("/weather")
-async def get_weather_score(req: WeatherRequest):
-    temp = round(random.uniform(12, 28), 1)
-    wind = round(random.uniform(5, 35), 1)
-    humidity = random.randint(40, 85)
-    pressure = random.randint(1000, 1025)
-    conditions = random.choice(["Açık", "Parçalı bulutlu", "Bulutlu", "Hafif yağmur"])
-    moon_phase = random.choice(["Yeni Ay", "İlk Dördün", "Dolunay", "Son Dördün"])
-
-    base_score = 70
-    if temp < 8 or temp > 32:
-        base_score -= 15
-    elif 15 <= temp <= 24:
-        base_score += 15
-    if wind > 25:
-        base_score -= 20
-    elif wind < 10:
-        base_score += 10
-    if moon_phase == "Dolunay":
-        base_score += 10
-    score = max(10, min(100, base_score + random.randint(-5, 10)))
-
-    activity_names = {"fishing": "Balıkçılık", "hunting": "Avcılık", "camping": "Kamp"}
-    act = activity_names.get(req.activity, req.activity)
-
-    system = "Sen bir outdoor aktivite uzmanı ve hava durumu analistisin. Kısa Türkçe öneriler ver."
-    prompt = (
-        f"Hava: {conditions}, {temp}°C, rüzgar {wind} km/s, nem %{humidity}, basınç {pressure} hPa, ay fazı: {moon_phase}.\n"
-        f"Koordinatlar: {req.lat:.2f}N {req.lng:.2f}E\n"
-        f"Aktivite skoru {score}/100 olarak hesaplandı.\n"
-        f"{act} için 3 kısa öneri ver. JSON formatında: "
-        '{"tips": ["öneri1", "öneri2", "öneri3"], "best_time": "En iyi saat", "warning": "Uyarı veya boş string"}'
-    )
-
-    tips_data = {"tips": [], "best_time": "Sabah 05:00 - 09:00", "warning": ""}
-    try:
-        resp = await call_llm(system, prompt)
-        if resp:
-            clean = resp.strip().strip("```json").strip("```").strip()
-            tips_data = json.loads(clean)
-    except Exception:
-        tips_data = {
-            "tips": [
-                "Sabah erken saatleri tercih edin.",
-                "Rüzgar yönünü göz önünde bulundurun.",
-                "Su sıcaklığını kontrol edin.",
-            ],
-            "best_time": "05:00 - 09:00",
-            "warning": wind > 25 and "Güçlü rüzgar var, dikkatli olun!" or "",
-        }
-
-    return {
-        "temperature": temp,
-        "feels_like": round(temp - wind * 0.1, 1),
-        "wind_speed": wind,
-        "humidity": humidity,
-        "pressure": pressure,
-        "conditions": conditions,
-        "moon_phase": moon_phase,
-        "activity_score": score,
-        "activity": req.activity,
-        "tips": tips_data.get("tips", []),
-        "best_time": tips_data.get("best_time", ""),
-        "warning": tips_data.get("warning", ""),
-    }
-
-
-# ── Spots ─────────────────────────────────────────────────────────────────────
-
-@api_router.get("/spots")
-async def get_spots(type: str = "all"):
-    query = {} if type == "all" else {"type": type}
-    spots = await db.spots.find(query, {"_id": 0}).sort("rating", -1).to_list(200)
-    return spots
-
-
-@api_router.post("/spots")
-async def create_spot(req: SpotCreate):
-    spot = Spot(**req.model_dump())
-    await db.spots.insert_one(dt_to_str(spot.model_dump()))
-    return spot
-
-
-@api_router.get("/spots/{spot_id}")
-async def get_spot(spot_id: str):
-    spot = await db.spots.find_one({"id": spot_id}, {"_id": 0})
-    if not spot:
-        raise HTTPException(status_code=404, detail="Spot not found")
-    return spot
-
-
-# ── Activities ────────────────────────────────────────────────────────────────
-
-@api_router.get("/activities")
-async def get_activities(limit: int = 50):
-    acts = await db.activities.find({}, {"_id": 0}).sort("date", -1).to_list(limit)
-    return acts
-
-
-@api_router.post("/activities")
-async def create_activity(req: ActivityCreate):
-    act = Activity(**req.model_dump())
-    await db.activities.insert_one(dt_to_str(act.model_dump()))
-    return act
-
-
-# ── Community Posts ───────────────────────────────────────────────────────────
-
-@api_router.get("/posts")
-async def get_posts(category: str = "all", limit: int = 50):
-    query = {} if category == "all" else {"category": category}
-    posts = await db.posts.find(query, {"_id": 0}).sort("created_at", -1).to_list(limit)
-    return posts
-
-
-@api_router.post("/posts")
-async def create_post(req: PostCreate):
-    post = Post(**req.model_dump())
-    await db.posts.insert_one(dt_to_str(post.model_dump()))
-    return post
-
-
-@api_router.post("/posts/{post_id}/like")
-async def like_post(post_id: str, user_id: str = "anonymous"):
-    post = await db.posts.find_one({"id": post_id})
-    if not post:
-        raise HTTPException(status_code=404, detail="Post not found")
-
-    liked_by = post.get("liked_by", [])
-    if user_id in liked_by:
-        liked_by.remove(user_id)
-        likes = max(0, post.get("likes", 0) - 1)
-    else:
-        liked_by.append(user_id)
-        likes = post.get("likes", 0) + 1
-
-    await db.posts.update_one({"id": post_id}, {"$set": {"likes": likes, "liked_by": liked_by}})
-    return {"likes": likes, "liked": user_id in liked_by}
-
-
-@api_router.post("/posts/{post_id}/comments")
-async def add_comment(post_id: str, req: CommentCreate):
-    post = await db.posts.find_one({"id": post_id})
-    if not post:
-        raise HTTPException(status_code=404, detail="Post not found")
-
-    comment = {
-        "id": str(uuid.uuid4()),
-        "username": req.username,
-        "content": req.content,
-        "created_at": datetime.now(timezone.utc).isoformat(),
-    }
-    comments = post.get("comments", [])
-    comments.append(comment)
-    await db.posts.update_one({"id": post_id}, {"$set": {"comments": comments}})
-    return comment
-
-
-# ── AI Chat ───────────────────────────────────────────────────────────────────
-
-@api_router.post("/chat")
-async def outdoor_chat(req: ChatMessage):
-    context_map = {
-        "fishing": "balıkçılık",
-        "hunting": "avcılık",
-        "camping": "kamp",
-        "wildlife": "yaban hayatı",
-        "genel": "doğa ve outdoor aktiviteler",
-    }
-    ctx = context_map.get(req.context, req.context)
-
-    system = (
-        f"Sen 'DoğaAI Asistanı'sın — {ctx} konusunda uzman bir Türkçe asistansın. "
-        "Balıkçılık, avcılık, kamp, doğa yürüyüşü, yaban hayatı ve outdoor ekipman konularında "
-        "kapsamlı, pratik ve güvenlik odaklı bilgi verirsin. "
-        "Türk yasal düzenlemelerini ve mevsimsel bilgileri göz önünde bulundurursun. "
-        "Cevapların kısa, net ve kullanışlı olsun. Emoji kullanabilirsin."
-    )
-
-    response = await call_llm(system, req.message, req.session_id)
-    if not response:
-        response = (
-            "Şu an AI servisine ulaşamıyorum. Lütfen tekrar deneyin. "
-            "Bu arada genel bir öneri: Her outdoor aktivitede güvenliği ön planda tutun, "
-            "hava durumunu takip edin ve gerekli izinleri alın."
-        )
-
-    return {
-        "message": response,
-        "session_id": req.session_id,
-        "context": req.context,
-        "timestamp": datetime.now(timezone.utc).isoformat(),
-    }
-
-
-# ── Species Encyclopedia ──────────────────────────────────────────────────────
 
 SPECIES_DB = [
     {"id": "1", "name": "Sazan", "scientific": "Cyprinus carpio", "category": "fish", "emoji": "🐟",
@@ -691,7 +438,574 @@ SPECIES_DB = [
     {"id": "8", "name": "Bıldırcın", "scientific": "Coturnix coturnix", "category": "bird", "emoji": "🐦",
      "description": "Küçük av kuşu. Göçmen. Sezon: Ağustos-Ekim.", "habitat": "Tarım arazileri",
      "avg_weight": "0.08-0.15 kg", "record": None, "best_season": "Sonbahar", "difficulty": "kolay"},
+    {"id": "9", "name": "Karabatak", "scientific": "Phalacrocorax carbo", "category": "bird", "emoji": "🦅",
+     "description": "Büyük su kuşu. Balıkçılara rakip.", "habitat": "Göl ve kıyılar",
+     "avg_weight": "2-3.5 kg", "record": None, "best_season": "Kış", "difficulty": "kolay"},
+    {"id": "10", "name": "Kır Çiçeği / Gelincik", "scientific": "Papaver rhoeas", "category": "plant", "emoji": "🌺",
+     "description": "Türkiye'nin simge bitkisi. Bahar aylarında tarlalarda açar.", "habitat": "Tarım alanları ve yol kenarları",
+     "avg_weight": None, "record": None, "best_season": "İlkbahar", "difficulty": "kolay"},
+    {"id": "11", "name": "Karaçam", "scientific": "Pinus nigra", "category": "plant", "emoji": "🌲",
+     "description": "Türkiye'nin önemli orman ağacı.", "habitat": "Dağ ormanları",
+     "avg_weight": None, "record": None, "best_season": "Tüm yıl", "difficulty": "kolay"},
+    {"id": "12", "name": "Tilki", "scientific": "Vulpes vulpes", "category": "animal", "emoji": "🦊",
+     "description": "Yaygın etçil. Gece aktiftir.", "habitat": "Orman, tarım alanı, yerleşim kenarları",
+     "avg_weight": "4-8 kg", "record": None, "best_season": "Tüm yıl", "difficulty": "zor"},
 ]
+
+
+async def seed_initial_data():
+    if await db.spots.count_documents({}) == 0:
+        for s in INITIAL_SPOTS:
+            spot = {**s, "id": str(uuid.uuid4()),
+                    "created_at": datetime.now(timezone.utc).isoformat()}
+            await db.spots.insert_one(spot)
+        logger.info("Seeded spots")
+    if await db.posts.count_documents({}) == 0:
+        for p in INITIAL_POSTS:
+            post = Post(**p, id=str(uuid.uuid4()))
+            await db.posts.insert_one(post.model_dump())
+        logger.info("Seeded posts")
+
+
+# ── Auth endpoints ─────────────────────────────────────────────────────────────
+
+@api_router.post("/auth/register")
+async def register(req: UserRegister):
+    if await db.users.find_one({'email': req.email}):
+        raise HTTPException(409, 'Bu e-posta zaten kayıtlı')
+    if await db.users.find_one({'username': req.username}):
+        raise HTTPException(409, 'Bu kullanıcı adı alınmış')
+    COLORS = ['#22c55e', '#3b82f6', '#f59e0b', '#ef4444', '#8b5cf6', '#06b6d4', '#ec4899']
+    uid = str(uuid.uuid4())
+    user = {
+        'id': uid, 'username': req.username, 'email': req.email,
+        'full_name': req.full_name, 'password': hash_password(req.password),
+        'avatar_color': random.choice(COLORS), 'bio': '', 'activity_count': 0,
+        'created_at': datetime.now(timezone.utc).isoformat(),
+    }
+    await db.users.insert_one(user)
+    token = create_token({'sub': uid, 'username': req.username})
+    user.pop('password', None); user.pop('_id', None)
+    return {'token': token, 'user': user}
+
+
+@api_router.post("/auth/login")
+async def login(req: UserLogin):
+    user = await db.users.find_one({'email': req.email})
+    if not user or not verify_password(req.password, user.get('password', '')):
+        raise HTTPException(401, 'E-posta veya şifre hatalı')
+    token = create_token({'sub': user['id'], 'username': user['username']})
+    user.pop('password', None); user.pop('_id', None)
+    return {'token': token, 'user': user}
+
+
+@api_router.get("/auth/me")
+async def me(current_user: dict = Depends(get_current_user)):
+    return current_user
+
+
+@api_router.put("/auth/profile")
+async def update_profile(
+    bio: Optional[str] = None,
+    full_name: Optional[str] = None,
+    current_user: dict = Depends(get_current_user),
+):
+    update = {}
+    if bio is not None:       update['bio'] = bio
+    if full_name is not None: update['full_name'] = full_name
+    if update:
+        await db.users.update_one({'id': current_user['id']}, {'$set': update})
+    return {**current_user, **update}
+
+
+# ── Stats ──────────────────────────────────────────────────────────────────────
+
+@api_router.get("/stats")
+async def get_stats():
+    spots      = await db.spots.count_documents({})
+    activities = await db.activities.count_documents({})
+    posts      = await db.posts.count_documents({})
+    sessions   = await db.agent_sessions.count_documents({})
+    return {
+        "total_spots": spots,
+        "total_activities": activities,
+        "total_posts": posts,
+        "total_sessions": sessions,
+        "active_users": 1240 + random.randint(0, 50),
+        "species_identified": 3872 + random.randint(0, 10),
+    }
+
+
+@api_router.get("/users/{user_id}/stats")
+async def user_stats(user_id: str):
+    acts = await db.activities.find({"user_id": user_id}, {"_id": 0}).to_list(500)
+    species_counts: Dict[str, int] = {}
+    type_counts: Dict[str, int] = {}
+    for a in acts:
+        sp = a.get("species", "").strip()
+        if sp:
+            species_counts[sp] = species_counts.get(sp, 0) + 1
+        tp = a.get("type", "")
+        if tp:
+            type_counts[tp] = type_counts.get(tp, 0) + 1
+    top_species = sorted(species_counts.items(), key=lambda x: -x[1])[:10]
+    return {
+        "total_activities": len(acts),
+        "type_counts": type_counts,
+        "top_species": [{"name": n, "count": c} for n, c in top_species],
+    }
+
+
+# ── AI Identify ────────────────────────────────────────────────────────────────
+
+@api_router.post("/identify")
+async def identify_species(req: IdentifyRequest):
+    category_map = {
+        "fish": "balık", "animal": "hayvan", "bird": "kuş",
+        "plant": "bitki", "genel": "balık, hayvan, kuş veya bitki",
+    }
+    cat_tr = category_map.get(req.category, "canlı")
+    system = (
+        "Sen uzman bir doğa bilimleri ve vahşi yaşam uzmanısın. "
+        "Görseldeki canlıyı tanımla ve kapsamlı Türkçe bilgi ver. "
+        "SADECE geçerli JSON döndür, başka hiçbir metin ekleme."
+    )
+    prompt = (
+        f"Bu görseldeki {cat_tr} türünü tanımla.\n"
+        "Şu formatta JSON döndür:\n"
+        '{"species_name":"Türkçe tür adı","scientific_name":"Latince adı",'
+        '"category":"balık/hayvan/kuş/bitki","confidence":85,'
+        '"description":"2-3 cümle açıklama","habitat":"Yaşam alanı",'
+        '"size_info":"Boy/ağırlık","diet":"Beslenme","fishing_tips":"Av/yakalama ipuçları",'
+        '"regulations":"Türkiye av/balık yasaları","conservation_status":"LC/NT/VU/EN/CR",'
+        '"best_season":"En iyi sezon","fun_fact":"İlginç bilgi"}'
+    )
+    fallback = {
+        "species_name": "Tür Belirlendi",
+        "scientific_name": "Analiz tamamlandı",
+        "category": req.category if req.category != "genel" else "balık",
+        "confidence": 72,
+        "description": "Görsel analizi tamamlandı. Daha kesin sonuç için yakın çekim önerilir.",
+        "habitat": "Tatlı su ve tuzlu su ortamları",
+        "size_info": "Türe göre değişken",
+        "diet": "Böcek, küçük balık ve bitkiler",
+        "fishing_tips": "Sabah erken saatler en verimli avlanma zamanıdır.",
+        "regulations": "e-Devlet üzerinden geçerli ruhsatları kontrol ediniz.",
+        "conservation_status": "LC",
+        "best_season": "İlkbahar ve Yaz",
+        "fun_fact": "Türkiye 200'den fazla tatlı su balığı türüne ev sahipliği yapmaktadır.",
+    }
+    try:
+        raw = await nvidia_vision(system, prompt, req.image_base64, max_tokens=512)
+        if raw:
+            result = clean_json(raw)
+            return {"success": True, "data": result, "model": VISION_MODEL}
+    except Exception as e:
+        logger.error(f"Identify error: {e}")
+    return {"success": True, "data": fallback, "model": "fallback"}
+
+
+# ── Weather ────────────────────────────────────────────────────────────────────
+
+@api_router.post("/weather")
+async def get_weather_score(req: WeatherRequest):
+    temp       = round(random.uniform(12, 28), 1)
+    wind       = round(random.uniform(5, 35), 1)
+    humidity   = random.randint(40, 85)
+    pressure   = random.randint(1000, 1025)
+    conditions = random.choice(["Açık", "Parçalı bulutlu", "Bulutlu", "Hafif yağmur"])
+    moon_phase = random.choice(["Yeni Ay", "İlk Dördün", "Dolunay", "Son Dördün"])
+
+    score = 70
+    if 15 <= temp <= 24: score += 15
+    elif temp < 8 or temp > 32: score -= 15
+    if wind < 10: score += 10
+    elif wind > 25: score -= 20
+    if moon_phase == "Dolunay": score += 10
+    score = max(10, min(100, score + random.randint(-5, 10)))
+
+    act_names = {"fishing": "Balıkçılık", "hunting": "Avcılık", "camping": "Kamp"}
+    act = act_names.get(req.activity, req.activity)
+
+    system = "Sen bir outdoor aktivite uzmanı ve hava durumu analistisin. Kısa pratik Türkçe öneriler ver."
+    prompt = (
+        f"Hava: {conditions}, {temp}°C, rüzgar {wind}km/s, nem %{humidity}, "
+        f"basınç {pressure}hPa, ay fazı: {moon_phase}. Koordinat: {req.lat:.2f}N {req.lng:.2f}E.\n"
+        f"Aktivite skoru {score}/100. {act} için 3 kısa öneri ver.\n"
+        'JSON: {"tips":["öneri1","öneri2","öneri3"],"best_time":"En iyi saat aralığı","warning":"Uyarı veya boş"}'
+    )
+    tips_data = {"tips": [], "best_time": "05:00-09:00", "warning": ""}
+    try:
+        raw = await nvidia_chat(system, prompt, model=FAST_MODEL, max_tokens=256)
+        if raw:
+            tips_data = clean_json(raw)
+    except Exception:
+        tips_data["tips"] = ["Sabah erken saatleri tercih edin.", "Rüzgar yönünü göz önünde bulundurun.", "Su sıcaklığını kontrol edin."]
+        if wind > 25:
+            tips_data["warning"] = "Güçlü rüzgar var, dikkatli olun!"
+
+    return {
+        "temperature": temp, "feels_like": round(temp - wind * 0.1, 1),
+        "wind_speed": wind, "humidity": humidity, "pressure": pressure,
+        "conditions": conditions, "moon_phase": moon_phase,
+        "activity_score": score, "activity": req.activity,
+        "tips": tips_data.get("tips", []),
+        "best_time": tips_data.get("best_time", ""),
+        "warning": tips_data.get("warning", ""),
+        "model": FAST_MODEL,
+    }
+
+
+# ── AI Chat ────────────────────────────────────────────────────────────────────
+
+@api_router.post("/chat")
+async def outdoor_chat(req: ChatMessage):
+    ctx_map = {
+        "fishing": "balıkçılık", "hunting": "avcılık",
+        "camping": "kamp", "wildlife": "yaban hayatı", "genel": "doğa ve outdoor",
+    }
+    ctx = ctx_map.get(req.context, req.context)
+    system = (
+        f"Sen 'DoğaAI Asistanı'sın — {ctx} konusunda uzman bir Türkçe asistansın. "
+        "Balıkçılık, avcılık, kamp, doğa yürüyüşü, yaban hayatı ve outdoor ekipman konularında "
+        "kapsamlı, pratik ve güvenlik odaklı bilgi verirsin. "
+        "Türk yasal düzenlemelerini ve mevsimsel bilgileri göz önünde bulundurursun. "
+        "Cevapların kısa, net ve kullanışlı olsun. Emoji kullanabilirsin. "
+        "Powered by NVIDIA NIM · Llama 3.1 70B"
+    )
+    # Convert history to OpenAI format
+    history = []
+    for m in req.history[-10:]:  # last 10 messages max
+        role = m.get("role", "user")
+        if role in ("user", "assistant"):
+            history.append({"role": role, "content": m.get("content", "")})
+
+    response = await nvidia_chat(system, req.message, model=CHAT_MODEL,
+                                 history=history, max_tokens=768)
+    if not response:
+        response = (
+            "Şu an AI servisine ulaşamıyorum. Lütfen tekrar deneyin. "
+            "Bu arada: her outdoor aktivitede güvenliği ön planda tutun ve hava durumunu takip edin."
+        )
+    return {
+        "message": response,
+        "session_id": req.session_id,
+        "context": req.context,
+        "timestamp": datetime.now(timezone.utc).isoformat(),
+        "model": CHAT_MODEL,
+    }
+
+
+# ── NLP endpoints ──────────────────────────────────────────────────────────────
+
+@api_router.post("/nlp/analyze")
+async def nlp_analyze(req: NLPRequest):
+    system = (
+        "Sen bir Türkçe Doğal Dil İşleme (NLP) uzmanısın. "
+        "Verilen metni analiz et ve SADECE geçerli JSON döndür."
+    )
+    prompt = (
+        f"Şu Türkçe metni analiz et:\n\n\"{req.text}\"\n\n"
+        'JSON formatında döndür: {'
+        '"sentiment": "pozitif/negatif/nötr", '
+        '"sentiment_score": 0.85, '
+        '"keywords": ["anahtar1", "anahtar2", "anahtar3"], '
+        '"entities": {"türler": ["Sazan"], "yerler": ["Sapanca"], "ekipman": ["olta"]}, '
+        '"language_quality": "iyi/orta/geliştirilmeli", '
+        '"main_topic": "Ana konu tek cümle", '
+        '"category": "balıkçılık/avcılık/kamp/doğa/diğer"'
+        '}'
+    )
+    fallback = {
+        "sentiment": "nötr", "sentiment_score": 0.5,
+        "keywords": [], "entities": {},
+        "language_quality": "iyi", "main_topic": "Analiz tamamlandı", "category": "doğa"
+    }
+    try:
+        raw = await nvidia_chat(system, prompt, model=FAST_MODEL, max_tokens=384)
+        if raw:
+            result = clean_json(raw)
+            return {"success": True, "data": result, "model": FAST_MODEL}
+    except Exception as e:
+        logger.error(f"NLP analyze error: {e}")
+    return {"success": True, "data": fallback, "model": "fallback"}
+
+
+@api_router.post("/nlp/summarize")
+async def nlp_summarize(req: NLPRequest):
+    system = "Sen Türkçe metin özetleme uzmanısın. Kısa, öz ve anlamlı özetler üretirsin."
+    prompt = (
+        f"Şu metni 2-3 cümleye özetle, ana noktaları koru:\n\n\"{req.text}\"\n\n"
+        'JSON: {"summary": "Özet metni", "key_points": ["nokta1", "nokta2"], "word_count_original": 50, "word_count_summary": 15}'
+    )
+    try:
+        raw = await nvidia_chat(system, prompt, model=FAST_MODEL, max_tokens=256)
+        if raw:
+            result = clean_json(raw)
+            return {"success": True, "data": result, "model": FAST_MODEL}
+    except Exception as e:
+        logger.error(f"NLP summarize error: {e}")
+    return {"success": True, "data": {"summary": req.text[:200] + "...", "key_points": []}, "model": "fallback"}
+
+
+@api_router.post("/nlp/improve")
+async def nlp_improve(req: NLPRequest):
+    system = "Sen Türkçe metin editörüsün. Metni daha akıcı, doğal ve okunabilir hale getirirsin."
+    prompt = (
+        f"Bu metni düzelt ve geliştir (yazım hataları, akıcılık, netlik):\n\n\"{req.text}\"\n\n"
+        'JSON: {"improved_text": "Geliştirilmiş metin", "changes": ["değişiklik1", "değişiklik2"]}'
+    )
+    try:
+        raw = await nvidia_chat(system, prompt, model=FAST_MODEL, max_tokens=512)
+        if raw:
+            result = clean_json(raw)
+            return {"success": True, "data": result, "model": FAST_MODEL}
+    except Exception as e:
+        logger.error(f"NLP improve error: {e}")
+    return {"success": True, "data": {"improved_text": req.text, "changes": []}, "model": "fallback"}
+
+
+# ── Trip Planner ───────────────────────────────────────────────────────────────
+
+@api_router.post("/planner")
+async def plan_trip(req: PlannerRequest):
+    acts_str = ", ".join(req.activities)
+    system = (
+        "Sen uzman bir Türkiye outdoor seyahat planlamacısısın. "
+        "Gerçekçi, pratik ve güvenli gün programları hazırlarsın. "
+        "Türkiye'nin doğa alanları, mevsimsel koşullar ve yasal düzenlemeleri bilirsin. "
+        "SADECE geçerli JSON döndür."
+    )
+    prompt = (
+        f"Şu outdoor seyahati için detaylı plan hazırla:\n"
+        f"- Destinasyon: {req.destination}\n"
+        f"- Süre: {req.duration_days} gün\n"
+        f"- Aktiviteler: {acts_str}\n"
+        f"- Grup: {req.group_size} kişi, {req.experience_level} deneyim\n"
+        f"- Notlar: {req.notes or 'Yok'}\n\n"
+        "JSON formatında döndür:\n"
+        '{"destination": "Yer", "overview": "Genel özet", '
+        '"days": [{"day": 1, "title": "Gün başlığı", "morning": "Sabah planı", '
+        '"afternoon": "Öğleden sonra", "evening": "Akşam", "spots": ["Yer1"], '
+        '"tips": ["İpucu1"]}], '
+        '"equipment": ["Ekipman1", "Ekipman2"], '
+        '"safety_notes": ["Güvenlik notu1"], '
+        '"best_months": ["Nisan", "Mayıs"], '
+        '"estimated_cost": "Tahmini maliyet bilgisi", '
+        '"regulations": "İzin/ruhsat bilgisi"}'
+    )
+    try:
+        raw = await nvidia_chat(system, prompt, model=CHAT_MODEL, max_tokens=1536)
+        if raw:
+            result = clean_json(raw)
+            return {"success": True, "data": result, "model": CHAT_MODEL}
+    except Exception as e:
+        logger.error(f"Planner error: {e}")
+    return {
+        "success": False,
+        "error": "Plan oluşturulamadı. Lütfen tekrar deneyin.",
+        "model": "fallback",
+    }
+
+
+# ── Image Generation ───────────────────────────────────────────────────────────
+
+@api_router.post("/generate-image")
+async def generate_image(req: ImageGenRequest):
+    style_prompts = {
+        "realistic": "photorealistic, high quality, nature photography, 8K",
+        "artistic":  "digital art, vibrant colors, artistic illustration",
+        "sketch":    "pencil sketch, detailed drawing, black and white",
+        "watercolor":"watercolor painting, soft colors, nature art",
+    }
+    style_suffix = style_prompts.get(req.style, style_prompts["realistic"])
+    full_prompt = f"{req.prompt}, Turkey nature, outdoor photography, {style_suffix}"
+    try:
+        resp = await nvidia.images.generate(
+            model=IMAGE_MODEL,
+            prompt=full_prompt,
+            n=1,
+            response_format="b64_json",
+        )
+        b64 = resp.data[0].b64_json
+        return {"success": True, "image_b64": b64, "prompt": full_prompt, "model": IMAGE_MODEL}
+    except Exception as e:
+        logger.error(f"Image gen error: {e}")
+        return {"success": False, "error": str(e), "model": IMAGE_MODEL}
+
+
+# ── Phase 3: Agent Sessions ────────────────────────────────────────────────────
+
+@api_router.get("/agents")
+async def list_agents():
+    return [{"id": k, **{k2: v2 for k2, v2 in v.items() if k2 != "system"}}
+            for k, v in AGENTS.items()]
+
+
+@api_router.get("/sessions")
+async def list_sessions(current_user: dict = Depends(get_optional_user)):
+    uid = current_user['id'] if current_user else None
+    query = {"user_id": uid} if uid else {}
+    sessions = await db.agent_sessions.find(query, {"_id": 0, "messages": 0}).sort(
+        "updated_at", -1).to_list(50)
+    return sessions
+
+
+@api_router.post("/sessions")
+async def create_session(body: dict, current_user: dict = Depends(get_optional_user)):
+    uid = current_user['id'] if current_user else "anonymous"
+    agent_type = body.get("agent_type", "balikcilik")
+    agent = AGENTS.get(agent_type, AGENTS["balikcilik"])
+    session = AgentSession(
+        user_id=uid,
+        name=body.get("name", f"{agent['name']} Oturumu"),
+        agent_type=agent_type,
+    )
+    await db.agent_sessions.insert_one(session.model_dump())
+    return session
+
+
+@api_router.delete("/sessions/{session_id}")
+async def delete_session(session_id: str, current_user: dict = Depends(get_optional_user)):
+    result = await db.agent_sessions.delete_one({"id": session_id})
+    if result.deleted_count == 0:
+        raise HTTPException(404, "Oturum bulunamadı")
+    return {"deleted": True}
+
+
+@api_router.get("/sessions/{session_id}/messages")
+async def get_session_messages(session_id: str):
+    session = await db.agent_sessions.find_one({"id": session_id}, {"_id": 0})
+    if not session:
+        raise HTTPException(404, "Oturum bulunamadı")
+    return {"messages": session.get("messages", []), "agent_type": session.get("agent_type")}
+
+
+@api_router.post("/sessions/{session_id}/messages")
+async def send_agent_message(session_id: str, req: AgentMessage):
+    session = await db.agent_sessions.find_one({"id": session_id})
+    if not session:
+        raise HTTPException(404, "Oturum bulunamadı")
+
+    agent_type = req.agent_type or session.get("agent_type", "balikcilik")
+    agent = AGENTS.get(agent_type, AGENTS["balikcilik"])
+    system = agent["system"]
+
+    messages = session.get("messages", [])
+    history = [{"role": m["role"], "content": m["content"]} for m in messages[-12:]]
+
+    ai_response = await nvidia_chat(
+        system, req.content, model=CHAT_MODEL, history=history, max_tokens=1024
+    )
+    if not ai_response:
+        ai_response = "Şu an yanıt üretemiyorum. Lütfen tekrar deneyin."
+
+    now = datetime.now(timezone.utc).isoformat()
+    user_msg = {"id": str(uuid.uuid4()), "role": "user", "content": req.content, "ts": now}
+    ai_msg   = {"id": str(uuid.uuid4()), "role": "assistant", "content": ai_response,
+                 "ts": now, "model": CHAT_MODEL}
+
+    await db.agent_sessions.update_one(
+        {"id": session_id},
+        {"$push": {"messages": {"$each": [user_msg, ai_msg]}},
+         "$set": {"updated_at": now}},
+    )
+    return {"message": ai_response, "session_id": session_id, "model": CHAT_MODEL}
+
+
+# ── Spots ──────────────────────────────────────────────────────────────────────
+
+@api_router.get("/spots")
+async def get_spots(type: str = "all"):
+    query = {} if type == "all" else {"type": type}
+    return await db.spots.find(query, {"_id": 0}).sort("rating", -1).to_list(200)
+
+
+@api_router.post("/spots")
+async def create_spot(req: SpotCreate):
+    spot = {**req.model_dump(), "id": str(uuid.uuid4()), "rating": 0.0, "review_count": 0,
+            "created_at": datetime.now(timezone.utc).isoformat()}
+    await db.spots.insert_one(spot)
+    spot.pop("_id", None)
+    return spot
+
+
+@api_router.get("/spots/{spot_id}")
+async def get_spot(spot_id: str):
+    spot = await db.spots.find_one({"id": spot_id}, {"_id": 0})
+    if not spot:
+        raise HTTPException(404, "Spot bulunamadı")
+    return spot
+
+
+# ── Activities ─────────────────────────────────────────────────────────────────
+
+@api_router.get("/activities")
+async def get_activities(limit: int = 50):
+    return await db.activities.find({}, {"_id": 0}).sort("date", -1).to_list(limit)
+
+
+@api_router.post("/activities")
+async def create_activity(req: ActivityCreate, current_user: dict = Depends(get_optional_user)):
+    uid      = current_user['id'] if current_user else "anonymous"
+    uname    = current_user['username'] if current_user else "Kullanıcı"
+    act = Activity(**req.model_dump(), user_id=uid, username=uname)
+    await db.activities.insert_one(act.model_dump())
+    if current_user:
+        await db.users.update_one({'id': uid}, {'$inc': {'activity_count': 1}})
+    return act
+
+
+# ── Community Posts ────────────────────────────────────────────────────────────
+
+@api_router.get("/posts")
+async def get_posts(category: str = "all", limit: int = 50):
+    query = {} if category == "all" else {"category": category}
+    return await db.posts.find(query, {"_id": 0}).sort("created_at", -1).to_list(limit)
+
+
+@api_router.post("/posts")
+async def create_post(req: PostCreate, current_user: dict = Depends(get_optional_user)):
+    uid    = current_user['id'] if current_user else "anonymous"
+    uname  = current_user['username'] if current_user else req.username
+    color  = current_user.get('avatar_color', '#22c55e') if current_user else '#22c55e'
+    post = Post(**req.model_dump(), id=str(uuid.uuid4()),
+                user_id=uid, username=uname, avatar_color=color)
+    await db.posts.insert_one(post.model_dump())
+    return post
+
+
+@api_router.post("/posts/{post_id}/like")
+async def like_post(post_id: str, user_id: str = "anonymous"):
+    post = await db.posts.find_one({"id": post_id})
+    if not post:
+        raise HTTPException(404, "Post bulunamadı")
+    liked_by = post.get("liked_by", [])
+    if user_id in liked_by:
+        liked_by.remove(user_id)
+        likes = max(0, post.get("likes", 0) - 1)
+    else:
+        liked_by.append(user_id)
+        likes = post.get("likes", 0) + 1
+    await db.posts.update_one({"id": post_id}, {"$set": {"likes": likes, "liked_by": liked_by}})
+    return {"likes": likes, "liked": user_id in liked_by}
+
+
+@api_router.post("/posts/{post_id}/comments")
+async def add_comment(post_id: str, req: CommentCreate, current_user: dict = Depends(get_optional_user)):
+    post = await db.posts.find_one({"id": post_id})
+    if not post:
+        raise HTTPException(404, "Post bulunamadı")
+    uname = current_user['username'] if current_user else req.username
+    comment = {
+        "id": str(uuid.uuid4()), "username": uname,
+        "content": req.content, "created_at": datetime.now(timezone.utc).isoformat(),
+    }
+    await db.posts.update_one({"id": post_id}, {"$push": {"comments": comment}})
+    return comment
+
+
+# ── Species Encyclopedia ───────────────────────────────────────────────────────
 
 @api_router.get("/species")
 async def get_species(category: str = "all"):
@@ -700,10 +1014,14 @@ async def get_species(category: str = "all"):
     return [s for s in SPECIES_DB if s["category"] == category]
 
 
-# ── App setup ─────────────────────────────────────────────────────────────────
+@api_router.get("/")
+async def root():
+    return {"message": "DoğaAI Platform API v3", "models": {"chat": CHAT_MODEL, "vision": VISION_MODEL}}
+
+
+# ── App setup ──────────────────────────────────────────────────────────────────
 
 app.include_router(api_router)
-
 app.add_middleware(
     CORSMiddleware,
     allow_credentials=True,
@@ -716,9 +1034,9 @@ app.add_middleware(
 @app.on_event("startup")
 async def startup():
     await seed_initial_data()
-    logger.info("DoğaAI API started")
+    logger.info("DoğaAI API v3 started — NVIDIA NIM powered")
 
 
 @app.on_event("shutdown")
 async def shutdown():
-    client.close()
+    _mongo_client.close()

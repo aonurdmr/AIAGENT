@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { useAuth } from '@/context/AuthContext';
 
 const API = process.env.REACT_APP_BACKEND_URL + '/api';
 
@@ -16,6 +17,7 @@ function formatDate(d) {
 }
 
 export default function ActivityLog() {
+  const { user } = useAuth();
   const [activities, setActivities] = useState([]);
   const [loading, setLoading]       = useState(true);
   const [showForm, setShowForm]     = useState(false);

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { useAuth } from '@/context/AuthContext';
 
 const API = process.env.REACT_APP_BACKEND_URL + '/api';
 
@@ -37,6 +38,7 @@ export default function Community() {
   const [showForm, setShowForm] = useState(false);
   const [commentId, setCommentId] = useState(null);
   const [comment, setComment] = useState('');
+  const { user } = useAuth();
   const [form, setForm] = useState({ title: '', content: '', category: 'fishing', location: '', username: 'Ben' });
 
   const loadPosts = async (cat = 'all') => {
@@ -52,20 +54,23 @@ export default function Community() {
   useEffect(() => { loadPosts(filter); }, [filter]);
 
   const likePost = async (id) => {
-    const { data } = await axios.post(`${API}/posts/${id}/like`, null, { params: { user_id: 'local_user' } });
+    const uid = user?.id || 'local_user';
+    const { data } = await axios.post(`${API}/posts/${id}/like`, null, { params: { user_id: uid } });
     setPosts(prev => prev.map(p => p.id === id ? { ...p, likes: data.likes } : p));
   };
 
   const submitComment = async (postId) => {
     if (!comment.trim()) return;
-    await axios.post(`${API}/posts/${postId}/comments`, { username: 'Ben', content: comment });
+    const uname = user?.username || 'Misafir';
+    await axios.post(`${API}/posts/${postId}/comments`, { username: uname, content: comment });
     setComment(''); setCommentId(null);
     loadPosts(filter);
   };
 
   const submitPost = async () => {
     if (!form.title || !form.content) return;
-    await axios.post(`${API}/posts`, form);
+    const uname = user?.username || form.username || 'Misafir';
+    await axios.post(`${API}/posts`, { ...form, username: uname });
     setShowForm(false); setForm({ title: '', content: '', category: 'fishing', location: '', username: 'Ben' });
     loadPosts(filter);
   };

@@ -1,44 +1,46 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { useAuth } from '@/context/AuthContext';
 
 const API = process.env.REACT_APP_BACKEND_URL + '/api';
 
-const BADGES = [
-  { icon: '🎣', name: 'İlk Balık', desc: 'İlk aktiviteni kaydettin', earned: true },
-  { icon: '⭐', name: '5 Yıldız', desc: '5 nokta değerlendirdin', earned: true },
-  { icon: '🌟', name: 'Keşifçi', desc: '10 farklı nokta ziyaret et', earned: false },
-  { icon: '📸', name: 'Fotoğrafçı', desc: '20 tür tanımladın', earned: false },
-  { icon: '👥', name: 'Topluluk', desc: '50 beğeni al', earned: false },
-  { icon: '🏆', name: 'Usta', desc: '100 aktivite kaydet', earned: false },
-];
-
-const SPECIES_LIST = [
-  { name: 'Sazan', emoji: '🐟', count: 14 },
-  { name: 'Alabalık', emoji: '🐠', count: 7 },
-  { name: 'Levrek', emoji: '🐟', count: 5 },
-  { name: 'Keklik', emoji: '🦜', count: 3 },
+const BADGES_DEF = [
+  { icon: '🎣', name: 'İlk Adım', desc: '1+ aktivite kaydet',     threshold: 1,  type: 'total' },
+  { icon: '🌿', name: 'Doğa Sever', desc: '5+ aktivite kaydet',   threshold: 5,  type: 'total' },
+  { icon: '🌟', name: 'Keşifçi',  desc: '10+ aktivite kaydet',    threshold: 10, type: 'total' },
+  { icon: '🏆', name: 'Usta',     desc: '25+ aktivite kaydet',    threshold: 25, type: 'total' },
+  { icon: '🎣', name: 'Balıkçı',  desc: '5+ balık aktivitesi',    threshold: 5,  type: 'fishing' },
+  { icon: '⛺', name: 'Kampçı',   desc: '3+ kamp aktivitesi',     threshold: 3,  type: 'camping' },
 ];
 
 export default function Profile() {
   const navigate = useNavigate();
-  const [activities, setActivities] = useState([]);
-  const [stats, setStats] = useState(null);
-  const [name, setName] = useState('Outdoor Sever');
-  const [editName, setEditName] = useState(false);
-  const [tab, setTab] = useState('stats');
+  const { user, logout } = useAuth();
+  const [userStats, setUserStats] = useState(null);
+  const [stats, setStats]         = useState(null);
+  const [tab, setTab]             = useState('stats');
 
   useEffect(() => {
-    Promise.all([
-      axios.get(`${API}/activities`).then(r => setActivities(r.data)),
-      axios.get(`${API}/stats`).then(r => setStats(r.data)),
-    ]).catch(() => {});
-  }, []);
+    axios.get(`${API}/stats`).then(r => setStats(r.data)).catch(() => {});
+    if (user?.id) {
+      axios.get(`${API}/users/${user.id}/stats`).then(r => setUserStats(r.data)).catch(() => {});
+    }
+  }, [user]);
 
-  const actCount = activities.length;
-  const fishCount = activities.filter(a => a.type === 'fishing').length;
-  const huntCount = activities.filter(a => a.type === 'hunting').length;
-  const campCount = activities.filter(a => a.type === 'camping').length;
+  const actCount  = userStats?.total_activities || 0;
+  const fishCount = userStats?.type_counts?.fishing || 0;
+  const huntCount = userStats?.type_counts?.hunting || 0;
+  const campCount = userStats?.type_counts?.camping || 0;
+  const speciesList = userStats?.top_species || [];
+
+  const badges = BADGES_DEF.map(b => ({
+    ...b,
+    earned: b.type === 'total' ? actCount >= b.threshold
+          : b.type === 'fishing' ? fishCount >= b.threshold
+          : b.type === 'camping' ? campCount >= b.threshold
+          : false,
+  }));
 
   return (
     <div className="page fade-in">
@@ -56,26 +58,21 @@ export default function Profile() {
           fontSize: 36, boxShadow: '0 4px 24px #22c55e44',
         }}>🏕️</div>
 
-        {editName ? (
-          <div style={{ display: 'flex', gap: 8, justifyContent: 'center', marginBottom: 8 }}>
-            <input className="input-field" value={name} onChange={e => setName(e.target.value)}
-              style={{ maxWidth: 200, textAlign: 'center' }} />
-            <button className="btn-primary" style={{ width: 'auto', padding: '8px 14px' }}
-              onClick={() => setEditName(false)}>✓</button>
-          </div>
-        ) : (
-          <div style={{ marginBottom: 8 }}>
-            <h2 style={{ fontSize: 22, fontWeight: 800, color: '#fff' }}>{name}</h2>
-            <button onClick={() => setEditName(true)} style={{
-              background: 'none', border: 'none', color: '#4a6741', fontSize: 12, cursor: 'pointer',
-            }}>✏️ Düzenle</button>
-          </div>
-        )}
+        <div style={{ marginBottom: 8 }}>
+          <h2 style={{ fontSize: 22, fontWeight: 800, color: '#fff' }}>{user?.full_name || user?.username || 'Outdoor Sever'}</h2>
+          {user?.username && <div style={{ fontSize: 13, color: '#4a7a4a' }}>@{user.username}</div>}
+          {user && (
+            <button onClick={logout} style={{
+              background: 'none', border: 'none', color: '#4a6741', fontSize: 12, cursor: 'pointer', marginTop: 4,
+            }}>⬡ Çıkış Yap</button>
+          )}
+        </div>
 
         <div style={{ display: 'flex', justifyContent: 'center', gap: 8, flexWrap: 'wrap', marginBottom: 16 }}>
-          <span className="tag tag-green">🎣 Balıkçı</span>
-          <span className="tag tag-amber">⛺ Kampçı</span>
-          <span className="tag tag-blue">🔍 Keşifçi</span>
+          {fishCount > 0 && <span className="tag tag-green">🎣 Balıkçı</span>}
+          {campCount > 0 && <span className="tag tag-amber">⛺ Kampçı</span>}
+          {actCount > 0 && <span className="tag tag-blue">🔍 Keşifçi</span>}
+          {!user && <span className="tag tag-purple">👤 Misafir</span>}
         </div>
 
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: 8 }}>
@@ -125,10 +122,11 @@ export default function Profile() {
             <div className="card" style={{ marginBottom: 12 }}>
               <div style={{ fontSize: 13, fontWeight: 700, color: '#86efac', marginBottom: 10 }}>🌙 Hızlı Erişim</div>
               {[
-                { icon: '🔍', label: 'AI Tür Tanımlama', path: '/tani' },
-                { icon: '💬', label: 'AI Asistan', path: '/ai-asistan' },
-                { icon: '📋', label: 'Aktivite Günlüğü', path: '/aktivite' },
-                { icon: '👥', label: 'Topluluk', path: '/topluluk' },
+                { icon: '🤖', label: 'AI Ajan Merkezi',    path: '/ajanlar' },
+                { icon: '🗺️', label: 'Seyahat Planlamacı', path: '/planlama' },
+                { icon: '🔍', label: 'AI Tür Tanımlama',   path: '/tani' },
+                { icon: '📋', label: 'Aktivite Günlüğü',   path: '/aktivite' },
+                { icon: '👥', label: 'Topluluk',            path: '/topluluk' },
               ].map(item => (
                 <button key={item.path} onClick={() => navigate(item.path)} style={{
                   width: '100%', background: '#0f1f0f', border: '1px solid #22c55e11',
@@ -146,7 +144,7 @@ export default function Profile() {
         {tab === 'badges' && (
           <div className="fade-in">
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }}>
-              {BADGES.map(badge => (
+              {badges.map(badge => (
                 <div key={badge.name} className="card" style={{
                   opacity: badge.earned ? 1 : 0.4,
                   borderColor: badge.earned ? '#22c55e44' : '#22c55e11',
@@ -168,10 +166,14 @@ export default function Profile() {
               <div style={{ fontSize: 13, color: '#4a6741', marginBottom: 8 }}>
                 Yakaladığın/gördüğün türler:
               </div>
-              {SPECIES_LIST.map(s => (
+              {speciesList.length === 0 ? (
+                <div style={{ textAlign: 'center', padding: '20px 0', color: '#4a6741', fontSize: 13 }}>
+                  Henüz tür kaydı yok. Aktivite ekleyerek başlayın!
+                </div>
+              ) : speciesList.map(s => (
                 <div key={s.name} className="post-card" style={{ padding: 12, marginBottom: 8 }}>
                   <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-                    <span style={{ fontSize: 28 }}>{s.emoji}</span>
+                    <span style={{ fontSize: 28 }}>🐟</span>
                     <div style={{ flex: 1 }}>
                       <div style={{ fontWeight: 600, fontSize: 13, color: '#e2e8f0' }}>{s.name}</div>
                     </div>

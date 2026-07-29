@@ -4,8 +4,8 @@ import { useNavigate, useLocation } from 'react-router-dom';
 const TABS = [
   { path: '/',         icon: '🏠', label: 'Ana Sayfa' },
   { path: '/tani',     icon: '🔍', label: 'AI Tanı' },
+  { path: '/ajanlar',  icon: '🤖', label: 'Ajanlar' },
   { path: '/harita',   icon: '🗺️', label: 'Harita' },
-  { path: '/topluluk', icon: '👥', label: 'Topluluk' },
   { path: '/profil',   icon: '👤', label: 'Profil' },
 ];
 

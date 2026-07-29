@@ -10,11 +10,15 @@ import AIChat       from '@/components/AIChat';
 import Profile      from '@/components/Profile';
 import Login        from '@/components/Login';
 import Navbar       from '@/components/Navbar';
+import AgentCenter  from '@/components/AgentCenter';
+import Planner      from '@/components/Planner';
 import '@/App.css';
+
+const HIDE_NAV = ['/ai-asistan', '/giris', '/ajanlar'];
 
 function AppInner() {
   const location = useLocation();
-  const hideNav  = ['/ai-asistan', '/giris'].includes(location.pathname);
+  const hideNav  = HIDE_NAV.some(p => location.pathname.startsWith(p));
 
   return (
     <div className="app-container">
@@ -27,6 +31,8 @@ function AppInner() {
         <Route path="/ai-asistan" element={<AIChat />} />
         <Route path="/profil"    element={<Profile />} />
         <Route path="/giris"     element={<Login />} />
+        <Route path="/ajanlar"   element={<AgentCenter />} />
+        <Route path="/planlama"  element={<Planner />} />
       </Routes>
       {!hideNav && <Navbar />}
     </div>

@@ -46,7 +46,8 @@ export default function AIChat() {
     setMessages(prev => [...prev, { role: 'user', content: msg, ts: Date.now() }]);
     setLoading(true);
     try {
-      const { data } = await axios.post(`${API}/chat`, { message: msg, context, session_id: SESSION_ID });
+      const history = messages.slice(-10).map(m => ({ role: m.role, content: m.content }));
+      const { data } = await axios.post(`${API}/chat`, { message: msg, context, session_id: SESSION_ID, history });
       setMessages(prev => [...prev, { role: 'assistant', content: data.message, ts: Date.now() }]);
     } catch {
       setMessages(prev => [...prev, {
@@ -185,7 +186,7 @@ export default function AIChat() {
           </button>
         </div>
         <div style={{ fontSize: 11, color: '#4a6741', textAlign: 'center', marginTop: 6 }}>
-          Powered by DoğaAI · Güvenli Outdoor Deneyimi
+          Powered by <span style={{ color: '#76b900' }}>NVIDIA NIM</span> · Llama 3.1 70B
         </div>
       </div>
 

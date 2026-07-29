@@ -9,8 +9,8 @@ const SCORE_COLOR = s => s >= 75 ? '#34d399' : s >= 50 ? '#fbbf24' : '#f87171';
 
 const ACTIONS = [
   { icon: '🔍', label: 'AI Tanımla', sub: 'Fotoğrafla tür bul', path: '/tani',       accent: '#22c55e' },
-  { icon: '🗺️', label: 'Harita',     sub: 'Nokta keşfet',       path: '/harita',     accent: '#60a5fa' },
-  { icon: '🤖', label: 'AI Asistan', sub: 'Soru sor',            path: '/ai-asistan', accent: '#c084fc' },
+  { icon: '🤖', label: 'AI Ajanlar', sub: '11 uzman ajan',       path: '/ajanlar',    accent: '#c084fc' },
+  { icon: '🗺️', label: 'Planlama',   sub: 'Seyahat planla',      path: '/planlama',   accent: '#06b6d4' },
   { icon: '📋', label: 'Aktivite',   sub: 'Kayıt tut',           path: '/aktivite',   accent: '#fbbf24' },
 ];
 

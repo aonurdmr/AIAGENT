@@ -18,6 +18,7 @@ import ImageGen     from '@/components/ImageGen';
 import Equipment    from '@/components/Equipment';
 import Leaderboard  from '@/components/Leaderboard';
 import Search       from '@/components/Search';
+import { ToastProvider } from '@/components/Toast';
 import '@/App.css';
 
 const HIDE_NAV = ['/ai-asistan', '/giris', '/ajanlar'];
@@ -54,9 +55,11 @@ function AppInner() {
 export default function App() {
   return (
     <AuthProvider>
-      <Router>
-        <AppInner />
-      </Router>
+      <ToastProvider>
+        <Router>
+          <AppInner />
+        </Router>
+      </ToastProvider>
     </AuthProvider>
   );
 }

@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { useAuth } from '@/context/AuthContext';
+import { toast } from '@/components/Toast';
 
 const API = process.env.REACT_APP_BACKEND_URL + '/api';
 
@@ -14,9 +16,10 @@ const CAT_TABS = [
 const DIFF_COLORS = { kolay: '#22c55e', orta: '#f59e0b', zor: '#ef4444' };
 const CAT_COLORS  = { fish: '#3b82f6', animal: '#f59e0b', bird: '#a855f7', plant: '#22c55e' };
 
-function SpeciesCard({ s, accent }) {
+function SpeciesCard({ s, accent, onFav, favSet }) {
   const [open, setOpen] = useState(false);
   const diff = s.difficulty || 'orta';
+  const faved = favSet.has(s.id);
   return (
     <div
       onClick={() => setOpen(o => !o)}
@@ -58,7 +61,15 @@ function SpeciesCard({ s, accent }) {
           </div>
         </div>
 
-        <span style={{ color: '#4a7a4a', fontSize: 16, flexShrink: 0 }}>{open ? '▾' : '▸'}</span>
+        <div style={{ display: 'flex', gap: 8, alignItems: 'center', flexShrink: 0 }}>
+          <button onClick={e => { e.stopPropagation(); onFav(s); }} style={{
+            background: 'none', border: 'none', cursor: 'pointer', fontSize: 18,
+            color: faved ? '#fbbf24' : '#4a7a4a',
+            transition: 'color .2s, transform .15s',
+            transform: faved ? 'scale(1.15)' : 'scale(1)',
+          }}>⭐</button>
+          <span style={{ color: '#4a7a4a', fontSize: 16 }}>{open ? '▾' : '▸'}</span>
+        </div>
       </div>
 
       {/* Expanded details */}
@@ -98,17 +109,40 @@ function SpeciesCard({ s, accent }) {
 }
 
 export default function SpeciesDB() {
+  const { user } = useAuth();
   const [species, setSpecies] = useState([]);
   const [loading, setLoading] = useState(true);
   const [cat, setCat]         = useState('all');
   const [query, setQuery]     = useState('');
+  const [favSet, setFavSet]   = useState(new Set());
 
   useEffect(() => {
     axios.get(`${API}/species`)
       .then(r => setSpecies(r.data))
       .catch(() => {})
       .finally(() => setLoading(false));
-  }, []);
+    if (user) {
+      axios.get(`${API}/favorites`).then(r => {
+        const ids = new Set(r.data.filter(f => f.item_type === 'species').map(f => f.item_id));
+        setFavSet(ids);
+      }).catch(() => {});
+    }
+  }, [user]);
+
+  async function handleFav(s) {
+    if (!user) { toast('Favorilere eklemek için giriş yapın', 'info'); return; }
+    try {
+      const { data } = await axios.post(`${API}/favorites`, {
+        item_type: 'species', item_id: s.id, item_name: s.name,
+      });
+      setFavSet(prev => {
+        const next = new Set(prev);
+        if (data.favorited) { next.add(s.id); toast(`${s.name} favorilere eklendi ⭐`); }
+        else { next.delete(s.id); toast(`${s.name} favorilerden çıkarıldı`, 'info'); }
+        return next;
+      });
+    } catch { toast('Hata oluştu', 'error'); }
+  }
 
   const filtered = species.filter(s => {
     if (cat !== 'all' && s.category !== cat) return false;
@@ -175,6 +209,8 @@ export default function SpeciesDB() {
                 key={s.id}
                 s={s}
                 accent={CAT_COLORS[s.category] || '#22c55e'}
+                onFav={handleFav}
+                favSet={favSet}
               />
             ))}
           </>

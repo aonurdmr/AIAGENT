@@ -426,6 +426,7 @@ select.input-field        { cursor: pointer; }
 /* ── Animations ──────────────────────────────────────────── */
 .fade-in { animation: fadeIn .25s ease both; }
 @keyframes fadeIn { from { opacity:0; transform:translateY(6px); } to { opacity:1; transform:none; } }
+@keyframes slideUp { from { opacity:0; transform:translateY(16px) scale(.96); } to { opacity:1; transform:none; } }
 
 .slide-up { animation: slideUp .3s cubic-bezier(.34,1.1,.64,1) both; }
 @keyframes slideUp { from { opacity:0; transform:translateY(20px); } to { opacity:1; transform:none; } }

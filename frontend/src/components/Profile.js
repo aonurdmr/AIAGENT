@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { useAuth } from '@/context/AuthContext';
+import { toast } from '@/components/Toast';
 
 const API = process.env.REACT_APP_BACKEND_URL + '/api';
 
@@ -19,10 +20,13 @@ const BADGES_DEF = [
 export default function Profile() {
   const navigate = useNavigate();
   const { user, logout } = useAuth();
-  const [userStats, setUserStats] = useState(null);
-  const [stats, setStats]         = useState(null);
-  const [favorites, setFavorites] = useState([]);
-  const [tab, setTab]             = useState('stats');
+  const [userStats, setUserStats]   = useState(null);
+  const [stats, setStats]           = useState(null);
+  const [favorites, setFavorites]   = useState([]);
+  const [tab, setTab]               = useState('stats');
+  const [editOpen, setEditOpen]     = useState(false);
+  const [editForm, setEditForm]     = useState({ full_name: '', bio: '' });
+  const [saving, setSaving]         = useState(false);
 
   useEffect(() => {
     axios.get(`${API}/stats`).then(r => setStats(r.data)).catch(() => {});
@@ -38,7 +42,26 @@ export default function Profile() {
         item_type: fav.item_type, item_id: fav.item_id, item_name: fav.item_name,
       });
       setFavorites(prev => prev.filter(f => f.id !== fav.id));
+      toast('Favorilerden çıkarıldı', 'info');
     } catch { }
+  }
+
+  function openEdit() {
+    setEditForm({ full_name: user?.full_name || '', bio: user?.bio || '' });
+    setEditOpen(true);
+  }
+
+  async function saveProfile() {
+    setSaving(true);
+    try {
+      const params = new URLSearchParams();
+      if (editForm.full_name !== undefined) params.append('full_name', editForm.full_name);
+      if (editForm.bio !== undefined) params.append('bio', editForm.bio);
+      await axios.put(`${API}/auth/profile?${params.toString()}`);
+      toast('Profil güncellendi ✓');
+      setEditOpen(false);
+    } catch { toast('Güncelleme başarısız', 'error'); }
+    setSaving(false);
   }
 
   const actCount  = userStats?.total_activities || 0;
@@ -74,10 +97,17 @@ export default function Profile() {
         <div style={{ marginBottom: 8 }}>
           <h2 style={{ fontSize: 22, fontWeight: 800, color: '#fff' }}>{user?.full_name || user?.username || 'Outdoor Sever'}</h2>
           {user?.username && <div style={{ fontSize: 13, color: '#4a7a4a' }}>@{user.username}</div>}
+          {user?.bio && <div style={{ fontSize: 12, color: 'var(--t-mid)', marginTop: 4, fontStyle: 'italic' }}>{user.bio}</div>}
           {user && (
-            <button onClick={logout} style={{
-              background: 'none', border: 'none', color: '#4a6741', fontSize: 12, cursor: 'pointer', marginTop: 4,
-            }}>⬡ Çıkış Yap</button>
+            <div style={{ display: 'flex', gap: 10, justifyContent: 'center', marginTop: 8 }}>
+              <button onClick={openEdit} style={{
+                background: 'var(--s3)', border: '1px solid var(--border)', color: 'var(--a-light)',
+                fontSize: 12, cursor: 'pointer', borderRadius: 20, padding: '4px 14px', fontWeight: 600,
+              }}>✏️ Düzenle</button>
+              <button onClick={logout} style={{
+                background: 'none', border: 'none', color: '#4a6741', fontSize: 12, cursor: 'pointer',
+              }}>⬡ Çıkış Yap</button>
+            </div>
           )}
         </div>
 
@@ -240,6 +270,42 @@ export default function Profile() {
           </div>
         )}
       </div>
+
+      {/* Edit Profile Modal */}
+      {editOpen && (
+        <div style={{
+          position: 'fixed', inset: 0, background: 'rgba(0,0,0,.75)',
+          zIndex: 200, display: 'flex', alignItems: 'flex-end',
+        }} onClick={() => setEditOpen(false)}>
+          <div style={{
+            background: 'var(--s1)', borderRadius: '20px 20px 0 0',
+            width: '100%', maxWidth: 430, margin: '0 auto',
+            padding: '20px 20px 40px', border: '1px solid var(--border)',
+          }} onClick={e => e.stopPropagation()}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16 }}>
+              <div style={{ fontWeight: 800, fontSize: 16 }}>✏️ Profili Düzenle</div>
+              <button onClick={() => setEditOpen(false)} style={{
+                background: 'none', border: 'none', color: 'var(--t-mute)', fontSize: 22, cursor: 'pointer',
+              }}>×</button>
+            </div>
+            <div style={{ fontSize: 11, color: 'var(--t-mute)', marginBottom: 6 }}>Ad Soyad</div>
+            <input className="ai-input" placeholder="Ad Soyad" value={editForm.full_name}
+              onChange={e => setEditForm(f => ({ ...f, full_name: e.target.value }))}
+              style={{ marginBottom: 12 }} />
+            <div style={{ fontSize: 11, color: 'var(--t-mute)', marginBottom: 6 }}>Bio</div>
+            <textarea className="ai-input" placeholder="Kendin hakkında kısa bir şey yaz…" rows={3}
+              value={editForm.bio}
+              onChange={e => setEditForm(f => ({ ...f, bio: e.target.value }))}
+              style={{ marginBottom: 16, resize: 'none' }} />
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 8 }}>
+              <button className="btn-ghost" onClick={() => setEditOpen(false)}>İptal</button>
+              <button className="btn-primary" onClick={saveProfile} disabled={saving}>
+                {saving ? 'Kaydediliyor…' : 'Kaydet'}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useAuth } from '@/context/AuthContext';
+import { toast } from '@/components/Toast';
 
 const API = process.env.REACT_APP_BACKEND_URL + '/api';
 
@@ -31,7 +32,10 @@ export default function ActivityLog() {
   }, []);
 
   const submit = async () => {
-    if (!form.type || !form.location_name) return;
+    if (!form.type || !form.location_name) {
+      toast('Lütfen tür ve konum girin', 'warning');
+      return;
+    }
     const payload = {
       ...form,
       lat: parseFloat(form.lat) || 0,
@@ -43,6 +47,7 @@ export default function ActivityLog() {
     setActivities(prev => [data, ...prev]);
     setShowForm(false);
     setForm({ type: 'fishing', species: '', location_name: '', lat: '', lng: '', weight: '', length: '', notes: '', weather_conditions: '' });
+    toast('Aktivite kaydedildi ✓');
   };
 
   const typeConfig = (t) => TYPES.find(x => x.id === t) || TYPES[0];

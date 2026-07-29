@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useAuth } from '@/context/AuthContext';
+import { toast } from '@/components/Toast';
 
 const API = process.env.REACT_APP_BACKEND_URL + '/api';
 
@@ -32,12 +33,13 @@ function timeAgo(dateStr) {
 }
 
 export default function Community() {
-  const [posts, setPosts]     = useState([]);
-  const [filter, setFilter]   = useState('all');
-  const [loading, setLoading] = useState(true);
-  const [showForm, setShowForm] = useState(false);
+  const [posts, setPosts]         = useState([]);
+  const [filter, setFilter]       = useState('all');
+  const [loading, setLoading]     = useState(true);
+  const [showForm, setShowForm]   = useState(false);
   const [commentId, setCommentId] = useState(null);
-  const [comment, setComment] = useState('');
+  const [comment, setComment]     = useState('');
+  const [favSet, setFavSet]       = useState(new Set());
   const { user } = useAuth();
   const [form, setForm] = useState({ title: '', content: '', category: 'fishing', location: '', username: 'Ben' });
 
@@ -52,6 +54,30 @@ export default function Community() {
   };
 
   useEffect(() => { loadPosts(filter); }, [filter]);
+
+  useEffect(() => {
+    if (user) {
+      axios.get(`${API}/favorites`).then(r => {
+        const ids = new Set(r.data.filter(f => f.item_type === 'post').map(f => f.item_id));
+        setFavSet(ids);
+      }).catch(() => {});
+    }
+  }, [user]);
+
+  const toggleFav = async (post) => {
+    if (!user) { toast('Favorilere eklemek için giriş yapın', 'info'); return; }
+    try {
+      const { data } = await axios.post(`${API}/favorites`, {
+        item_type: 'post', item_id: post.id, item_name: post.title,
+      });
+      setFavSet(prev => {
+        const next = new Set(prev);
+        if (data.favorited) { next.add(post.id); toast('Favorilere eklendi ⭐'); }
+        else { next.delete(post.id); toast('Favorilerden çıkarıldı', 'info'); }
+        return next;
+      });
+    } catch { toast('Hata oluştu', 'error'); }
+  };
 
   const likePost = async (id) => {
     const uid = user?.id || 'local_user';
@@ -140,6 +166,12 @@ export default function Community() {
                   }}>
                     <span>💬</span> {(post.comments || []).length}
                   </button>
+                  <button onClick={() => toggleFav(post)} style={{
+                    background: 'none', border: 'none', cursor: 'pointer',
+                    marginLeft: 'auto', fontSize: 16,
+                    color: favSet.has(post.id) ? '#fbbf24' : '#4a6741',
+                    transition: 'color .2s',
+                  }}>⭐</button>
                 </div>
               </div>
 

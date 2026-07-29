@@ -21,6 +21,7 @@ const TOOLS = [
   { icon: '🎒', label: 'Ekipman Takibi',    sub: 'Gear yönetimi',        path: '/ekipman',   accent: '#06b6d4' },
   { icon: '🏆', label: 'Liderboard',        sub: 'Topluluk sıralaması',  path: '/liderboard',accent: '#fbbf24' },
   { icon: '🔍', label: 'Global Arama',      sub: 'Tüm içerikte ara',     path: '/arama',     accent: '#a855f7' },
+  { icon: '🌡️', label: 'Hava Durumu',       sub: 'Aktivite bazlı skor',  path: '/hava',      accent: '#38bdf8' },
 ];
 
 const CATS = [

@@ -18,6 +18,7 @@ import ImageGen     from '@/components/ImageGen';
 import Equipment    from '@/components/Equipment';
 import Leaderboard  from '@/components/Leaderboard';
 import Search       from '@/components/Search';
+import WeatherDetail from '@/components/WeatherDetail';
 import { ToastProvider } from '@/components/Toast';
 import '@/App.css';
 
@@ -46,6 +47,7 @@ function AppInner() {
         <Route path="/ekipman"     element={<Equipment />} />
         <Route path="/liderboard"  element={<Leaderboard />} />
         <Route path="/arama"       element={<Search />} />
+        <Route path="/hava"        element={<WeatherDetail />} />
       </Routes>
       {!hideNav && <Navbar />}
     </div>

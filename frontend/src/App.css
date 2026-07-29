@@ -409,6 +409,7 @@ select.input-field        { cursor: pointer; }
 
 .slide-up { animation: slideUp .3s cubic-bezier(.34,1.1,.64,1) both; }
 @keyframes slideUp { from { opacity:0; transform:translateY(20px); } to { opacity:1; transform:none; } }
+@keyframes slide { 0% { transform:translateX(-100%); } 100% { transform:translateX(350%); } }
 
 @media (prefers-reduced-motion: reduce) {
   .fade-in, .slide-up { animation: none; }

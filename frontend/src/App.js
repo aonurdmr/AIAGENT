@@ -12,6 +12,9 @@ import Login        from '@/components/Login';
 import Navbar       from '@/components/Navbar';
 import AgentCenter  from '@/components/AgentCenter';
 import Planner      from '@/components/Planner';
+import SpeciesDB    from '@/components/SpeciesDB';
+import NLPTools     from '@/components/NLPTools';
+import ImageGen     from '@/components/ImageGen';
 import '@/App.css';
 
 const HIDE_NAV = ['/ai-asistan', '/giris', '/ajanlar'];
@@ -33,6 +36,9 @@ function AppInner() {
         <Route path="/giris"     element={<Login />} />
         <Route path="/ajanlar"   element={<AgentCenter />} />
         <Route path="/planlama"  element={<Planner />} />
+        <Route path="/turler"    element={<SpeciesDB />} />
+        <Route path="/nlp"       element={<NLPTools />} />
+        <Route path="/gorsel"    element={<ImageGen />} />
       </Routes>
       {!hideNav && <Navbar />}
     </div>

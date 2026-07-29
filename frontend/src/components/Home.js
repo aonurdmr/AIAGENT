@@ -14,6 +14,12 @@ const ACTIONS = [
   { icon: '📋', label: 'Aktivite',   sub: 'Kayıt tut',           path: '/aktivite',   accent: '#fbbf24' },
 ];
 
+const TOOLS = [
+  { icon: '📖', label: 'Tür Ansiklopedisi', sub: '12+ tür detayı',    path: '/turler',  accent: '#22c55e' },
+  { icon: '🧠', label: 'NLP Araçları',      sub: 'Metin analizi',      path: '/nlp',     accent: '#f59e0b' },
+  { icon: '🎨', label: 'Görsel Oluştur',    sub: 'AI ile doğa görseli', path: '/gorsel', accent: '#ec4899' },
+];
+
 const CATS = [
   { icon: '🎣', label: 'Balık',  q: 'fishing' },
   { icon: '🏹', label: 'Av',     q: 'hunting' },
@@ -186,6 +192,34 @@ export default function Home() {
             </button>
           </div>
         )}
+
+        {/* ── Phase 4 Tools ──────────────────────────────── */}
+        <div style={{ marginBottom: 14 }}>
+          <div style={{ fontSize: 12, fontWeight: 700, color: 'var(--t-mute)', letterSpacing: '.08em', marginBottom: 10 }}>
+            AI ARAÇLARI
+          </div>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+            {TOOLS.map(t => (
+              <button key={t.path} onClick={() => navigate(t.path)} style={{
+                background: 'var(--s2)', border: `1px solid ${t.accent}18`,
+                borderRadius: 14, padding: '12px 14px',
+                cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 12,
+                textAlign: 'left', transition: 'all .2s',
+              }}>
+                <div style={{
+                  width: 42, height: 42, borderRadius: 12, flexShrink: 0,
+                  background: t.accent + '18', border: `1px solid ${t.accent}25`,
+                  display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 20,
+                }}>{t.icon}</div>
+                <div style={{ flex: 1 }}>
+                  <div style={{ fontSize: 13, fontWeight: 700, color: '#fff' }}>{t.label}</div>
+                  <div style={{ fontSize: 11, color: 'var(--t-mute)', marginTop: 1 }}>{t.sub}</div>
+                </div>
+                <span style={{ color: t.accent, fontSize: 16, opacity: .6 }}>→</span>
+              </button>
+            ))}
+          </div>
+        </div>
 
         {/* ── Category grid ──────────────────────────────── */}
         <div style={{ marginBottom: 14 }}>

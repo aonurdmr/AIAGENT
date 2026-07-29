@@ -303,6 +303,16 @@ class Favorite(BaseModel):
     item_name: str = ""
     created_at: str = Field(default_factory=lambda: datetime.now(timezone.utc).isoformat())
 
+class Notification(BaseModel):
+    model_config = ConfigDict(extra="ignore")
+    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    user_id: str
+    type: str  # like | comment | system
+    message: str
+    data: Dict[str, Any] = {}
+    read: bool = False
+    created_at: str = Field(default_factory=lambda: datetime.now(timezone.utc).isoformat())
+
 
 # ── Phase-3 agent definitions ──────────────────────────────────────────────────
 
@@ -1020,6 +1030,14 @@ async def like_post(post_id: str, user_id: str = "anonymous"):
     else:
         liked_by.append(user_id)
         likes = post.get("likes", 0) + 1
+        owner_id = post.get("user_id", "")
+        if owner_id and owner_id != user_id and owner_id != "anonymous":
+            notif = Notification(
+                user_id=owner_id, type="like",
+                message=f"Birileri '{post.get('title', 'paylaşımını')}' beğendi ❤️",
+                data={"post_id": post_id},
+            )
+            await db.notifications.insert_one(notif.model_dump())
     await db.posts.update_one({"id": post_id}, {"$set": {"likes": likes, "liked_by": liked_by}})
     return {"likes": likes, "liked": user_id in liked_by}
 
@@ -1035,6 +1053,15 @@ async def add_comment(post_id: str, req: CommentCreate, current_user: dict = Dep
         "content": req.content, "created_at": datetime.now(timezone.utc).isoformat(),
     }
     await db.posts.update_one({"id": post_id}, {"$push": {"comments": comment}})
+    owner_id = post.get("user_id", "")
+    commenter_id = current_user['id'] if current_user else "anonymous"
+    if owner_id and owner_id != commenter_id and owner_id != "anonymous":
+        notif = Notification(
+            user_id=owner_id, type="comment",
+            message=f"@{uname} '{post.get('title', 'paylaşımına')}' yorum yaptı 💬",
+            data={"post_id": post_id},
+        )
+        await db.notifications.insert_one(notif.model_dump())
     return comment
 
 
@@ -1171,6 +1198,28 @@ async def get_leaderboard(period: str = "all"):
     for i, entry in enumerate(board):
         entry["rank"] = i + 1
     return board[:20]
+
+
+@api_router.get("/notifications")
+async def get_notifications(current_user: dict = Depends(get_current_user)):
+    uid = current_user["id"]
+    notifs = await db.notifications.find({"user_id": uid}, {"_id": 0}).sort("created_at", -1).to_list(50)
+    unread = sum(1 for n in notifs if not n.get("read"))
+    return {"notifications": notifs, "unread": unread}
+
+
+@api_router.put("/notifications/read")
+async def mark_all_read(current_user: dict = Depends(get_current_user)):
+    uid = current_user["id"]
+    await db.notifications.update_many({"user_id": uid, "read": False}, {"$set": {"read": True}})
+    return {"ok": True}
+
+
+@api_router.put("/notifications/{notif_id}/read")
+async def mark_one_read(notif_id: str, current_user: dict = Depends(get_current_user)):
+    uid = current_user["id"]
+    await db.notifications.update_one({"id": notif_id, "user_id": uid}, {"$set": {"read": True}})
+    return {"ok": True}
 
 
 @api_router.get("/analytics")

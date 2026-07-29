@@ -1,17 +1,39 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
+import axios from 'axios';
+import { useAuth } from '@/context/AuthContext';
+
+const API = process.env.REACT_APP_BACKEND_URL + '/api';
 
 const TABS = [
-  { path: '/',          icon: '🏠', label: 'Ana Sayfa' },
-  { path: '/arama',     icon: '🔍', label: 'Arama' },
-  { path: '/ajanlar',   icon: '🤖', label: 'Ajanlar' },
-  { path: '/liderboard',icon: '🏆', label: 'Lider' },
-  { path: '/profil',    icon: '👤', label: 'Profil' },
+  { path: '/',             icon: '🏠', label: 'Ana Sayfa' },
+  { path: '/arama',        icon: '🔍', label: 'Arama' },
+  { path: '/ajanlar',      icon: '🤖', label: 'Ajanlar' },
+  { path: '/bildirimler',  icon: '🔔', label: 'Bildirim', notif: true },
+  { path: '/profil',       icon: '👤', label: 'Profil' },
 ];
 
 export default function Navbar() {
   const navigate  = useNavigate();
   const location  = useLocation();
+  const { user, token } = useAuth();
+  const [unread, setUnread] = useState(0);
+
+  useEffect(() => {
+    if (!user || !token) { setUnread(0); return; }
+    const fetch = () => {
+      axios.get(`${API}/notifications`, { headers: { Authorization: `Bearer ${token}` } })
+        .then(r => setUnread(r.data.unread || 0))
+        .catch(() => {});
+    };
+    fetch();
+    const iv = setInterval(fetch, 30000);
+    return () => clearInterval(iv);
+  }, [user, token]);
+
+  useEffect(() => {
+    if (location.pathname === '/bildirimler') setUnread(0);
+  }, [location.pathname]);
 
   return (
     <nav style={{
@@ -39,6 +61,7 @@ export default function Navbar() {
       }}>
         {TABS.map(tab => {
           const active = location.pathname === tab.path;
+          const badge = tab.notif && unread > 0;
           return (
             <button
               key={tab.path}
@@ -58,6 +81,7 @@ export default function Navbar() {
                 transition: 'all .2s cubic-bezier(.34,1.2,.64,1)',
                 transform: active ? 'scale(1.05)' : 'scale(1)',
                 minWidth: 56,
+                position: 'relative',
               }}
             >
               <span style={{
@@ -65,8 +89,22 @@ export default function Navbar() {
                 lineHeight: 1,
                 filter: active ? 'drop-shadow(0 0 6px rgba(34,197,94,.55))' : 'none',
                 transition: 'filter .2s',
+                position: 'relative',
               }}>
                 {tab.icon}
+                {badge && (
+                  <span style={{
+                    position: 'absolute', top: -3, right: -4,
+                    background: '#ef4444', color: '#fff',
+                    borderRadius: '50%', fontSize: 8, fontWeight: 800,
+                    width: 14, height: 14,
+                    display: 'flex', alignItems: 'center', justifyContent: 'center',
+                    border: '1.5px solid rgba(13,31,13,.92)',
+                    lineHeight: 1,
+                  }}>
+                    {unread > 9 ? '9+' : unread}
+                  </span>
+                )}
               </span>
               <span style={{
                 fontSize: 9.5,

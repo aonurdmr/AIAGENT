@@ -19,7 +19,8 @@ import Equipment    from '@/components/Equipment';
 import Leaderboard  from '@/components/Leaderboard';
 import Search       from '@/components/Search';
 import WeatherDetail from '@/components/WeatherDetail';
-import Analytics    from '@/components/Analytics';
+import Analytics      from '@/components/Analytics';
+import Notifications  from '@/components/Notifications';
 import { ToastProvider } from '@/components/Toast';
 import '@/App.css';
 
@@ -50,6 +51,7 @@ function AppInner() {
         <Route path="/arama"       element={<Search />} />
         <Route path="/hava"        element={<WeatherDetail />} />
         <Route path="/analiz"      element={<Analytics />} />
+        <Route path="/bildirimler" element={<Notifications />} />
       </Routes>
       {!hideNav && <Navbar />}
     </div>

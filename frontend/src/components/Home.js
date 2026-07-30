@@ -48,6 +48,7 @@ const TOOLS = [
   { icon: '🚨', label: 'Acil Durum',   sub: 'İlk yardım, SOS ve hayatta kalma', path: '/acil',   accent: '#ef4444' },
   { icon: '🌊', label: 'Su Sporları',  sub: '8 dal · Türkiye\'nin en iyi noktaları', path: '/su-sporlari', accent: '#06b6d4' },
   { icon: '📈', label: 'Hava Trendleri', sub: 'Aylık ortalama ve balıkçılık skoru', path: '/trend',      accent: '#38bdf8' },
+  { icon: '📓', label: 'Doğa Günlüğü', sub: 'Kişisel tür gözlem kayıtları',      path: '/gunluk',     accent: '#a855f7' },
 ];
 
 const CATS = [

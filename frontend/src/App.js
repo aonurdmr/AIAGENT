@@ -46,6 +46,7 @@ import PlantGuide      from '@/components/PlantGuide';
 import EmergencyGuide  from '@/components/EmergencyGuide';
 import WaterSports     from '@/components/WaterSports';
 import WeatherTrends   from '@/components/WeatherTrends';
+import WildlifeLog     from '@/components/WildlifeLog';
 import { ToastProvider } from '@/components/Toast';
 import '@/App.css';
 
@@ -102,6 +103,7 @@ function AppInner() {
         <Route path="/acil"        element={<EmergencyGuide />} />
         <Route path="/su-sporlari" element={<WaterSports />} />
         <Route path="/trend"       element={<WeatherTrends />} />
+        <Route path="/gunluk"      element={<WildlifeLog />} />
       </Routes>
       {!hideNav && <Navbar />}
     </div>

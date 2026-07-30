@@ -65,6 +65,7 @@ import NatureQuiz      from '@/components/NatureQuiz';
 import Tournament      from '@/components/Tournament';
 import NationalParks   from '@/components/NationalParks';
 import FirstAid        from '@/components/FirstAid';
+import CampingChecklist from '@/components/CampingChecklist';
 import { ToastProvider } from '@/components/Toast';
 import '@/App.css';
 
@@ -140,6 +141,7 @@ function AppInner() {
         <Route path="/turnuva"      element={<Tournament />} />
         <Route path="/milli-park"   element={<NationalParks />} />
         <Route path="/ilk-yardim"   element={<FirstAid />} />
+        <Route path="/kamp-liste"   element={<CampingChecklist />} />
       </Routes>
       {!hideNav && <Navbar />}
     </div>

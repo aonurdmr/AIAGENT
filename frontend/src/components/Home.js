@@ -67,6 +67,7 @@ const TOOLS = [
   { icon: '🏆', label: 'Turnuva', sub: 'Canlı zamanlayıcı & sıralama', path: '/turnuva', accent: '#f59e0b' },
   { icon: '🌿', label: 'Milli Parklar', sub: '8 park · aktivite & yaban hayatı', path: '/milli-park', accent: '#22c55e' },
   { icon: '🩺', label: 'İlk Yardım', sub: '8 senaryo · adım adım müdahale', path: '/ilk-yardim', accent: '#ef4444' },
+  { icon: '⛺', label: 'Kamp Listesi', sub: '30 madde · kişiselleştirilebilir', path: '/kamp-liste', accent: '#22c55e' },
 ];
 
 const CATS = [

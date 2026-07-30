@@ -42,6 +42,7 @@ import HuntingCalendar from '@/components/HuntingCalendar';
 import CampingGuide    from '@/components/CampingGuide';
 import TrailFinder     from '@/components/TrailFinder';
 import BirdWatching   from '@/components/BirdWatching';
+import PlantGuide     from '@/components/PlantGuide';
 import { ToastProvider } from '@/components/Toast';
 import '@/App.css';
 
@@ -94,6 +95,7 @@ function AppInner() {
         <Route path="/kamp"        element={<CampingGuide />} />
         <Route path="/rotalar"     element={<TrailFinder />} />
         <Route path="/kuslar"      element={<BirdWatching />} />
+        <Route path="/bitkiler"    element={<PlantGuide />} />
       </Routes>
       {!hideNav && <Navbar />}
     </div>

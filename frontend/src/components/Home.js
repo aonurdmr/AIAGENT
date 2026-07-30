@@ -44,6 +44,7 @@ const TOOLS = [
   { icon: '⛺', label: 'Kamp Rehberi', sub: '10 kamp yeri + ekipman listesi',   path: '/kamp',      accent: '#22c55e' },
   { icon: '🥾', label: 'Doğa Yolları', sub: '10 yürüyüş rotası, filtreli',     path: '/rotalar',   accent: '#84cc16' },
   { icon: '🦅', label: 'Kuş Gözlemi', sub: '12 tür, 6 gözlem noktası',       path: '/kuslar',    accent: '#38bdf8' },
+  { icon: '🌿', label: 'Bitki Rehberi', sub: 'Yenilebilir & zehirli bitkiler', path: '/bitkiler',  accent: '#22c55e' },
 ];
 
 const CATS = [

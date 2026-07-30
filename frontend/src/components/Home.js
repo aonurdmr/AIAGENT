@@ -60,6 +60,7 @@ const TOOLS = [
   { icon: '🐟', label: 'Balık Veritabanı', sub: 'FishWatch · besin değeri & sürdürülebilirlik', path: '/balik-db', accent: '#06b6d4' },
   { icon: '☀️', label: 'Güneş Takibi', sub: 'Doğuş · batış · altın balıkçılık saatleri', path: '/gun', accent: '#f59e0b' },
   { icon: '🏹', label: 'Av Bölgeleri', sub: '8 onaylı av sahası · sezon & izin bilgisi', path: '/av-bolge', accent: '#f59e0b' },
+  { icon: '🎣', label: 'Balıkçılık Noktaları', sub: '8 elit nokta · tür, yöntem & sezon', path: '/balik-nokta', accent: '#06b6d4' },
 ];
 
 const CATS = [

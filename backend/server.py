@@ -1297,6 +1297,92 @@ class ChecklistCreate(BaseModel):
     use_template: bool = True
 
 
+class TripReportRequest(BaseModel):
+    period: str = "last30"   # last7 | last30 | last90 | all
+    activity: str = "all"
+
+
+@api_router.post("/trip-report")
+async def generate_trip_report(req: TripReportRequest, current_user: dict = Depends(get_current_user)):
+    uid = current_user["id"]
+    now = datetime.now(timezone.utc)
+    period_map = {"last7": 7, "last30": 30, "last90": 90}
+    days = period_map.get(req.period)
+    query: dict = {"user_id": uid}
+    if days:
+        since = (now - timedelta(days=days)).isoformat()
+        query["date"] = {"$gte": since}
+    if req.activity != "all":
+        query["type"] = req.activity
+
+    acts = await db.activities.find(query, {"_id": 0}).sort("date", -1).to_list(200)
+    if not acts:
+        return {"report": None, "stats": {}, "message": "Bu dönemde aktivite bulunamadı."}
+
+    # compute stats
+    type_counts: Dict[str, int] = {}
+    locations = set()
+    species_set = set()
+    max_weight = 0.0
+    max_weight_sp = ""
+    for a in acts:
+        t = a.get("type", "other")
+        type_counts[t] = type_counts.get(t, 0) + 1
+        loc = (a.get("location_name") or "").strip()
+        if loc:
+            locations.add(loc)
+        sp = (a.get("species") or "").strip()
+        if sp:
+            species_set.add(sp)
+        w = a.get("weight") or 0
+        if w > max_weight:
+            max_weight = w
+            max_weight_sp = sp or "balık"
+
+    stats = {
+        "total": len(acts),
+        "type_counts": type_counts,
+        "unique_locations": len(locations),
+        "unique_species": len(species_set),
+        "top_locations": list(locations)[:3],
+        "top_species": list(species_set)[:5],
+        "best_catch": f"{max_weight}kg {max_weight_sp}" if max_weight else None,
+    }
+
+    type_tr = {"fishing": "balıkçılık", "hunting": "avcılık", "camping": "kamp", "birdwatching": "kuş gözlemi"}
+    counts_str = ", ".join(f"{v} {type_tr.get(k, k)}" for k, v in type_counts.items())
+    locs_str = ", ".join(list(locations)[:5]) or "çeşitli lokasyonlar"
+    sp_str   = ", ".join(list(species_set)[:5]) or "çeşitli türler"
+
+    period_label = {"last7": "son 7 gün", "last30": "son 30 gün", "last90": "son 90 gün", "all": "tüm zamanlar"}.get(req.period, req.period)
+
+    system = (
+        "Sen deneyimli bir outdoor yazarısın. Türkçe, samimi ve heyecanlı bir seyahat raporu yaz. "
+        "3-4 paragraf, akıcı bir anlatım kullan. Doğal ve kişisel bir ton benimse."
+    )
+    prompt = (
+        f"Kullanıcı adı: @{current_user['username']}\n"
+        f"Dönem: {period_label}\n"
+        f"Aktiviteler: {counts_str} ({len(acts)} toplam)\n"
+        f"Lokasyonlar: {locs_str}\n"
+        f"Türler / hedefler: {sp_str}\n"
+        + (f"En iyi av: {stats['best_catch']}\n" if stats['best_catch'] else "")
+        + "\nBu verilerden ilham alan, gerçekçi ve etkileyici bir outdoor seyahat raporu yaz. "
+        "Macera duygusunu, doğayla bağlantıyı ve başarıları vurgula."
+    )
+
+    try:
+        narrative = await nvidia_chat(system, prompt, max_tokens=512)
+    except Exception:
+        narrative = (
+            f"@{current_user['username']} olarak {period_label} boyunca {len(acts)} aktivite tamamladım. "
+            f"{locs_str} bölgelerini keşfettim ve {sp_str} türleriyle karşılaştım. "
+            "Her seyahat yeni bir macera, her av farklı bir hikaye!"
+        )
+
+    return {"report": narrative, "stats": stats, "period": period_label, "activity": req.activity}
+
+
 @api_router.get("/checklists")
 async def get_checklists(current_user: dict = Depends(get_current_user)):
     return await db.checklists.find({"user_id": current_user["id"]}, {"_id": 0}).sort("created_at", -1).to_list(50)

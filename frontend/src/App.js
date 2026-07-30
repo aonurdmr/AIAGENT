@@ -27,6 +27,7 @@ import Notes           from '@/components/Notes';
 import Settings         from '@/components/Settings';
 import Recommendations  from '@/components/Recommendations';
 import Checklist       from '@/components/Checklist';
+import TripReport      from '@/components/TripReport';
 import { ToastProvider } from '@/components/Toast';
 import '@/App.css';
 
@@ -64,6 +65,7 @@ function AppInner() {
         <Route path="/ayarlar"     element={<Settings />} />
         <Route path="/oneri"       element={<Recommendations />} />
         <Route path="/kontrol"     element={<Checklist />} />
+        <Route path="/rapor"       element={<TripReport />} />
       </Routes>
       {!hideNav && <Navbar />}
     </div>

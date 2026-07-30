@@ -1001,8 +1001,43 @@ async def get_spot(spot_id: str):
 # ── Activities ─────────────────────────────────────────────────────────────────
 
 @api_router.get("/activities")
-async def get_activities(limit: int = 50):
-    return await db.activities.find({}, {"_id": 0}).sort("date", -1).to_list(limit)
+async def get_activities(limit: int = 50, user_id: Optional[str] = None, type: Optional[str] = None):
+    query: dict = {}
+    if user_id:
+        query["user_id"] = user_id
+    if type:
+        query["type"] = type
+    return await db.activities.find(query, {"_id": 0}).sort("date", -1).to_list(limit)
+
+
+@api_router.get("/trophies")
+async def get_trophies(current_user: dict = Depends(get_current_user)):
+    uid = current_user["id"]
+    acts = await db.activities.find({"user_id": uid, "type": "fishing"}, {"_id": 0}).to_list(500)
+
+    records: Dict[str, dict] = {}
+    for a in acts:
+        sp = (a.get("species") or "Bilinmeyen").strip()
+        w = a.get("weight") or 0
+        l = a.get("length") or 0
+        if sp not in records:
+            records[sp] = {"species": sp, "best_weight": 0, "best_length": 0, "count": 0, "location": "", "date": ""}
+        records[sp]["count"] += 1
+        if w > records[sp]["best_weight"]:
+            records[sp]["best_weight"] = w
+            records[sp]["location"]    = a.get("location_name", "")
+            records[sp]["date"]        = a.get("date", "")
+        if l > records[sp]["best_length"]:
+            records[sp]["best_length"] = l
+
+    trophy_list = sorted(records.values(), key=lambda x: -x["best_weight"])
+    total_weight = sum(a.get("weight") or 0 for a in acts)
+    return {
+        "trophies": trophy_list,
+        "total_catches": len(acts),
+        "unique_species": len(records),
+        "total_weight": round(total_weight, 2),
+    }
 
 
 @api_router.post("/activities")
@@ -1660,6 +1695,108 @@ async def get_analytics(current_user: dict = Depends(get_optional_user)):
 @api_router.get("/")
 async def root():
     return {"message": "DoğaAI Platform API v3", "models": {"chat": CHAT_MODEL, "vision": VISION_MODEL}}
+
+
+# ── Bait Guide ─────────────────────────────────────────────────────────────────
+
+BAIT_DATA = {
+    "sazan": {
+        "label": "Sazan (Carp)", "water": "fresh",
+        "baits": [
+            {"name": "Mısır", "icon": "🌽", "type": "Doğal", "seasons": ["ilkbahar","yaz","sonbahar"], "rating": 5, "tip": "En etkili sazan yemi. 2-3 tane iğneye takın."},
+            {"name": "Ekmek Hamuru", "icon": "🍞", "type": "Doğal", "seasons": ["ilkbahar","yaz","sonbahar","kış"], "rating": 4, "tip": "Sert yoğrulmuş hamur, daha uzun süre suda kalır."},
+            {"name": "Solucan", "icon": "🪱", "type": "Doğal", "seasons": ["ilkbahar","yaz","sonbahar","kış"], "rating": 4, "tip": "Tüm mevsimlerde işe yarar, özellikle çamurlu sularda."},
+            {"name": "Boyle", "icon": "🟤", "type": "Yapay", "seasons": ["yaz","sonbahar"], "rating": 5, "tip": "Protein bazlı yem topu. Sazan için özel karışımlar kullanın."},
+            {"name": "Haşlanmış Patates", "icon": "🥔", "type": "Doğal", "seasons": ["yaz","sonbahar"], "rating": 3, "tip": "Az pişmiş, sert olması tercih edilir."},
+            {"name": "Pellet", "icon": "🟡", "type": "Hazır", "seasons": ["ilkbahar","yaz","sonbahar","kış"], "rating": 4, "tip": "Sazan peletleri hızlı koku yayar."},
+        ]
+    },
+    "levrek": {
+        "label": "Levrek (Bass)", "water": "salt",
+        "baits": [
+            {"name": "Küçük Balık", "icon": "🐟", "type": "Doğal", "seasons": ["yaz","sonbahar"], "rating": 5, "tip": "Hamsi veya istavrit en iyi sonucu verir."},
+            {"name": "Karides", "icon": "🦐", "type": "Doğal", "seasons": ["ilkbahar","yaz","sonbahar","kış"], "rating": 4, "tip": "Taze veya donmuş karides her mevsim işe yarar."},
+            {"name": "Soft Bait", "icon": "🎣", "type": "Yapay", "seasons": ["yaz","sonbahar"], "rating": 5, "tip": "Silikon balık taklitleri çok etkili, yavaş çekim kullanın."},
+            {"name": "Popper", "icon": "💧", "type": "Yapay", "seasons": ["yaz"], "rating": 4, "tip": "Sabah erken ve gün batımında yüzeyde büyük patlama yapar."},
+            {"name": "Jig", "icon": "⚡", "type": "Yapay", "seasons": ["ilkbahar","yaz","sonbahar","kış"], "rating": 4, "tip": "Metal jig, derine çöküşlerde çok etkili."},
+            {"name": "Ahtapot Parçası", "icon": "🐙", "type": "Doğal", "seasons": ["ilkbahar","sonbahar","kış"], "rating": 3, "tip": "Özellikle soğuk sezonda koku ile çeker."},
+        ]
+    },
+    "alabalik": {
+        "label": "Alabalık (Trout)", "water": "fresh",
+        "baits": [
+            {"name": "Solucan", "icon": "🪱", "type": "Doğal", "seasons": ["ilkbahar","yaz","sonbahar","kış"], "rating": 5, "tip": "Küçük parçalara bölerek kullanın, doğal görünüm önemli."},
+            {"name": "Spinner", "icon": "✨", "type": "Yapay", "seasons": ["ilkbahar","yaz","sonbahar"], "rating": 5, "tip": "Parlak metal spinnerlar akan sularda mükemmel çalışır."},
+            {"name": "Küçük Minnow", "icon": "🐠", "type": "Yapay", "seasons": ["yaz","sonbahar"], "rating": 4, "tip": "Balık taklidi maşrapa tipi yemler büyük alabalık için ideal."},
+            {"name": "Alabalık Pelet", "icon": "🔴", "type": "Hazır", "seasons": ["ilkbahar","yaz","sonbahar","kış"], "rating": 4, "tip": "Kırmızı pellet rengi alabalık için çok çekici."},
+            {"name": "Mısır Kurdu", "icon": "🐛", "type": "Doğal", "seasons": ["ilkbahar","yaz"], "rating": 4, "tip": "Küçük iğne ile hafifçe takın, doğal salınım sağlayın."},
+            {"name": "Flies (Sinek)", "icon": "🪰", "type": "Yapay", "seasons": ["ilkbahar","yaz","sonbahar"], "rating": 5, "tip": "Sinek balıkçılığı (fly fishing) en etkili alabalık yöntemi."},
+        ]
+    },
+    "turna": {
+        "label": "Turna (Pike)", "water": "fresh",
+        "baits": [
+            {"name": "Büyük Spinner", "icon": "🌀", "type": "Yapay", "seasons": ["ilkbahar","yaz","sonbahar","kış"], "rating": 5, "tip": "Büyük spinner + tüylü çekim. Turna yüzeyden saldırır."},
+            {"name": "Wobbler", "icon": "🐟", "type": "Yapay", "seasons": ["ilkbahar","yaz","sonbahar"], "rating": 5, "tip": "Orta derinlikte yavaş manevralı wobbler çok etkili."},
+            {"name": "Canlı Balık", "icon": "🐠", "type": "Doğal", "seasons": ["sonbahar","kış"], "rating": 5, "tip": "İstavrit veya küçük sazan canlı yem olarak kullanılır."},
+            {"name": "Rubber Fish", "icon": "🦈", "type": "Yapay", "seasons": ["yaz","sonbahar"], "rating": 4, "tip": "Büyük silikon balık taklidi, derin ağır jig başlı."},
+            {"name": "Frog Lure", "icon": "🐸", "type": "Yapay", "seasons": ["yaz"], "rating": 4, "tip": "Yüzey kurbağa taklidi, kamışlık ve su bitkilerinde harika."},
+        ]
+    },
+    "sudak": {
+        "label": "Sudak (Zander)", "water": "fresh",
+        "baits": [
+            {"name": "Twister Jig", "icon": "🌀", "type": "Yapay", "seasons": ["ilkbahar","yaz","sonbahar","kış"], "rating": 5, "tip": "Twister kuyruklu silikon, dipte yavaş çekim mükemmel."},
+            {"name": "Küçük Balık", "icon": "🐟", "type": "Doğal", "seasons": ["sonbahar","kış"], "rating": 4, "tip": "Küçük canlı balık özellikle soğuk mevsimde çok etkili."},
+            {"name": "Shad Lure", "icon": "💨", "type": "Yapay", "seasons": ["yaz","sonbahar"], "rating": 4, "tip": "Shad tipi silikon balık gerçekçi titreşim yapar."},
+            {"name": "Metal Jig", "icon": "⚡", "type": "Yapay", "seasons": ["ilkbahar","yaz","sonbahar","kış"], "rating": 4, "tip": "Dip yapısının üzerinde dikey jig hareketi deneyin."},
+        ]
+    },
+    "karagoz": {
+        "label": "Karagöz (Bream)", "water": "salt",
+        "baits": [
+            {"name": "Karides", "icon": "🦐", "type": "Doğal", "seasons": ["ilkbahar","yaz","sonbahar","kış"], "rating": 5, "tip": "Taze karides en etkili karagöz yemi."},
+            {"name": "Midye", "icon": "🦪", "type": "Doğal", "seasons": ["ilkbahar","yaz","sonbahar","kış"], "rating": 5, "tip": "Açılmış midye iğneye geçirin, çok güçlü koku yarar."},
+            {"name": "Yengeç", "icon": "🦀", "type": "Doğal", "seasons": ["yaz","sonbahar"], "rating": 4, "tip": "Küçük yengeç veya yengeç eti parlak yem."},
+            {"name": "Solucan", "icon": "🪱", "type": "Doğal", "seasons": ["ilkbahar","sonbahar"], "rating": 3, "tip": "Tuzlu su solucanı tercih edilir."},
+        ]
+    },
+    "cipura": {
+        "label": "Çipura (Sea Bream)", "water": "salt",
+        "baits": [
+            {"name": "Karides", "icon": "🦐", "type": "Doğal", "seasons": ["ilkbahar","yaz","sonbahar","kış"], "rating": 5, "tip": "En çok tercih edilen çipura yemi."},
+            {"name": "Sülük", "icon": "🪲", "type": "Doğal", "seasons": ["yaz","sonbahar"], "rating": 4, "tip": "Deniz sülüğü çipura için çok çekici."},
+            {"name": "Jig Head Soft", "icon": "🎣", "type": "Yapay", "seasons": ["ilkbahar","yaz","sonbahar"], "rating": 4, "tip": "Küçük silikon yem, hafif jig başı ile dip avı."},
+            {"name": "İstiridye Eti", "icon": "🦪", "type": "Doğal", "seasons": ["ilkbahar","yaz"], "rating": 4, "tip": "Küçük parçalar halinde, koku çok güçlü."},
+        ]
+    },
+    "yayın": {
+        "label": "Yayın Balığı (Catfish)", "water": "fresh",
+        "baits": [
+            {"name": "Solucan Demeti", "icon": "🪱", "type": "Doğal", "seasons": ["ilkbahar","yaz","sonbahar","kış"], "rating": 5, "tip": "5-6 solucan birden iğneye takın, büyük koku alanı oluşturur."},
+            {"name": "Karaciğer", "icon": "🩸", "type": "Doğal", "seasons": ["yaz","sonbahar"], "rating": 5, "tip": "Tavuk veya sığır karaciğeri çok güçlü koku yayar."},
+            {"name": "Büyük Canlı Balık", "icon": "🐟", "type": "Doğal", "seasons": ["yaz","sonbahar"], "rating": 5, "tip": "Küçük sazan veya levrek canlı yem olarak kullanılır."},
+            {"name": "Peynir", "icon": "🧀", "type": "Doğal", "seasons": ["yaz"], "rating": 3, "tip": "Kuvvetli kokulu peynir, özellikle gece avında."},
+            {"name": "Silikon Balık (Büyük)", "icon": "🦈", "type": "Yapay", "seasons": ["yaz","sonbahar"], "rating": 4, "tip": "25-30 cm büyük silikon, troling veya bottom jig."},
+        ]
+    },
+}
+
+@api_router.get("/bait-guide")
+async def get_bait_guide(species: str = "sazan", season: str = ""):
+    data = BAIT_DATA.get(species)
+    if not data:
+        raise HTTPException(404, "Species not found")
+    baits = data["baits"]
+    if season:
+        baits = [b for b in baits if not season or season in b["seasons"]]
+    return {
+        "species": species,
+        "label": data["label"],
+        "water": data["water"],
+        "baits": baits,
+        "all_species": [{"id": k, "label": v["label"], "water": v["water"]} for k, v in BAIT_DATA.items()],
+    }
 
 
 # ── App setup ──────────────────────────────────────────────────────────────────

@@ -32,6 +32,7 @@ const TOOLS = [
   { icon: '📄', label: 'Seyahat Raporu',   sub: 'AI ile trip özeti',       path: '/rapor',     accent: '#c084fc' },
   { icon: '🏆', label: 'Kupa Dolabı',      sub: 'Kişisel balık rekortları', path: '/kupalar',   accent: '#fbbf24' },
   { icon: '⚖️', label: 'Kilo Hesabı',     sub: 'Boy → ağırlık tahmini',    path: '/hesap',     accent: '#38bdf8' },
+  { icon: '🪱', label: 'Yem Rehberi',     sub: 'Tür bazlı yem önerileri',  path: '/yem',       accent: '#84cc16' },
 ];
 
 const CATS = [

@@ -29,6 +29,7 @@ import Recommendations  from '@/components/Recommendations';
 import Checklist       from '@/components/Checklist';
 import TripReport      from '@/components/TripReport';
 import TrophyCabinet   from '@/components/TrophyCabinet';
+import FishCalc        from '@/components/FishCalc';
 import { ToastProvider } from '@/components/Toast';
 import '@/App.css';
 
@@ -68,6 +69,7 @@ function AppInner() {
         <Route path="/kontrol"     element={<Checklist />} />
         <Route path="/rapor"       element={<TripReport />} />
         <Route path="/kupalar"     element={<TrophyCabinet />} />
+        <Route path="/hesap"       element={<FishCalc />} />
       </Routes>
       {!hideNav && <Navbar />}
     </div>

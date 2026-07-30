@@ -76,6 +76,8 @@ const TOOLS = [
   { icon: '💧', label: 'Su Kalitesi', sub: '5 parametre · balıkçılık kalite skoru', path: '/su-kalite', accent: '#06b6d4' },
   { icon: '⚖️', label: 'Av Mevzuatı', sub: '4915 sayılı Kanun · izinler ve cezalar', path: '/av-kanun', accent: '#60a5fa' },
   { icon: '🌍', label: 'Hava Karşılaştırma', sub: '6 şehir · anlık hava & balıkçılık skoru', path: '/hava-karsi', accent: '#38bdf8' },
+  { icon: '📔', label: 'Balıkçılık Günlüğü', sub: 'Seans kaydı · kişisel istatistikler', path: '/balik-gunluk', accent: '#22c55e' },
+  { icon: '📊', label: 'Popülasyon Takibi', sub: '8 tür · aylık aktivite & stok durumu', path: '/populasyon', accent: '#3b82f6' },
 ];
 
 const CATS = [

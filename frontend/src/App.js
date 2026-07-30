@@ -72,8 +72,10 @@ import MushroomGuide   from '@/components/MushroomGuide';
 import StarMap         from '@/components/StarMap';
 import SnakeGuide      from '@/components/SnakeGuide';
 import WaterQuality    from '@/components/WaterQuality';
-import HuntingLaws     from '@/components/HuntingLaws';
-import WeatherCompare  from '@/components/WeatherCompare';
+import HuntingLaws       from '@/components/HuntingLaws';
+import WeatherCompare    from '@/components/WeatherCompare';
+import FishingDiary      from '@/components/FishingDiary';
+import PopulationTracker from '@/components/PopulationTracker';
 import { ToastProvider } from '@/components/Toast';
 import '@/App.css';
 
@@ -158,6 +160,8 @@ function AppInner() {
         <Route path="/su-kalite"    element={<WaterQuality />} />
         <Route path="/av-kanun"     element={<HuntingLaws />} />
         <Route path="/hava-karsi"   element={<WeatherCompare />} />
+        <Route path="/balik-gunluk" element={<FishingDiary />} />
+        <Route path="/populasyon"   element={<PopulationTracker />} />
       </Routes>
       {!hideNav && <Navbar />}
     </div>

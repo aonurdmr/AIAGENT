@@ -31,6 +31,7 @@ import TripReport      from '@/components/TripReport';
 import TrophyCabinet   from '@/components/TrophyCabinet';
 import FishCalc        from '@/components/FishCalc';
 import BaitGuide       from '@/components/BaitGuide';
+import MoonCalendar    from '@/components/MoonCalendar';
 import { ToastProvider } from '@/components/Toast';
 import '@/App.css';
 
@@ -72,6 +73,7 @@ function AppInner() {
         <Route path="/kupalar"     element={<TrophyCabinet />} />
         <Route path="/hesap"       element={<FishCalc />} />
         <Route path="/yem"         element={<BaitGuide />} />
+        <Route path="/ay"          element={<MoonCalendar />} />
       </Routes>
       {!hideNav && <Navbar />}
     </div>

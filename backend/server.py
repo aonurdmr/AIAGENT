@@ -1782,6 +1782,64 @@ BAIT_DATA = {
     },
 }
 
+@api_router.get("/moon")
+async def get_moon_calendar(year: int = 0, month: int = 0):
+    import math
+    now = datetime.now(timezone.utc)
+    y = year  or now.year
+    m = month or now.month
+
+    def moon_phase(date: datetime) -> float:
+        """Return moon age in days (0=new, 7.4=first quarter, 14.8=full, 22.1=last quarter, 29.5=new)"""
+        d = date
+        c = 0.0
+        e = d.day
+        jd = 367*d.year - int(7*(d.year+int((d.month+9)/12))/4) + int(275*d.month/9) + e + 1721013.5
+        jd += (d.hour + d.minute/60.0) / 24.0
+        k = math.floor((d.year - 1900) * 12.3685)
+        t = k / 1236.85
+        t2 = t * t
+        t3 = t2 * t
+        j0 = 2415020.75933 + 29.53058868*k + 0.0001178*t2 - 0.000000155*t3
+        j0 += 0.00033 * math.sin(math.radians(166.56 + 132.87*t - 0.009173*t2))
+        m0 = 359.2242 + 29.10535608*k - 0.0000333*t2 - 0.00000347*t3
+        m1 = 306.0253 + 385.81691806*k + 0.0107306*t2 + 0.00001236*t3
+        a  = 21.2964 + 390.67050646*k - 0.0016528*t2 - 0.00000239*t3
+        m0 = m0 % 360; m1 = m1 % 360; a = a % 360
+        f  = (0.1734 - 0.000393*t)*math.sin(math.radians(m0)) + 0.0021*math.sin(math.radians(2*m0))
+        f -= 0.4068*math.sin(math.radians(m1)) + 0.0161*math.sin(math.radians(2*m1)) - 0.0004*math.sin(math.radians(3*m1))
+        f += 0.0104*math.sin(math.radians(2*a)) - 0.0051*math.sin(math.radians(m0+m1))
+        f -= 0.0074*math.sin(math.radians(m0-m1)) + 0.0004*math.sin(math.radians(2*a+m0))
+        f -= 0.0004*math.sin(math.radians(2*a-m0)) - 0.0006*math.sin(math.radians(2*a+m1))
+        f += 0.0010*math.sin(math.radians(2*a-m1)) + 0.0005*math.sin(math.radians(m0+2*m1))
+        phase_jd = j0 + f
+        age = (jd - phase_jd) % 29.530588
+        return round(age, 2)
+
+    def phase_info(age: float):
+        if age < 1.85:   return {"name": "Yeni Ay",       "icon": "🌑", "score": 3}
+        if age < 7.38:   return {"name": "Hilal",         "icon": "🌒", "score": 5}
+        if age < 9.22:   return {"name": "İlk Dördün",   "icon": "🌓", "score": 8}
+        if age < 12.91:  return {"name": "Şişen Ay",     "icon": "🌔", "score": 9}
+        if age < 16.61:  return {"name": "Dolunay",      "icon": "🌕", "score": 10}
+        if age < 20.30:  return {"name": "Azalan Ay",    "icon": "🌖", "score": 8}
+        if age < 23.22:  return {"name": "Son Dördün",   "icon": "🌗", "score": 7}
+        if age < 27.68:  return {"name": "Yaşlı Hilal",  "icon": "🌘", "score": 4}
+        return {"name": "Yeni Ay", "icon": "🌑", "score": 3}
+
+    import calendar
+    days_in_month = calendar.monthrange(y, m)[1]
+    result = []
+    for day in range(1, days_in_month + 1):
+        d = datetime(y, m, day, 12, 0, tzinfo=timezone.utc)
+        age = moon_phase(d)
+        pi  = phase_info(age)
+        result.append({"day": day, "weekday": d.strftime("%a"), "age": age, **pi})
+
+    today_day = now.day if (now.year == y and now.month == m) else None
+    return {"year": y, "month": m, "month_name": datetime(y,m,1).strftime("%B"), "days": result, "today": today_day}
+
+
 @api_router.get("/bait-guide")
 async def get_bait_guide(species: str = "sazan", season: str = ""):
     data = BAIT_DATA.get(species)

@@ -49,6 +49,7 @@ import WeatherTrends   from '@/components/WeatherTrends';
 import WildlifeLog     from '@/components/WildlifeLog';
 import SpotMap         from '@/components/SpotMap';
 import FishSeason      from '@/components/FishSeason';
+import RigCalculator   from '@/components/RigCalculator';
 import { ToastProvider } from '@/components/Toast';
 import '@/App.css';
 
@@ -108,6 +109,7 @@ function AppInner() {
         <Route path="/gunluk"      element={<WildlifeLog />} />
         <Route path="/noktalar"    element={<SpotMap />} />
         <Route path="/sezon"       element={<FishSeason />} />
+        <Route path="/olta"        element={<RigCalculator />} />
       </Routes>
       {!hideNav && <Navbar />}
     </div>

@@ -51,6 +51,7 @@ const TOOLS = [
   { icon: '📓', label: 'Doğa Günlüğü', sub: 'Kişisel tür gözlem kayıtları',      path: '/gunluk',     accent: '#a855f7' },
   { icon: '🗺️', label: 'Favori Noktalar', sub: 'Balık, av ve kamp noktalarım',  path: '/noktalar',   accent: '#3b82f6' },
   { icon: '🧭', label: 'Sezon Pusulası', sub: '12 balık türü mevsim takvimi',  path: '/sezon',      accent: '#06b6d4' },
+  { icon: '🎣', label: 'Olta Hesap',    sub: 'İğne, misina ve kurşun önerisi', path: '/olta',       accent: '#22c55e' },
 ];
 
 const CATS = [

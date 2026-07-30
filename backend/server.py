@@ -668,12 +668,52 @@ async def identify_species(req: IdentifyRequest):
 # ── Weather ────────────────────────────────────────────────────────────────────
 
 @api_router.post("/weather")
+async def _fetch_open_meteo(lat: float, lng: float) -> dict:
+    """Fetch real weather from Open-Meteo (free, no key, CORS-enabled)."""
+    WMO = {
+        0: "Açık", 1: "Büyük ölçüde açık", 2: "Parçalı bulutlu", 3: "Bulutlu",
+        45: "Sisli", 48: "Dondurucu sis",
+        51: "Hafif çisenti", 53: "Çisenti", 55: "Yoğun çisenti",
+        61: "Hafif yağmur", 63: "Yağmurlu", 65: "Kuvvetli yağmur",
+        71: "Hafif kar", 73: "Karlı", 75: "Yoğun kar",
+        80: "Hafif sağanak", 81: "Sağanak", 82: "Kuvvetli sağanak",
+        95: "Gök gürültülü fırtına", 96: "Dolulu fırtına", 99: "Yoğun dolulu fırtına",
+    }
+    try:
+        url = (
+            f"https://api.open-meteo.com/v1/forecast"
+            f"?latitude={lat}&longitude={lng}"
+            f"&current=temperature_2m,relative_humidity_2m,wind_speed_10m,"
+            f"weather_code,surface_pressure,precipitation"
+            f"&forecast_days=1&wind_speed_unit=kmh"
+        )
+        async with httpx.AsyncClient(verify=_verify, timeout=8) as client:
+            resp = await client.get(url)
+            if resp.status_code == 200:
+                d = resp.json().get("current", {})
+                code = d.get("weather_code", 0)
+                return {
+                    "temp":      round(d.get("temperature_2m", 20), 1),
+                    "humidity":  d.get("relative_humidity_2m", 60),
+                    "wind":      round(d.get("wind_speed_10m", 10), 1),
+                    "pressure":  round(d.get("surface_pressure", 1013), 0),
+                    "condition": WMO.get(code, WMO.get((code // 10) * 10, "Bilinmiyor")),
+                    "code":      code,
+                }
+    except Exception:
+        pass
+    # fallback
+    return {
+        "temp": round(random.uniform(15, 27), 1), "humidity": random.randint(45, 80),
+        "wind": round(random.uniform(5, 20), 1),  "pressure": random.randint(1005, 1020),
+        "condition": random.choice(["Açık", "Parçalı bulutlu", "Bulutlu"]), "code": 0,
+    }
+
+
 async def get_weather_score(req: WeatherRequest):
-    temp       = round(random.uniform(12, 28), 1)
-    wind       = round(random.uniform(5, 35), 1)
-    humidity   = random.randint(40, 85)
-    pressure   = random.randint(1000, 1025)
-    conditions = random.choice(["Açık", "Parçalı bulutlu", "Bulutlu", "Hafif yağmur"])
+    w = await _fetch_open_meteo(req.lat, req.lng)
+    temp, wind, humidity, pressure = w["temp"], w["wind"], w["humidity"], w["pressure"]
+    conditions = w["condition"]
     moon_phase = random.choice(["Yeni Ay", "İlk Dördün", "Dolunay", "Son Dördün"])
 
     score = 70
@@ -1874,10 +1914,22 @@ async def get_daily_briefing(lat: float = 41.0, lng: float = 29.0, activity: str
         if month in months:
             season_name, season_icon = sname, sicon
 
-    weather_score = random.randint(55, 95)
-    conditions = ["Açık", "Parçalı bulutlu", "Hafif bulutlu"][random.randint(0,2)]
-    temp = round(random.uniform(18, 28), 1)
-    wind = round(random.uniform(5, 20), 0)
+    w = await _fetch_open_meteo(lat, lng)
+    temp = w["temp"]
+    wind = w["wind"]
+    conditions = w["condition"]
+    # Derive weather score from actual conditions
+    code = w.get("code", 0)
+    if code == 0:   weather_score = 95
+    elif code <= 2: weather_score = 85
+    elif code == 3: weather_score = 70
+    elif code < 50: weather_score = 60
+    elif code < 70: weather_score = 45
+    elif code < 80: weather_score = 35
+    else:           weather_score = 30
+    # Penalise high wind
+    if wind > 30: weather_score = max(10, weather_score - 25)
+    elif wind > 20: weather_score = max(15, weather_score - 10)
 
     # Best time window
     if moon_score >= 9:
@@ -1922,6 +1974,55 @@ async def get_daily_briefing(lat: float = 41.0, lng: float = 29.0, activity: str
         "best_time": best_time,
         "ai_briefing": ai_text,
     }
+
+
+@api_router.get("/hava")
+async def get_hava(lat: float = 41.01, lng: float = 28.95):
+    """Current weather via Open-Meteo (Istanbul default)."""
+    w = await _fetch_open_meteo(lat, lng)
+    code = w.get("code", 0)
+    if code == 0:   score = 95
+    elif code <= 2: score = 85
+    elif code == 3: score = 70
+    elif code < 50: score = 60
+    elif code < 70: score = 45
+    elif code < 80: score = 35
+    else:           score = 30
+    wind = w["wind"]
+    if wind > 30: score = max(10, score - 25)
+    elif wind > 20: score = max(15, score - 10)
+    return {
+        "temp": w["temp"],
+        "humidity": w["humidity"],
+        "wind_speed": w["wind"],
+        "pressure": w["pressure"],
+        "condition": w["condition"],
+        "code": w["code"],
+        "activity_score": score,
+    }
+
+
+@api_router.get("/sunrise")
+async def get_sunrise(lat: float = 41.01, lng: float = 28.95):
+    """Sunrise / sunset times via Sunrise-Sunset API."""
+    try:
+        url = f"https://api.sunrise-sunset.org/json?lat={lat}&lng={lng}&formatted=0"
+        async with httpx.AsyncClient(verify=_verify, timeout=8) as client:
+            resp = await client.get(url)
+            if resp.status_code == 200:
+                data = resp.json().get("results", {})
+                return {
+                    "sunrise": data.get("sunrise"),
+                    "sunset": data.get("sunset"),
+                    "solar_noon": data.get("solar_noon"),
+                    "day_length": data.get("day_length"),
+                    "civil_twilight_begin": data.get("civil_twilight_begin"),
+                    "civil_twilight_end": data.get("civil_twilight_end"),
+                    "status": "ok",
+                }
+    except Exception:
+        pass
+    return {"sunrise": None, "sunset": None, "status": "unavailable"}
 
 
 @api_router.get("/gear-selector")

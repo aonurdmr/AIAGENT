@@ -30,6 +30,7 @@ const TOOLS = [
   { icon: '🤖', label: 'AI Öneri',          sub: 'Bugün nereye gideyim?',  path: '/oneri',     accent: '#22c55e' },
   { icon: '✅', label: 'Kontrol Listesi',   sub: 'Seyahat hazırlığı',      path: '/kontrol',   accent: '#34d399' },
   { icon: '📄', label: 'Seyahat Raporu',   sub: 'AI ile trip özeti',       path: '/rapor',     accent: '#c084fc' },
+  { icon: '🏆', label: 'Kupa Dolabı',      sub: 'Kişisel balık rekortları', path: '/kupalar',   accent: '#fbbf24' },
 ];
 
 const CATS = [

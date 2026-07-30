@@ -56,6 +56,7 @@ const TOOLS = [
   { icon: '✏️', label: 'Saha Notları', sub: 'Hızlı kayıt + AI özeti',           path: '/saha',       accent: '#a855f7' },
   { icon: '🔊', label: 'Doğa Sesleri', sub: '10 tür · ses tanıma rehberi',     path: '/sesler',     accent: '#06b6d4' },
   { icon: '🌊', label: 'Gelgit Takvimi', sub: 'Med-cezir saatleri ve balıkçılık skoru', path: '/gelgit', accent: '#06b6d4' },
+  { icon: '🌡️', label: 'Hava İstasyonu', sub: 'Canlı hava verisi ve aktivite skoru', path: '/istasyon', accent: '#3b82f6' },
 ];
 
 const CATS = [

@@ -70,6 +70,8 @@ const TOOLS = [
   { icon: '⛺', label: 'Kamp Listesi', sub: '30 madde · kişiselleştirilebilir', path: '/kamp-liste', accent: '#22c55e' },
   { icon: '📏', label: 'Boy Kılavuzu', sub: '12 tür · yasal minimum & ölçüm', path: '/boy-kilavuz', accent: '#06b6d4' },
   { icon: '🦶', label: 'Hayvan İzleri', sub: '8 tür · iz tanıma rehberi', path: '/izler', accent: '#92400e' },
+  { icon: '🍄', label: 'Mantar Rehberi', sub: '8 tür · yenilebilir ve zehirli', path: '/mantar', accent: '#84cc16' },
+  { icon: '⭐', label: 'Yıldız Haritası', sub: '6 takımyıldız · gece navigasyonu', path: '/yildizlar', accent: '#818cf8' },
 ];
 
 const CATS = [

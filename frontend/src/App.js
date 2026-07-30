@@ -68,6 +68,8 @@ import FirstAid        from '@/components/FirstAid';
 import CampingChecklist from '@/components/CampingChecklist';
 import FishSizeGuide   from '@/components/FishSizeGuide';
 import AnimalTracks    from '@/components/AnimalTracks';
+import MushroomGuide   from '@/components/MushroomGuide';
+import StarMap         from '@/components/StarMap';
 import { ToastProvider } from '@/components/Toast';
 import '@/App.css';
 
@@ -146,6 +148,8 @@ function AppInner() {
         <Route path="/kamp-liste"   element={<CampingChecklist />} />
         <Route path="/boy-kilavuz"  element={<FishSizeGuide />} />
         <Route path="/izler"        element={<AnimalTracks />} />
+        <Route path="/mantar"       element={<MushroomGuide />} />
+        <Route path="/yildizlar"    element={<StarMap />} />
       </Routes>
       {!hideNav && <Navbar />}
     </div>

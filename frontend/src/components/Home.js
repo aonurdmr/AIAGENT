@@ -36,6 +36,7 @@ const TOOLS = [
   { icon: '🌕', label: 'Ay Takvimi',      sub: 'Balıkçılık aktivite skoru', path: '/ay',        accent: '#fbbf24' },
   { icon: '🪢', label: 'Düğüm Rehberi',  sub: '9 temel balıkçı düğümü',   path: '/dugum',     accent: '#f97316' },
   { icon: '🍳', label: 'Balık Tarifleri', sub: 'Avını en güzel pişir',      path: '/tarifler',  accent: '#ef4444' },
+  { icon: '⚔️', label: 'Tür Karşılaştır', sub: '8 türü yan yana karşılaştır', path: '/karsilastir', accent: '#a855f7' },
 ];
 
 const CATS = [

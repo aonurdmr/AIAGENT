@@ -65,6 +65,7 @@ const TOOLS = [
   { icon: '🪝', label: 'Sahte Yem Rehberi', sub: '8 kategori · teknik, tür ve sezon', path: '/sahte-yem', accent: '#22c55e' },
   { icon: '🧠', label: 'Doğa Testi', sub: '10 soruluk bilgi yarışması', path: '/quiz', accent: '#a855f7' },
   { icon: '🏆', label: 'Turnuva', sub: 'Canlı zamanlayıcı & sıralama', path: '/turnuva', accent: '#f59e0b' },
+  { icon: '🌿', label: 'Milli Parklar', sub: '8 park · aktivite & yaban hayatı', path: '/milli-park', accent: '#22c55e' },
 ];
 
 const CATS = [

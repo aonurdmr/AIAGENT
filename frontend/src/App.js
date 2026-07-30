@@ -63,6 +63,7 @@ import WeatherForecast from '@/components/WeatherForecast';
 import LureGuide       from '@/components/LureGuide';
 import NatureQuiz      from '@/components/NatureQuiz';
 import Tournament      from '@/components/Tournament';
+import NationalParks   from '@/components/NationalParks';
 import { ToastProvider } from '@/components/Toast';
 import '@/App.css';
 
@@ -136,6 +137,7 @@ function AppInner() {
         <Route path="/sahte-yem"   element={<LureGuide />} />
         <Route path="/quiz"         element={<NatureQuiz />} />
         <Route path="/turnuva"      element={<Tournament />} />
+        <Route path="/milli-park"   element={<NationalParks />} />
       </Routes>
       {!hideNav && <Navbar />}
     </div>

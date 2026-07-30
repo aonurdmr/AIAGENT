@@ -45,6 +45,7 @@ import BirdWatching   from '@/components/BirdWatching';
 import PlantGuide      from '@/components/PlantGuide';
 import EmergencyGuide  from '@/components/EmergencyGuide';
 import WaterSports     from '@/components/WaterSports';
+import WeatherTrends   from '@/components/WeatherTrends';
 import { ToastProvider } from '@/components/Toast';
 import '@/App.css';
 
@@ -100,6 +101,7 @@ function AppInner() {
         <Route path="/bitkiler"    element={<PlantGuide />} />
         <Route path="/acil"        element={<EmergencyGuide />} />
         <Route path="/su-sporlari" element={<WaterSports />} />
+        <Route path="/trend"       element={<WeatherTrends />} />
       </Routes>
       {!hideNav && <Navbar />}
     </div>

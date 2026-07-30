@@ -38,6 +38,7 @@ const TOOLS = [
   { icon: '🍳', label: 'Balık Tarifleri', sub: 'Avını en güzel pişir',      path: '/tarifler',  accent: '#ef4444' },
   { icon: '⚔️', label: 'Tür Karşılaştır', sub: '8 türü yan yana karşılaştır', path: '/karsilastir', accent: '#a855f7' },
   { icon: '⚖️', label: 'Mevzuat',         sub: 'Boy limitleri ve yasal kurallar', path: '/kanun',    accent: '#94a3b8' },
+  { icon: '🎣', label: 'Ekipman Seçici',  sub: 'Türe göre optimal setup',         path: '/setup',    accent: '#22c55e' },
 ];
 
 const CATS = [

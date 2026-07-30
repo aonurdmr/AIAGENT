@@ -36,6 +36,7 @@ import KnotGuide       from '@/components/KnotGuide';
 import RecipeBook      from '@/components/RecipeBook';
 import SpeciesCompare  from '@/components/SpeciesCompare';
 import FishingLaws     from '@/components/FishingLaws';
+import GearSelector    from '@/components/GearSelector';
 import { ToastProvider } from '@/components/Toast';
 import '@/App.css';
 
@@ -82,6 +83,7 @@ function AppInner() {
         <Route path="/tarifler"    element={<RecipeBook />} />
         <Route path="/karsilastir" element={<SpeciesCompare />} />
         <Route path="/kanun"       element={<FishingLaws />} />
+        <Route path="/setup"       element={<GearSelector />} />
       </Routes>
       {!hideNav && <Navbar />}
     </div>

@@ -1840,6 +1840,90 @@ async def get_moon_calendar(year: int = 0, month: int = 0):
     return {"year": y, "month": m, "month_name": datetime(y,m,1).strftime("%B"), "days": result, "today": today_day}
 
 
+@api_router.get("/gear-selector")
+async def get_gear_selector(species: str = "levrek", method: str = "spinning", location: str = "kıyı"):
+    gear_db = {
+        "levrek": {
+            "spinning": {
+                "rod":    {"model": "Spinning Kamışı 2.7-3.0m", "action": "Medium-Fast", "power": "ML-M", "tip": "7-25g atış için ideal"},
+                "reel":   {"model": "Spinning Makara 2500-3000", "gear": "5.2:1", "drag": "8kg", "tip": "Hafif ama güçlü çekim"},
+                "line":   {"main": "0.20mm Mono veya 0.8 PE Örgülü", "leader": "0.30mm Fluorocarbon 50-80cm", "tip": "Şeffaf lider gizliliği artırır"},
+                "hook":   {"size": "#2 – #1/0", "type": "Treble veya Single", "tip": "Keskin uç çok önemli"},
+                "lure":   ["Soft bait 7-12cm", "Minnow 8-12cm", "Popper 8-10cm"],
+            },
+            "bottom": {
+                "rod":    {"model": "Bottom Kamışı 2.7-3.6m", "action": "Medium", "power": "M-MH", "tip": "Sert dip yapıları için"},
+                "reel":   {"model": "Multiplier Makara 6000", "gear": "4.7:1", "drag": "12kg", "tip": "Uzun atış ve güçlü çekim"},
+                "line":   {"main": "0.30mm Mono", "leader": "0.40mm Mono 60cm", "tip": "Dip sürtünmesi için kalın misina"},
+                "hook":   {"size": "#1/0 – #3/0", "type": "Circle veya Octopus", "tip": "Circle hook daha az yutulur"},
+                "lure":   ["Karides", "Küçük balık", "Sülük"],
+            },
+        },
+        "sazan": {
+            "bottom": {
+                "rod":    {"model": "Karp Kamışı 3.6-3.9m", "action": "Through Action", "power": "3.5lb TC", "tip": "Uzun atış ve karp güçlüdür"},
+                "reel":   {"model": "Baitrunner Makara 8000", "gear": "4.5:1", "drag": "12kg", "tip": "Free spool modu zorunlu"},
+                "line":   {"main": "0.35-0.40mm Mono", "leader": "Tungsten coated 30cm", "tip": "Dip ağırlığı tungsten tercih"},
+                "hook":   {"size": "#4 – #8", "type": "Karp iğnesi (Boilies)", "tip": "Ağırlıklı bait kullanımı"},
+                "lure":   ["Boilies", "Corn", "Method feeder mixi"],
+            },
+        },
+        "alabalik": {
+            "spinning": {
+                "rod":    {"model": "Trout Kamışı 2.1-2.4m", "action": "Fast", "power": "UL-L", "tip": "Hassas atış için hafif"},
+                "reel":   {"model": "Spinning Makara 1000-2000", "gear": "6.0:1", "drag": "4kg", "tip": "Hızlı geri sarma şart"},
+                "line":   {"main": "0.14-0.18mm Mono veya 0.6 PE", "leader": "0.18mm Fluorocarbon 40cm", "tip": "İnce misina = daha çok vuruş"},
+                "hook":   {"size": "#8 – #14", "type": "Single Barbless", "tip": "Barbless hook ile serbest bırakma kolaylaşır"},
+                "lure":   ["Spinner #0-1", "Minnow 4-6cm", "Spoon 3-7g"],
+            },
+            "fly": {
+                "rod":    {"model": "Fly Rod 2.7-3.0m #4-6", "action": "Medium-Fast", "power": "#4-6 line", "tip": "Akışlı su için kısa kamış"},
+                "reel":   {"model": "Fly Makara #4-6", "gear": "Manuel", "drag": "2kg", "tip": "Hafif ve dengeli"},
+                "line":   {"main": "#5 WF Fly Line", "leader": "7.5ft 4X Tapered", "tip": "Flaoting line çoğu durumda yeterli"},
+                "hook":   {"size": "#10 – #18", "type": "Dry/Wet/Nymph Fly", "tip": "Yerel böcek türlere uygun sinek seçin"},
+                "lure":   ["Dry Fly", "Nymph", "Streamer"],
+            },
+        },
+        "turna": {
+            "spinning": {
+                "rod":    {"model": "Pike Kamışı 2.4-2.7m", "action": "Fast", "power": "MH-H", "tip": "Büyük yemler için güçlü"},
+                "reel":   {"model": "Spinning Makara 4000-5000", "gear": "5.5:1", "drag": "10kg", "tip": "Turna güçlü koşar"},
+                "line":   {"main": "0.8-1.0 PE Örgülü", "leader": "30-40cm Wire/Çelik Lider", "tip": "Çelik lider zorunlu — turna keser"},
+                "hook":   {"size": "#1/0 – #4/0", "type": "Treble Hook (wired)", "tip": "Büyük yemler için büyük iğne"},
+                "lure":   ["Büyük wobbler 12-20cm", "Rubber fish 15-25cm", "Popper 12cm"],
+            },
+        },
+        "sudak": {
+            "spinning": {
+                "rod":    {"model": "Jig Kamışı 2.4-2.7m", "action": "Fast-Extra Fast", "power": "ML-M", "tip": "Dip hissiyatı çok önemli"},
+                "reel":   {"model": "Spinning Makara 2500-4000", "gear": "6.2:1", "drag": "8kg", "tip": "Hızlı çekim için yüksek dişli"},
+                "line":   {"main": "0.6-0.8 PE Örgülü", "leader": "0.35mm Fluorocarbon 50-80cm", "tip": "Örgülü = dip hissi, fluoro = gizlilik"},
+                "hook":   {"size": "#2 – #2/0", "type": "Jig Head 10-20g", "tip": "Ağır jig dipte tutar"},
+                "lure":   ["Twister 7-12cm", "Shad 8-12cm", "Metal jig 15-30g"],
+            },
+        },
+    }
+
+    sp_data = gear_db.get(species, gear_db["levrek"])
+    method_data = sp_data.get(method, list(sp_data.values())[0])
+
+    general_tips = {
+        "kıyı": "Kıyı balıkçılığında taşlık ve kayalık zemin iğne ve uçkucu kaybını artırır. Ekstra yem ve parça bulundurun.",
+        "tekne": "Teknede derinlik ölçer kullanın. Dip yapısını bilmek yem seçimini belirler.",
+        "göl": "Göl sularında gün doğumu ve batımı en aktif saatlerdir. Rüzgar yönüne dikkat edin.",
+        "dere": "Derelerde yukarı akışa atış yapın, yemin doğal sürüklenmesine izin verin.",
+    }
+
+    return {
+        "species": species,
+        "method": method,
+        "location": location,
+        "gear": method_data,
+        "tip": general_tips.get(location, general_tips["kıyı"]),
+        "available_methods": list(sp_data.keys()),
+    }
+
+
 @api_router.get("/bait-guide")
 async def get_bait_guide(species: str = "sazan", season: str = ""):
     data = BAIT_DATA.get(species)

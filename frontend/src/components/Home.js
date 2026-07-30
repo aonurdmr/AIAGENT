@@ -78,6 +78,8 @@ const TOOLS = [
   { icon: '🌍', label: 'Hava Karşılaştırma', sub: '6 şehir · anlık hava & balıkçılık skoru', path: '/hava-karsi', accent: '#38bdf8' },
   { icon: '📔', label: 'Balıkçılık Günlüğü', sub: 'Seans kaydı · kişisel istatistikler', path: '/balik-gunluk', accent: '#22c55e' },
   { icon: '📊', label: 'Popülasyon Takibi', sub: '8 tür · aylık aktivite & stok durumu', path: '/populasyon', accent: '#3b82f6' },
+  { icon: '🎣', label: 'Balıkçılık Tahmin', sub: '7 gün · hava + ay + UV kombinasyonu', path: '/balik-tahmin', accent: '#22c55e' },
+  { icon: '🏕️', label: 'Kamp Noktaları', sub: '8 kamp yeri · tesis ve aktivite bilgisi', path: '/kamp-harita', accent: '#84cc16' },
 ];
 
 const CATS = [

@@ -82,6 +82,8 @@ import InsectGuide       from '@/components/InsectGuide';
 import SeasonAlerts      from '@/components/SeasonAlerts';
 import FishWeightCalc    from '@/components/FishWeightCalc';
 import SurvivalGuide     from '@/components/SurvivalGuide';
+import BaitShopFinder   from '@/components/BaitShopFinder';
+import CatchPhotoAlbum  from '@/components/CatchPhotoAlbum';
 import { ToastProvider } from '@/components/Toast';
 import '@/App.css';
 
@@ -174,6 +176,8 @@ function AppInner() {
         <Route path="/sezon-uyari"  element={<SeasonAlerts />} />
         <Route path="/kilo"         element={<FishWeightCalc />} />
         <Route path="/hayatta-kal"  element={<SurvivalGuide />} />
+        <Route path="/yem-bul"      element={<BaitShopFinder />} />
+        <Route path="/foto-album"   element={<CatchPhotoAlbum />} />
       </Routes>
       {!hideNav && <Navbar />}
     </div>

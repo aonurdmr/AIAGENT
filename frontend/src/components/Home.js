@@ -84,6 +84,8 @@ const TOOLS = [
   { icon: '📅', label: 'Sezon Uyarıları', sub: '10 tür · av ve balık sezonu takibi', path: '/sezon-uyari', accent: '#3b82f6' },
   { icon: '⚖️', label: 'Kilo Hesaplama', sub: 'Boy + çevre → ağırlık tahmini', path: '/kilo', accent: '#06b6d4' },
   { icon: '🏔️', label: 'Hayatta Kalma', sub: '8 senaryo · doğada hayatta kalma', path: '/hayatta-kal', accent: '#ef4444' },
+  { icon: '🏪', label: 'Yem Dükkanı Bul', sub: '8 dükkan · Türkiye\'nin önde gelen balıkçı malzemeleri', path: '/yem-bul', accent: '#22c55e' },
+  { icon: '📸', label: 'Av Fotoğraf Albümü', sub: 'Kişisel av kaydı ve fotoğraf koleksiyonu', path: '/foto-album', accent: '#a855f7' },
 ];
 
 const CATS = [

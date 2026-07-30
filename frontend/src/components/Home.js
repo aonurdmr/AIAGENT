@@ -49,6 +49,7 @@ const TOOLS = [
   { icon: '🌊', label: 'Su Sporları',  sub: '8 dal · Türkiye\'nin en iyi noktaları', path: '/su-sporlari', accent: '#06b6d4' },
   { icon: '📈', label: 'Hava Trendleri', sub: 'Aylık ortalama ve balıkçılık skoru', path: '/trend',      accent: '#38bdf8' },
   { icon: '📓', label: 'Doğa Günlüğü', sub: 'Kişisel tür gözlem kayıtları',      path: '/gunluk',     accent: '#a855f7' },
+  { icon: '🗺️', label: 'Favori Noktalar', sub: 'Balık, av ve kamp noktalarım',  path: '/noktalar',   accent: '#3b82f6' },
 ];
 
 const CATS = [

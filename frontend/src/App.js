@@ -47,6 +47,7 @@ import EmergencyGuide  from '@/components/EmergencyGuide';
 import WaterSports     from '@/components/WaterSports';
 import WeatherTrends   from '@/components/WeatherTrends';
 import WildlifeLog     from '@/components/WildlifeLog';
+import SpotMap         from '@/components/SpotMap';
 import { ToastProvider } from '@/components/Toast';
 import '@/App.css';
 
@@ -104,6 +105,7 @@ function AppInner() {
         <Route path="/su-sporlari" element={<WaterSports />} />
         <Route path="/trend"       element={<WeatherTrends />} />
         <Route path="/gunluk"      element={<WildlifeLog />} />
+        <Route path="/noktalar"    element={<SpotMap />} />
       </Routes>
       {!hideNav && <Navbar />}
     </div>

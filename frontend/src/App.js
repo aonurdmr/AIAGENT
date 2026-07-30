@@ -80,6 +80,8 @@ import FishingForecast   from '@/components/FishingForecast';
 import CampingMap        from '@/components/CampingMap';
 import InsectGuide       from '@/components/InsectGuide';
 import SeasonAlerts      from '@/components/SeasonAlerts';
+import FishWeightCalc    from '@/components/FishWeightCalc';
+import SurvivalGuide     from '@/components/SurvivalGuide';
 import { ToastProvider } from '@/components/Toast';
 import '@/App.css';
 
@@ -170,6 +172,8 @@ function AppInner() {
         <Route path="/kamp-harita"  element={<CampingMap />} />
         <Route path="/bocekler"     element={<InsectGuide />} />
         <Route path="/sezon-uyari"  element={<SeasonAlerts />} />
+        <Route path="/kilo"         element={<FishWeightCalc />} />
+        <Route path="/hayatta-kal"  element={<SurvivalGuide />} />
       </Routes>
       {!hideNav && <Navbar />}
     </div>

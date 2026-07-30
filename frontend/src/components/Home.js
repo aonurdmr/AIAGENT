@@ -82,6 +82,8 @@ const TOOLS = [
   { icon: '🏕️', label: 'Kamp Noktaları', sub: '8 kamp yeri · tesis ve aktivite bilgisi', path: '/kamp-harita', accent: '#84cc16' },
   { icon: '🪲', label: 'Böcek Rehberi', sub: '8 tür · yararlı, zararlı ve tehlikeli', path: '/bocekler', accent: '#f59e0b' },
   { icon: '📅', label: 'Sezon Uyarıları', sub: '10 tür · av ve balık sezonu takibi', path: '/sezon-uyari', accent: '#3b82f6' },
+  { icon: '⚖️', label: 'Kilo Hesaplama', sub: 'Boy + çevre → ağırlık tahmini', path: '/kilo', accent: '#06b6d4' },
+  { icon: '🏔️', label: 'Hayatta Kalma', sub: '8 senaryo · doğada hayatta kalma', path: '/hayatta-kal', accent: '#ef4444' },
 ];
 
 const CATS = [

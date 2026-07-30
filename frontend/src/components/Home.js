@@ -64,6 +64,7 @@ const TOOLS = [
   { icon: '📅', label: '7 Günlük Tahmin', sub: 'Open-Meteo · hava & balıkçılık skoru', path: '/tahmin', accent: '#3b82f6' },
   { icon: '🪝', label: 'Sahte Yem Rehberi', sub: '8 kategori · teknik, tür ve sezon', path: '/sahte-yem', accent: '#22c55e' },
   { icon: '🧠', label: 'Doğa Testi', sub: '10 soruluk bilgi yarışması', path: '/quiz', accent: '#a855f7' },
+  { icon: '🏆', label: 'Turnuva', sub: 'Canlı zamanlayıcı & sıralama', path: '/turnuva', accent: '#f59e0b' },
 ];
 
 const CATS = [

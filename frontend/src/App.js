@@ -62,6 +62,7 @@ import FishingSpots    from '@/components/FishingSpots';
 import WeatherForecast from '@/components/WeatherForecast';
 import LureGuide       from '@/components/LureGuide';
 import NatureQuiz      from '@/components/NatureQuiz';
+import Tournament      from '@/components/Tournament';
 import { ToastProvider } from '@/components/Toast';
 import '@/App.css';
 
@@ -134,6 +135,7 @@ function AppInner() {
         <Route path="/tahmin"      element={<WeatherForecast />} />
         <Route path="/sahte-yem"   element={<LureGuide />} />
         <Route path="/quiz"         element={<NatureQuiz />} />
+        <Route path="/turnuva"      element={<Tournament />} />
       </Routes>
       {!hideNav && <Navbar />}
     </div>

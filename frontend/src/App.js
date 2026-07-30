@@ -51,6 +51,7 @@ import SpotMap         from '@/components/SpotMap';
 import FishSeason      from '@/components/FishSeason';
 import RigCalculator   from '@/components/RigCalculator';
 import HuntingGear     from '@/components/HuntingGear';
+import FieldNotes      from '@/components/FieldNotes';
 import { ToastProvider } from '@/components/Toast';
 import '@/App.css';
 
@@ -112,6 +113,7 @@ function AppInner() {
         <Route path="/sezon"       element={<FishSeason />} />
         <Route path="/olta"        element={<RigCalculator />} />
         <Route path="/av-ekipman"  element={<HuntingGear />} />
+        <Route path="/saha"        element={<FieldNotes />} />
       </Routes>
       {!hideNav && <Navbar />}
     </div>

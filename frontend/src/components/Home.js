@@ -53,6 +53,7 @@ const TOOLS = [
   { icon: '🧭', label: 'Sezon Pusulası', sub: '12 balık türü mevsim takvimi',  path: '/sezon',      accent: '#06b6d4' },
   { icon: '🎣', label: 'Olta Hesap',    sub: 'İğne, misina ve kurşun önerisi', path: '/olta',       accent: '#22c55e' },
   { icon: '🏹', label: 'Av Ekipmanı',  sub: 'Silah, fişek ve güvenlik bilgisi', path: '/av-ekipman', accent: '#f59e0b' },
+  { icon: '✏️', label: 'Saha Notları', sub: 'Hızlı kayıt + AI özeti',           path: '/saha',       accent: '#a855f7' },
 ];
 
 const CATS = [

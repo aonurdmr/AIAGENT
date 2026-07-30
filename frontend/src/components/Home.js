@@ -74,6 +74,8 @@ const TOOLS = [
   { icon: '⭐', label: 'Yıldız Haritası', sub: '6 takımyıldız · gece navigasyonu', path: '/yildizlar', accent: '#818cf8' },
   { icon: '🐍', label: 'Yılan Rehberi', sub: '6 tür · zehirli / zararsız tanıma', path: '/surungen', accent: '#ef4444' },
   { icon: '💧', label: 'Su Kalitesi', sub: '5 parametre · balıkçılık kalite skoru', path: '/su-kalite', accent: '#06b6d4' },
+  { icon: '⚖️', label: 'Av Mevzuatı', sub: '4915 sayılı Kanun · izinler ve cezalar', path: '/av-kanun', accent: '#60a5fa' },
+  { icon: '🌍', label: 'Hava Karşılaştırma', sub: '6 şehir · anlık hava & balıkçılık skoru', path: '/hava-karsi', accent: '#38bdf8' },
 ];
 
 const CATS = [

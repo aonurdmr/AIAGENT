@@ -72,6 +72,8 @@ import MushroomGuide   from '@/components/MushroomGuide';
 import StarMap         from '@/components/StarMap';
 import SnakeGuide      from '@/components/SnakeGuide';
 import WaterQuality    from '@/components/WaterQuality';
+import HuntingLaws     from '@/components/HuntingLaws';
+import WeatherCompare  from '@/components/WeatherCompare';
 import { ToastProvider } from '@/components/Toast';
 import '@/App.css';
 
@@ -154,6 +156,8 @@ function AppInner() {
         <Route path="/yildizlar"    element={<StarMap />} />
         <Route path="/surungen"     element={<SnakeGuide />} />
         <Route path="/su-kalite"    element={<WaterQuality />} />
+        <Route path="/av-kanun"     element={<HuntingLaws />} />
+        <Route path="/hava-karsi"   element={<WeatherCompare />} />
       </Routes>
       {!hideNav && <Navbar />}
     </div>

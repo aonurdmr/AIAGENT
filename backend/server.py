@@ -1254,6 +1254,148 @@ class NoteCreate(BaseModel):
     lng: float = 0.0
 
 
+CHECKLIST_TEMPLATES = {
+    "fishing": [
+        "Olta takımı", "Yedek iğneler", "Misina / Örme ip", "Makas ve pense",
+        "Balık ağı", "Canlı yem / suni yem", "Soğutucu çanta", "Yiyecek & su",
+        "Güneş kremi", "Böcek spreyi", "İlk yardım kiti", "Balıkçı lisansı",
+        "Çizme veya bot", "Yağmurluk", "Şapka",
+    ],
+    "hunting": [
+        "Tüfek ve mermi", "Av lisansı ve ruhsat", "Av kıyafeti (kamuflaj)",
+        "Avcı yeleği", "Dürbün", "Av çantası", "Bıçak", "Meşale / el feneri",
+        "GPS veya harita", "İlk yardım kiti", "Su ve yiyecek",
+        "Çizme", "Eldiven", "Tiz düdük (güvenlik)",
+    ],
+    "camping": [
+        "Çadır", "Uyku tulumu", "Şişme yatak", "Fener / baş lambası",
+        "Ocak ve gaz tüpü", "Yemek takımı", "Su arıtma tableti / filtre",
+        "Sırt çantası", "Yağmurluk", "Değişim kıyafeti",
+        "İlk yardım kiti", "Güneş kremi", "Böcek spreyi",
+        "Alet çantası", "Çöp poşeti",
+    ],
+    "birdwatching": [
+        "Dürbün (8x42 önerilen)", "Saha rehberi kitabı", "Not defteri & kalem",
+        "Fotoğraf makinası + telefoto", "Hafif sırt çantası",
+        "Su ve atıştırmalık", "Sessiz kıyafet (siyah/koyu)",
+        "Şapka", "Güneş kremi", "Kuş çağırıcı (opsiyonel)", "Oturak",
+    ],
+}
+
+class Checklist(BaseModel):
+    model_config = ConfigDict(extra="ignore")
+    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    user_id: str
+    name: str
+    activity: str
+    items: List[Dict[str, Any]] = []
+    created_at: str = Field(default_factory=lambda: datetime.now(timezone.utc).isoformat())
+
+class ChecklistCreate(BaseModel):
+    name: str
+    activity: str = "fishing"
+    use_template: bool = True
+
+
+@api_router.get("/checklists")
+async def get_checklists(current_user: dict = Depends(get_current_user)):
+    return await db.checklists.find({"user_id": current_user["id"]}, {"_id": 0}).sort("created_at", -1).to_list(50)
+
+
+@api_router.post("/checklists")
+async def create_checklist(req: ChecklistCreate, current_user: dict = Depends(get_current_user)):
+    items = []
+    if req.use_template:
+        tmpl = CHECKLIST_TEMPLATES.get(req.activity, [])
+        items = [{"id": str(uuid.uuid4()), "text": t, "checked": False} for t in tmpl]
+    cl = Checklist(user_id=current_user["id"], name=req.name, activity=req.activity, items=items)
+    await db.checklists.insert_one(cl.model_dump())
+    return cl
+
+
+@api_router.put("/checklists/{cl_id}/items")
+async def update_checklist_items(cl_id: str, body: dict, current_user: dict = Depends(get_current_user)):
+    await db.checklists.update_one(
+        {"id": cl_id, "user_id": current_user["id"]},
+        {"$set": {"items": body.get("items", [])}},
+    )
+    return {"ok": True}
+
+
+@api_router.post("/checklists/{cl_id}/items")
+async def add_checklist_item(cl_id: str, body: dict, current_user: dict = Depends(get_current_user)):
+    item = {"id": str(uuid.uuid4()), "text": body.get("text", ""), "checked": False}
+    await db.checklists.update_one(
+        {"id": cl_id, "user_id": current_user["id"]},
+        {"$push": {"items": item}},
+    )
+    return item
+
+
+@api_router.delete("/checklists/{cl_id}")
+async def delete_checklist(cl_id: str, current_user: dict = Depends(get_current_user)):
+    await db.checklists.delete_one({"id": cl_id, "user_id": current_user["id"]})
+    return {"ok": True}
+
+
+@api_router.get("/recommendations")
+async def get_recommendations(activity: str = "fishing", lat: float = 41.0, lng: float = 29.0):
+    import math
+
+    spots = await db.spots.find({}, {"_id": 0}).to_list(50)
+    if activity != "all":
+        scored_spots = [s for s in spots if s.get("type") == activity] or spots
+
+    spot_data = []
+    for spot in scored_spots[:8]:
+        slat = spot.get("lat", 41.0)
+        slng = spot.get("lng", 29.0)
+        dist = math.sqrt((slat - lat) ** 2 + (slng - lng) ** 2) * 111
+        # simulate weather score
+        temp = round(random.uniform(14, 26), 1)
+        wind = round(random.uniform(5, 25), 1)
+        moon = random.choice(["Yeni Ay", "İlk Dördün", "Dolunay", "Son Dördün"])
+        w_score = 70
+        if 15 <= temp <= 23: w_score += 12
+        if wind < 10: w_score += 10
+        elif wind > 20: w_score -= 10
+        if moon == "Dolunay": w_score += 8
+        w_score = max(20, min(100, w_score + random.randint(-5, 8)))
+        # distance penalty: -1 point per 10 km
+        dist_penalty = min(30, int(dist / 10))
+        final_score = max(10, w_score - dist_penalty)
+        spot_data.append({
+            "id": spot.get("id"), "name": spot.get("name"),
+            "type": spot.get("type"), "region": spot.get("region", ""),
+            "lat": slat, "lng": slng, "rating": spot.get("rating", 4.0),
+            "species": spot.get("species", []),
+            "weather_score": w_score, "distance_km": round(dist, 0),
+            "final_score": final_score,
+            "temperature": temp, "wind_speed": wind, "moon": moon,
+        })
+
+    spot_data.sort(key=lambda x: -x["final_score"])
+    top = spot_data[:5]
+
+    # AI reasoning for top spot
+    ai_reason = ""
+    if top:
+        best = top[0]
+        act_tr = {"fishing": "balıkçılık", "hunting": "avcılık", "camping": "kamp"}.get(activity, activity)
+        system = "Sen kısa ve pratik Türkçe tavsiyeler veren outdoor uzmanısın."
+        prompt = (
+            f"En iyi nokta: {best['name']} ({best['region']}), {act_tr} skoru {best['final_score']}/100, "
+            f"uzaklık ~{best['distance_km']}km, hava {best['temperature']}°C, rüzgar {best['wind_speed']}km/s, "
+            f"ay: {best['moon']}. Neden bu noktayı öneriyorsun? 1-2 cümle Türkçe açıkla."
+        )
+        try:
+            ai_reason = await nvidia_chat(system, prompt, model=FAST_MODEL, max_tokens=120)
+        except Exception:
+            ai_reason = f"{best['name']} bugünkü hava koşulları ve {act_tr} skoru açısından en iyi seçenek."
+
+    return {"spots": top, "activity": activity, "ai_reason": ai_reason}
+
+
 @api_router.get("/notes")
 async def get_notes(current_user: dict = Depends(get_current_user)):
     uid = current_user["id"]

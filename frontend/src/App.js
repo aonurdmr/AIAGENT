@@ -26,6 +26,7 @@ import SeasonalCalendar from '@/components/SeasonalCalendar';
 import Notes           from '@/components/Notes';
 import Settings         from '@/components/Settings';
 import Recommendations  from '@/components/Recommendations';
+import Checklist       from '@/components/Checklist';
 import { ToastProvider } from '@/components/Toast';
 import '@/App.css';
 
@@ -62,6 +63,7 @@ function AppInner() {
         <Route path="/notlar"      element={<Notes />} />
         <Route path="/ayarlar"     element={<Settings />} />
         <Route path="/oneri"       element={<Recommendations />} />
+        <Route path="/kontrol"     element={<Checklist />} />
       </Routes>
       {!hideNav && <Navbar />}
     </div>

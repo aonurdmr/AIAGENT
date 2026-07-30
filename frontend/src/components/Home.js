@@ -28,6 +28,7 @@ const TOOLS = [
   { icon: '📓', label: 'Hızlı Notlar',      sub: 'Saha gözlem notları',    path: '/notlar',    accent: '#a78bfa' },
   { icon: '⚙️', label: 'Ayarlar',           sub: 'Tercihler ve hesap',     path: '/ayarlar',   accent: '#94a3b8' },
   { icon: '🤖', label: 'AI Öneri',          sub: 'Bugün nereye gideyim?',  path: '/oneri',     accent: '#22c55e' },
+  { icon: '✅', label: 'Kontrol Listesi',   sub: 'Seyahat hazırlığı',      path: '/kontrol',   accent: '#34d399' },
 ];
 
 const CATS = [

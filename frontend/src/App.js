@@ -33,6 +33,7 @@ import FishCalc        from '@/components/FishCalc';
 import BaitGuide       from '@/components/BaitGuide';
 import MoonCalendar    from '@/components/MoonCalendar';
 import KnotGuide       from '@/components/KnotGuide';
+import RecipeBook      from '@/components/RecipeBook';
 import { ToastProvider } from '@/components/Toast';
 import '@/App.css';
 
@@ -76,6 +77,7 @@ function AppInner() {
         <Route path="/yem"         element={<BaitGuide />} />
         <Route path="/ay"          element={<MoonCalendar />} />
         <Route path="/dugum"       element={<KnotGuide />} />
+        <Route path="/tarifler"    element={<RecipeBook />} />
       </Routes>
       {!hideNav && <Navbar />}
     </div>

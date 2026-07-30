@@ -57,6 +57,7 @@ import TideCalc        from '@/components/TideCalc';
 import WeatherStation  from '@/components/WeatherStation';
 import FishDB          from '@/components/FishDB';
 import SunTracker      from '@/components/SunTracker';
+import HuntingZones    from '@/components/HuntingZones';
 import { ToastProvider } from '@/components/Toast';
 import '@/App.css';
 
@@ -124,6 +125,7 @@ function AppInner() {
         <Route path="/istasyon"    element={<WeatherStation />} />
         <Route path="/balik-db"    element={<FishDB />} />
         <Route path="/gun"         element={<SunTracker />} />
+        <Route path="/av-bolge"    element={<HuntingZones />} />
       </Routes>
       {!hideNav && <Navbar />}
     </div>

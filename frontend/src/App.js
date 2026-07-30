@@ -38,6 +38,7 @@ import SpeciesCompare  from '@/components/SpeciesCompare';
 import FishingLaws     from '@/components/FishingLaws';
 import GearSelector    from '@/components/GearSelector';
 import DailyBriefing   from '@/components/DailyBriefing';
+import HuntingCalendar from '@/components/HuntingCalendar';
 import { ToastProvider } from '@/components/Toast';
 import '@/App.css';
 
@@ -86,6 +87,7 @@ function AppInner() {
         <Route path="/kanun"       element={<FishingLaws />} />
         <Route path="/setup"       element={<GearSelector />} />
         <Route path="/brifing"     element={<DailyBriefing />} />
+        <Route path="/av-takvim"   element={<HuntingCalendar />} />
       </Routes>
       {!hideNav && <Navbar />}
     </div>

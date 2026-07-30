@@ -55,6 +55,7 @@ import FieldNotes      from '@/components/FieldNotes';
 import NatureSounds    from '@/components/NatureSounds';
 import TideCalc        from '@/components/TideCalc';
 import WeatherStation  from '@/components/WeatherStation';
+import FishDB          from '@/components/FishDB';
 import { ToastProvider } from '@/components/Toast';
 import '@/App.css';
 
@@ -120,6 +121,7 @@ function AppInner() {
         <Route path="/sesler"      element={<NatureSounds />} />
         <Route path="/gelgit"      element={<TideCalc />} />
         <Route path="/istasyon"    element={<WeatherStation />} />
+        <Route path="/balik-db"    element={<FishDB />} />
       </Routes>
       {!hideNav && <Navbar />}
     </div>

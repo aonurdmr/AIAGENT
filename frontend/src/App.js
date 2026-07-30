@@ -60,6 +60,7 @@ import SunTracker      from '@/components/SunTracker';
 import HuntingZones    from '@/components/HuntingZones';
 import FishingSpots    from '@/components/FishingSpots';
 import WeatherForecast from '@/components/WeatherForecast';
+import LureGuide       from '@/components/LureGuide';
 import { ToastProvider } from '@/components/Toast';
 import '@/App.css';
 
@@ -130,6 +131,7 @@ function AppInner() {
         <Route path="/av-bolge"    element={<HuntingZones />} />
         <Route path="/balik-nokta" element={<FishingSpots />} />
         <Route path="/tahmin"      element={<WeatherForecast />} />
+        <Route path="/sahte-yem"   element={<LureGuide />} />
       </Routes>
       {!hideNav && <Navbar />}
     </div>

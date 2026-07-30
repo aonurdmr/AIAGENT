@@ -46,6 +46,7 @@ const TOOLS = [
   { icon: '🦅', label: 'Kuş Gözlemi', sub: '12 tür, 6 gözlem noktası',       path: '/kuslar',    accent: '#38bdf8' },
   { icon: '🌿', label: 'Bitki Rehberi', sub: 'Yenilebilir & zehirli bitkiler', path: '/bitkiler',  accent: '#22c55e' },
   { icon: '🚨', label: 'Acil Durum',   sub: 'İlk yardım, SOS ve hayatta kalma', path: '/acil',   accent: '#ef4444' },
+  { icon: '🌊', label: 'Su Sporları',  sub: '8 dal · Türkiye\'nin en iyi noktaları', path: '/su-sporlari', accent: '#06b6d4' },
 ];
 
 const CATS = [

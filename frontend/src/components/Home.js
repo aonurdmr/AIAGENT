@@ -54,6 +54,7 @@ const TOOLS = [
   { icon: '🎣', label: 'Olta Hesap',    sub: 'İğne, misina ve kurşun önerisi', path: '/olta',       accent: '#22c55e' },
   { icon: '🏹', label: 'Av Ekipmanı',  sub: 'Silah, fişek ve güvenlik bilgisi', path: '/av-ekipman', accent: '#f59e0b' },
   { icon: '✏️', label: 'Saha Notları', sub: 'Hızlı kayıt + AI özeti',           path: '/saha',       accent: '#a855f7' },
+  { icon: '🔊', label: 'Doğa Sesleri', sub: '10 tür · ses tanıma rehberi',     path: '/sesler',     accent: '#06b6d4' },
 ];
 
 const CATS = [

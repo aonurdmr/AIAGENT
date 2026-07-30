@@ -52,6 +52,7 @@ import FishSeason      from '@/components/FishSeason';
 import RigCalculator   from '@/components/RigCalculator';
 import HuntingGear     from '@/components/HuntingGear';
 import FieldNotes      from '@/components/FieldNotes';
+import NatureSounds    from '@/components/NatureSounds';
 import { ToastProvider } from '@/components/Toast';
 import '@/App.css';
 
@@ -114,6 +115,7 @@ function AppInner() {
         <Route path="/olta"        element={<RigCalculator />} />
         <Route path="/av-ekipman"  element={<HuntingGear />} />
         <Route path="/saha"        element={<FieldNotes />} />
+        <Route path="/sesler"      element={<NatureSounds />} />
       </Routes>
       {!hideNav && <Navbar />}
     </div>

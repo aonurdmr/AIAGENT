@@ -72,6 +72,8 @@ const TOOLS = [
   { icon: '🦶', label: 'Hayvan İzleri', sub: '8 tür · iz tanıma rehberi', path: '/izler', accent: '#92400e' },
   { icon: '🍄', label: 'Mantar Rehberi', sub: '8 tür · yenilebilir ve zehirli', path: '/mantar', accent: '#84cc16' },
   { icon: '⭐', label: 'Yıldız Haritası', sub: '6 takımyıldız · gece navigasyonu', path: '/yildizlar', accent: '#818cf8' },
+  { icon: '🐍', label: 'Yılan Rehberi', sub: '6 tür · zehirli / zararsız tanıma', path: '/surungen', accent: '#ef4444' },
+  { icon: '💧', label: 'Su Kalitesi', sub: '5 parametre · balıkçılık kalite skoru', path: '/su-kalite', accent: '#06b6d4' },
 ];
 
 const CATS = [

@@ -70,6 +70,8 @@ import FishSizeGuide   from '@/components/FishSizeGuide';
 import AnimalTracks    from '@/components/AnimalTracks';
 import MushroomGuide   from '@/components/MushroomGuide';
 import StarMap         from '@/components/StarMap';
+import SnakeGuide      from '@/components/SnakeGuide';
+import WaterQuality    from '@/components/WaterQuality';
 import { ToastProvider } from '@/components/Toast';
 import '@/App.css';
 
@@ -150,6 +152,8 @@ function AppInner() {
         <Route path="/izler"        element={<AnimalTracks />} />
         <Route path="/mantar"       element={<MushroomGuide />} />
         <Route path="/yildizlar"    element={<StarMap />} />
+        <Route path="/surungen"     element={<SnakeGuide />} />
+        <Route path="/su-kalite"    element={<WaterQuality />} />
       </Routes>
       {!hideNav && <Navbar />}
     </div>

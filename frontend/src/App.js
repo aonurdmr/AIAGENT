@@ -39,6 +39,7 @@ import FishingLaws     from '@/components/FishingLaws';
 import GearSelector    from '@/components/GearSelector';
 import DailyBriefing   from '@/components/DailyBriefing';
 import HuntingCalendar from '@/components/HuntingCalendar';
+import CampingGuide    from '@/components/CampingGuide';
 import { ToastProvider } from '@/components/Toast';
 import '@/App.css';
 
@@ -88,6 +89,7 @@ function AppInner() {
         <Route path="/setup"       element={<GearSelector />} />
         <Route path="/brifing"     element={<DailyBriefing />} />
         <Route path="/av-takvim"   element={<HuntingCalendar />} />
+        <Route path="/kamp"        element={<CampingGuide />} />
       </Routes>
       {!hideNav && <Navbar />}
     </div>

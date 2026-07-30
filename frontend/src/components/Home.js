@@ -41,6 +41,7 @@ const TOOLS = [
   { icon: '🎣', label: 'Ekipman Seçici',  sub: 'Türe göre optimal setup',         path: '/setup',    accent: '#22c55e' },
   { icon: '📰', label: 'Günlük Brifing', sub: 'AI sabah balıkçılık raporu',       path: '/brifing',  accent: '#38bdf8' },
   { icon: '🏹', label: 'Av Takvimi',    sub: '8 av türü sezon ve kuralları',     path: '/av-takvim', accent: '#84cc16' },
+  { icon: '⛺', label: 'Kamp Rehberi', sub: '10 kamp yeri + ekipman listesi',   path: '/kamp',      accent: '#22c55e' },
 ];
 
 const CATS = [

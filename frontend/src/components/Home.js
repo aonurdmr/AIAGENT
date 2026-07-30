@@ -80,6 +80,8 @@ const TOOLS = [
   { icon: '📊', label: 'Popülasyon Takibi', sub: '8 tür · aylık aktivite & stok durumu', path: '/populasyon', accent: '#3b82f6' },
   { icon: '🎣', label: 'Balıkçılık Tahmin', sub: '7 gün · hava + ay + UV kombinasyonu', path: '/balik-tahmin', accent: '#22c55e' },
   { icon: '🏕️', label: 'Kamp Noktaları', sub: '8 kamp yeri · tesis ve aktivite bilgisi', path: '/kamp-harita', accent: '#84cc16' },
+  { icon: '🪲', label: 'Böcek Rehberi', sub: '8 tür · yararlı, zararlı ve tehlikeli', path: '/bocekler', accent: '#f59e0b' },
+  { icon: '📅', label: 'Sezon Uyarıları', sub: '10 tür · av ve balık sezonu takibi', path: '/sezon-uyari', accent: '#3b82f6' },
 ];
 
 const CATS = [

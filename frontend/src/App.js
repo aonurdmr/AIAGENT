@@ -78,6 +78,8 @@ import FishingDiary      from '@/components/FishingDiary';
 import PopulationTracker from '@/components/PopulationTracker';
 import FishingForecast   from '@/components/FishingForecast';
 import CampingMap        from '@/components/CampingMap';
+import InsectGuide       from '@/components/InsectGuide';
+import SeasonAlerts      from '@/components/SeasonAlerts';
 import { ToastProvider } from '@/components/Toast';
 import '@/App.css';
 
@@ -166,6 +168,8 @@ function AppInner() {
         <Route path="/populasyon"   element={<PopulationTracker />} />
         <Route path="/balik-tahmin" element={<FishingForecast />} />
         <Route path="/kamp-harita"  element={<CampingMap />} />
+        <Route path="/bocekler"     element={<InsectGuide />} />
+        <Route path="/sezon-uyari"  element={<SeasonAlerts />} />
       </Routes>
       {!hideNav && <Navbar />}
     </div>

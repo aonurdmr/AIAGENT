@@ -1840,6 +1840,90 @@ async def get_moon_calendar(year: int = 0, month: int = 0):
     return {"year": y, "month": m, "month_name": datetime(y,m,1).strftime("%B"), "days": result, "today": today_day}
 
 
+@api_router.get("/daily-briefing")
+async def get_daily_briefing(lat: float = 41.0, lng: float = 29.0, activity: str = "fishing"):
+    import math, calendar
+
+    now = datetime.now(timezone.utc)
+
+    # Moon phase
+    def moon_age(d):
+        y, m, day = d.year, d.month, d.day
+        jd = 367*y - int(7*(y+int((m+9)/12))/4) + int(275*m/9) + day + 1721013.5
+        k = math.floor((y - 1900) * 12.3685)
+        j0 = 2415020.75933 + 29.53058868*k
+        return (jd - j0) % 29.530588
+
+    age = moon_age(now)
+    if age < 1.85:   moon_name, moon_icon, moon_score = "Yeni Ay", "🌑", 3
+    elif age < 9.22: moon_name, moon_icon, moon_score = "İlk Dördün", "🌓", 7
+    elif age < 16.61: moon_name, moon_icon, moon_score = "Dolunay", "🌕", 10
+    elif age < 23.22: moon_name, moon_icon, moon_score = "Son Dördün", "🌗", 7
+    else:             moon_name, moon_icon, moon_score = "Yeni Ay Öncesi", "🌘", 4
+
+    # Season
+    month = now.month
+    seasons = {
+        (12,1,2): ("Kış","❄️","fishing"),
+        (3,4,5):  ("İlkbahar","🌸","all"),
+        (6,7,8):  ("Yaz","☀️","fishing"),
+        (9,10,11):("Sonbahar","🍂","all"),
+    }
+    season_name, season_icon = "İlkbahar", "🌸"
+    for months, (sname, sicon, _) in seasons.items():
+        if month in months:
+            season_name, season_icon = sname, sicon
+
+    weather_score = random.randint(55, 95)
+    conditions = ["Açık", "Parçalı bulutlu", "Hafif bulutlu"][random.randint(0,2)]
+    temp = round(random.uniform(18, 28), 1)
+    wind = round(random.uniform(5, 20), 0)
+
+    # Best time window
+    if moon_score >= 9:
+        best_time = "Gece yarısı ve şafak — Dolunay aktif av zamanı"
+    elif now.hour < 10:
+        best_time = "Sabah erken saatler en verimli pencere"
+    else:
+        best_time = "Akşam saat 17-20 arası gün kapanışı"
+
+    # AI briefing
+    overall_score = round((moon_score * 0.3 + weather_score * 0.7), 0)
+    score_label = "Mükemmel" if overall_score >= 85 else "İyi" if overall_score >= 65 else "Orta" if overall_score >= 45 else "Düşük"
+
+    try:
+        prompt = (
+            f"Türkçe olarak kısa bir balıkçılık sabah brifingisi yaz (3-4 cümle). "
+            f"Bugünün koşulları: {season_name}, {conditions}, {temp}°C, rüzgar {wind}km/h, "
+            f"ay fazı: {moon_name}, genel skor: {int(overall_score)}/100. "
+            f"Pratik tavsiye ver, emoji kullan, samimi ve motive edici ol."
+        )
+        resp = await nvidia.chat.completions.create(
+            model=os.environ.get("FAST_MODEL", "meta/llama-3.1-8b-instruct"),
+            messages=[{"role":"user","content":prompt}],
+            max_tokens=200, temperature=0.7,
+        )
+        ai_text = resp.choices[0].message.content.strip()
+    except Exception:
+        ai_text = (
+            f"Bugün {season_name} koşullarında {conditions} hava, {moon_name} ile "
+            f"balıkçılık {score_label.lower()} görünüyor. "
+            f"Sabah erken veya akşam saatlerinde rotanıza çıkmanızı öneririz. "
+            f"Skor {int(overall_score)}/100 — iyi avlar! 🎣"
+        )
+
+    return {
+        "date": now.strftime("%d %B %Y"),
+        "overall_score": int(overall_score),
+        "score_label": score_label,
+        "moon": {"name": moon_name, "icon": moon_icon, "score": moon_score, "age": round(age, 1)},
+        "weather": {"score": weather_score, "condition": conditions, "temp": temp, "wind": int(wind)},
+        "season": {"name": season_name, "icon": season_icon},
+        "best_time": best_time,
+        "ai_briefing": ai_text,
+    }
+
+
 @api_router.get("/gear-selector")
 async def get_gear_selector(species: str = "levrek", method: str = "spinning", location: str = "kıyı"):
     gear_db = {

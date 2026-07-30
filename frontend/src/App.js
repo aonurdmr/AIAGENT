@@ -37,6 +37,7 @@ import RecipeBook      from '@/components/RecipeBook';
 import SpeciesCompare  from '@/components/SpeciesCompare';
 import FishingLaws     from '@/components/FishingLaws';
 import GearSelector    from '@/components/GearSelector';
+import DailyBriefing   from '@/components/DailyBriefing';
 import { ToastProvider } from '@/components/Toast';
 import '@/App.css';
 
@@ -84,6 +85,7 @@ function AppInner() {
         <Route path="/karsilastir" element={<SpeciesCompare />} />
         <Route path="/kanun"       element={<FishingLaws />} />
         <Route path="/setup"       element={<GearSelector />} />
+        <Route path="/brifing"     element={<DailyBriefing />} />
       </Routes>
       {!hideNav && <Navbar />}
     </div>

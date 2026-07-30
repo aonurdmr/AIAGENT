@@ -39,6 +39,7 @@ const TOOLS = [
   { icon: '⚔️', label: 'Tür Karşılaştır', sub: '8 türü yan yana karşılaştır', path: '/karsilastir', accent: '#a855f7' },
   { icon: '⚖️', label: 'Mevzuat',         sub: 'Boy limitleri ve yasal kurallar', path: '/kanun',    accent: '#94a3b8' },
   { icon: '🎣', label: 'Ekipman Seçici',  sub: 'Türe göre optimal setup',         path: '/setup',    accent: '#22c55e' },
+  { icon: '📰', label: 'Günlük Brifing', sub: 'AI sabah balıkçılık raporu',       path: '/brifing',  accent: '#38bdf8' },
 ];
 
 const CATS = [

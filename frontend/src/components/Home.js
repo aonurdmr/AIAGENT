@@ -61,6 +61,7 @@ const TOOLS = [
   { icon: '☀️', label: 'Güneş Takibi', sub: 'Doğuş · batış · altın balıkçılık saatleri', path: '/gun', accent: '#f59e0b' },
   { icon: '🏹', label: 'Av Bölgeleri', sub: '8 onaylı av sahası · sezon & izin bilgisi', path: '/av-bolge', accent: '#f59e0b' },
   { icon: '🎣', label: 'Balıkçılık Noktaları', sub: '8 elit nokta · tür, yöntem & sezon', path: '/balik-nokta', accent: '#06b6d4' },
+  { icon: '📅', label: '7 Günlük Tahmin', sub: 'Open-Meteo · hava & balıkçılık skoru', path: '/tahmin', accent: '#3b82f6' },
 ];
 
 const CATS = [

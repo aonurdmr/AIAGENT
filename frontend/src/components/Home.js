@@ -69,6 +69,7 @@ const TOOLS = [
   { icon: '🩺', label: 'İlk Yardım', sub: '8 senaryo · adım adım müdahale', path: '/ilk-yardim', accent: '#ef4444' },
   { icon: '⛺', label: 'Kamp Listesi', sub: '30 madde · kişiselleştirilebilir', path: '/kamp-liste', accent: '#22c55e' },
   { icon: '📏', label: 'Boy Kılavuzu', sub: '12 tür · yasal minimum & ölçüm', path: '/boy-kilavuz', accent: '#06b6d4' },
+  { icon: '🦶', label: 'Hayvan İzleri', sub: '8 tür · iz tanıma rehberi', path: '/izler', accent: '#92400e' },
 ];
 
 const CATS = [

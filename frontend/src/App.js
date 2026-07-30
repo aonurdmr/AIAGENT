@@ -67,6 +67,7 @@ import NationalParks   from '@/components/NationalParks';
 import FirstAid        from '@/components/FirstAid';
 import CampingChecklist from '@/components/CampingChecklist';
 import FishSizeGuide   from '@/components/FishSizeGuide';
+import AnimalTracks    from '@/components/AnimalTracks';
 import { ToastProvider } from '@/components/Toast';
 import '@/App.css';
 
@@ -144,6 +145,7 @@ function AppInner() {
         <Route path="/ilk-yardim"   element={<FirstAid />} />
         <Route path="/kamp-liste"   element={<CampingChecklist />} />
         <Route path="/boy-kilavuz"  element={<FishSizeGuide />} />
+        <Route path="/izler"        element={<AnimalTracks />} />
       </Routes>
       {!hideNav && <Navbar />}
     </div>

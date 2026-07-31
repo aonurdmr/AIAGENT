@@ -98,6 +98,8 @@ const TOOLS = [
   { icon: '🔫', label: 'Av Silahları Rehberi', sub: 'Tüfek, fişek & Türkiye mevzuatı', path: '/silah', accent: '#f59e0b' },
   { icon: '🍳', label: 'Balık Tarifleri', sub: '6 tarif · malzeme, yapılış & besin değeri', path: '/balik-tarif', accent: '#ef4444' },
   { icon: '⛺', label: 'Kamp Yemekleri', sub: '6 tarif · közde, mangal & tencere yemekleri', path: '/kamp-yemek', accent: '#84cc16' },
+  { icon: '📷', label: 'Doğa Fotoğrafçılığı', sub: '4 bölüm · ekipman, teknik, kompozisyon', path: '/dogal-fotograf', accent: '#818cf8' },
+  { icon: '🧭', label: 'GPS Araçları', sub: 'DD↔DMS dönüştürücü · mesafe & yön hesabı', path: '/gps', accent: '#22c55e' },
 ];
 
 const CATS = [

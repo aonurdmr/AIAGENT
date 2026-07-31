@@ -88,8 +88,10 @@ import MarineWeather    from '@/components/MarineWeather';
 import INaturalist      from '@/components/INaturalist';
 import GBIFSpecies      from '@/components/GBIFSpecies';
 import AirQuality       from '@/components/AirQuality';
-import NasaAPOD         from '@/components/NasaAPOD';
-import ElevationMap     from '@/components/ElevationMap';
+import NasaAPOD           from '@/components/NasaAPOD';
+import ElevationMap       from '@/components/ElevationMap';
+import EarthquakeTracker  from '@/components/EarthquakeTracker';
+import GoldenHour         from '@/components/GoldenHour';
 import { ToastProvider } from '@/components/Toast';
 import '@/App.css';
 
@@ -190,6 +192,8 @@ function AppInner() {
         <Route path="/hava-kalite"  element={<AirQuality />} />
         <Route path="/nasa-apod"    element={<NasaAPOD />} />
         <Route path="/yukseklik"    element={<ElevationMap />} />
+        <Route path="/deprem"       element={<EarthquakeTracker />} />
+        <Route path="/altin-saat"   element={<GoldenHour />} />
       </Routes>
       {!hideNav && <Navbar />}
     </div>

@@ -92,6 +92,8 @@ const TOOLS = [
   { icon: '💨', label: 'Hava Kalitesi', sub: '6 şehir · PM2.5, ozon ve aktivite skoru', path: '/hava-kalite', accent: '#06b6d4' },
   { icon: '🚀', label: 'NASA Günün Görseli', sub: 'APOD · her gün bir evren fotoğrafı', path: '/nasa-apod', accent: '#818cf8' },
   { icon: '⛰️', label: 'Yükseklik Haritası', sub: 'Open-Elevation · koordinat yükseklik sorgula', path: '/yukseklik', accent: '#60a5fa' },
+  { icon: '🌍', label: 'Deprem Takibi', sub: 'USGS · Türkiye gerçek zamanlı depremler', path: '/deprem', accent: '#ef4444' },
+  { icon: '🌅', label: 'Altın Saat Rehberi', sub: '8 fotoğraf noktası · gün batımı saatleri', path: '/altin-saat', accent: '#f59e0b' },
 ];
 
 const CATS = [

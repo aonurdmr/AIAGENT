@@ -172,6 +172,7 @@ import HuntingDogCare  from '@/components/HuntingDogCare';
 import FishingLine       from '@/components/FishingLine';
 import CampSiteSelector  from '@/components/CampSiteSelector';
 import BirdMigrationMap  from '@/components/BirdMigrationMap';
+import StarNavigation    from '@/components/StarNavigation';
 import { ToastProvider } from '@/components/Toast';
 import '@/App.css';
 
@@ -354,6 +355,7 @@ function AppInner() {
         <Route path="/misina"         element={<FishingLine />} />
         <Route path="/kamp-yer"       element={<CampSiteSelector />} />
         <Route path="/goc-harita"     element={<BirdMigrationMap />} />
+        <Route path="/yildiz-nav"     element={<StarNavigation />} />
       </Routes>
       {!hideNav && <Navbar />}
     </div>

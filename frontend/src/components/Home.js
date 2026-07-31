@@ -174,6 +174,7 @@ const TOOLS = [
   { icon: '🧵', label: 'Olta İpliği Rehberi', sub: '4 ip türü · mono, fluoro, braid, tel', path: '/misina', accent: '#fbbf24' },
   { icon: '⛺', label: 'Kamp Yeri Seçimi', sub: '4 kriter · arazi, su, vahşi hayat & sığınak', path: '/kamp-yer', accent: '#22c55e' },
   { icon: '🐦', label: 'Kuş Göçü Haritası', sub: '4 güzergah · Türkiye geçiş koridorları', path: '/goc-harita', accent: '#22c55e' },
+  { icon: '⭐', label: 'Yıldız Navigasyon', sub: '4 yıldız · gece yön bulma & teknikler', path: '/yildiz-nav', accent: '#6366f1' },
 ];
 
 const CATS = [

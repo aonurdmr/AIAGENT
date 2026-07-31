@@ -96,6 +96,7 @@ const TOOLS = [
   { icon: '🌅', label: 'Altın Saat Rehberi', sub: '8 fotoğraf noktası · gün batımı saatleri', path: '/altin-saat', accent: '#f59e0b' },
   { icon: '🏞️', label: 'Akarsu Takibi', sub: '6 nehir · seviye, berraklık & balıkçılık', path: '/nehir', accent: '#06b6d4' },
   { icon: '🔫', label: 'Av Silahları Rehberi', sub: 'Tüfek, fişek & Türkiye mevzuatı', path: '/silah', accent: '#f59e0b' },
+  { icon: '🍳', label: 'Balık Tarifleri', sub: '6 tarif · malzeme, yapılış & besin değeri', path: '/balik-tarif', accent: '#ef4444' },
 ];
 
 const CATS = [

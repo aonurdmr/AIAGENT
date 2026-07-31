@@ -94,6 +94,7 @@ import EarthquakeTracker  from '@/components/EarthquakeTracker';
 import GoldenHour         from '@/components/GoldenHour';
 import RiverWatch         from '@/components/RiverWatch';
 import HuntingWeapons     from '@/components/HuntingWeapons';
+import FishRecipes        from '@/components/FishRecipes';
 import { ToastProvider } from '@/components/Toast';
 import '@/App.css';
 
@@ -198,6 +199,7 @@ function AppInner() {
         <Route path="/altin-saat"   element={<GoldenHour />} />
         <Route path="/nehir"        element={<RiverWatch />} />
         <Route path="/silah"        element={<HuntingWeapons />} />
+        <Route path="/balik-tarif"  element={<FishRecipes />} />
       </Routes>
       {!hideNav && <Navbar />}
     </div>

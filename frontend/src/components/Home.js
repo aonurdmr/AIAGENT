@@ -90,6 +90,8 @@ const TOOLS = [
   { icon: '🔭', label: 'Doğa Gözlemleri', sub: 'iNaturalist · Türkiye gerçek tür gözlemleri', path: '/gozlemler', accent: '#22c55e' },
   { icon: '🧬', label: 'GBIF Tür Arama', sub: '60M+ kayıt · taksonomik sınıflandırma', path: '/gbif', accent: '#a855f7' },
   { icon: '💨', label: 'Hava Kalitesi', sub: '6 şehir · PM2.5, ozon ve aktivite skoru', path: '/hava-kalite', accent: '#06b6d4' },
+  { icon: '🚀', label: 'NASA Günün Görseli', sub: 'APOD · her gün bir evren fotoğrafı', path: '/nasa-apod', accent: '#818cf8' },
+  { icon: '⛰️', label: 'Yükseklik Haritası', sub: 'Open-Elevation · koordinat yükseklik sorgula', path: '/yukseklik', accent: '#60a5fa' },
 ];
 
 const CATS = [

@@ -88,6 +88,8 @@ import MarineWeather    from '@/components/MarineWeather';
 import INaturalist      from '@/components/INaturalist';
 import GBIFSpecies      from '@/components/GBIFSpecies';
 import AirQuality       from '@/components/AirQuality';
+import NasaAPOD         from '@/components/NasaAPOD';
+import ElevationMap     from '@/components/ElevationMap';
 import { ToastProvider } from '@/components/Toast';
 import '@/App.css';
 
@@ -186,6 +188,8 @@ function AppInner() {
         <Route path="/gozlemler"    element={<INaturalist />} />
         <Route path="/gbif"         element={<GBIFSpecies />} />
         <Route path="/hava-kalite"  element={<AirQuality />} />
+        <Route path="/nasa-apod"    element={<NasaAPOD />} />
+        <Route path="/yukseklik"    element={<ElevationMap />} />
       </Routes>
       {!hideNav && <Navbar />}
     </div>

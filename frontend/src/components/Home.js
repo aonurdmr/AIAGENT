@@ -168,6 +168,7 @@ const TOOLS = [
   { icon: '🍂', label: 'Doğa Takvimi', sub: '12 ay · doğa olayları & sezon rehberi', path: '/doga-takvim', accent: '#22c55e' },
   { icon: '🌍', label: 'Zemin & Su Okuma', sub: '4 zemin tipi · balıkçılık & av işareti', path: '/zemin', accent: '#92400e' },
   { icon: '💨', label: 'Rüzgar & Hava Okuma', sub: 'Beaufort skalası · yön & işaret okuma', path: '/ruzgar-oku', accent: '#3b82f6' },
+  { icon: '🏔️', label: 'Dağ Güvenliği', sub: '4 tehlike · önleme & acil eylem rehberi', path: '/dag-guvenlik', accent: '#a78bfa' },
 ];
 
 const CATS = [

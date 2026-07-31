@@ -143,6 +143,10 @@ import SeaFishDB         from '@/components/SeaFishDB';
 import HikingGear        from '@/components/HikingGear';
 import FishingKnots      from '@/components/FishingKnots';
 import WildlifeSafety    from '@/components/WildlifeSafety';
+import DeerGuide         from '@/components/DeerGuide';
+import WeatherSafety     from '@/components/WeatherSafety';
+import AquaticPlants     from '@/components/AquaticPlants';
+import PhotoSpots        from '@/components/PhotoSpots';
 import { ToastProvider } from '@/components/Toast';
 import '@/App.css';
 
@@ -296,6 +300,10 @@ function AppInner() {
         <Route path="/yuruyus-gear"  element={<HikingGear />} />
         <Route path="/dugumler"      element={<FishingKnots />} />
         <Route path="/dogada-guvenlik" element={<WildlifeSafety />} />
+        <Route path="/geyik"          element={<DeerGuide />} />
+        <Route path="/hava-tehlike"   element={<WeatherSafety />} />
+        <Route path="/su-bitkileri"   element={<AquaticPlants />} />
+        <Route path="/foto-noktalar"  element={<PhotoSpots />} />
       </Routes>
       {!hideNav && <Navbar />}
     </div>

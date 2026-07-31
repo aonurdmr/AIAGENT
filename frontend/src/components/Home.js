@@ -145,6 +145,10 @@ const TOOLS = [
   { icon: '🥾', label: 'Yürüyüş Ekipmanı', sub: '5 kategori · seçim rehberi & ağırlık', path: '/yuruyus-gear', accent: '#84cc16' },
   { icon: '🪢', label: 'Balıkçı Düğümleri', sub: '6 düğüm · adım adım & güç karşılaştırması', path: '/dugumler', accent: '#22c55e' },
   { icon: '⚠️', label: 'Doğada Güvenlik', sub: '5 tehlikeli tür · önleme & ilk yardım', path: '/dogada-guvenlik', accent: '#ef4444' },
+  { icon: '🦌', label: 'Geyik Rehberi', sub: 'Karaca · alageyik · kızıl geyik · iz takibi', path: '/geyik', accent: '#f59e0b' },
+  { icon: '🌩️', label: 'Hava Tehlikeleri', sub: 'Yıldırım · hipotermi · sel · sıcak çarpması', path: '/hava-tehlike', accent: '#fbbf24' },
+  { icon: '🪷', label: 'Su Bitkileri', sub: '5 tür · balıkçılık habitatı & ekoloji', path: '/su-bitkileri', accent: '#ec4899' },
+  { icon: '📸', label: 'Fotoğraf Noktaları', sub: '6 konum · yaban hayatı & manzara', path: '/foto-noktalar', accent: '#818cf8' },
 ];
 
 const CATS = [

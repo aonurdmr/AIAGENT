@@ -95,6 +95,7 @@ import GoldenHour         from '@/components/GoldenHour';
 import RiverWatch         from '@/components/RiverWatch';
 import HuntingWeapons     from '@/components/HuntingWeapons';
 import FishRecipes        from '@/components/FishRecipes';
+import CampingRecipes     from '@/components/CampingRecipes';
 import { ToastProvider } from '@/components/Toast';
 import '@/App.css';
 
@@ -200,6 +201,7 @@ function AppInner() {
         <Route path="/nehir"        element={<RiverWatch />} />
         <Route path="/silah"        element={<HuntingWeapons />} />
         <Route path="/balik-tarif"  element={<FishRecipes />} />
+        <Route path="/kamp-yemek"   element={<CampingRecipes />} />
       </Routes>
       {!hideNav && <Navbar />}
     </div>

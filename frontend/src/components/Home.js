@@ -179,6 +179,7 @@ const TOOLS = [
   { icon: '🪤', label: 'Av Tuzak Teknikleri', sub: '4 tuzak · kamera, koku, iz & ses', path: '/tuzak', accent: '#f59e0b' },
   { icon: '📸', label: 'Doğa Fotoğrafı Teknik', sub: '4 teknik · ışık, kuş, makro, yaban', path: '/foto-teknik', accent: '#f59e0b' },
   { icon: '🏞️', label: 'Nehir Rehberi', sub: '5 nehir · balıkçılık, rafting & nehir okuma', path: '/nehir-harita', accent: '#3b82f6' },
+  { icon: '🍳', label: 'Mevsimsel Kamp Yemekleri', sub: '4 mevsim · doğal malzeme & tarifler', path: '/mevsim-kamp', accent: '#22c55e' },
 ];
 
 const CATS = [

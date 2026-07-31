@@ -109,6 +109,7 @@ const TOOLS = [
   { icon: '🦢', label: 'Kuş Göç Takvimi', sub: '8 tür · göç dönemi, rota & gözlem defteri', path: '/goc', accent: '#22c55e' },
   { icon: '⚖️', label: 'Bölgesel Mevzuat', sub: '5 bölge · boy limitleri, ruhsat & ceza', path: '/mevzuat2', accent: '#94a3b8' },
   { icon: '🔥', label: 'Ateş Rehberi', sub: '4 tip · yangın güvenliği & risk hesabı', path: '/ates', accent: '#f97316' },
+  { icon: '🚨', label: 'İstilacı Türler', sub: '6 tür · tehdit seviyesi & bildirim merkezi', path: '/istilaci', accent: '#ef4444' },
 ];
 
 const CATS = [

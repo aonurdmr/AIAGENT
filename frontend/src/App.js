@@ -105,6 +105,7 @@ import WindForecast       from '@/components/WindForecast';
 import BirdMigration      from '@/components/BirdMigration';
 import FishingRegulations from '@/components/FishingRegulations';
 import FireGuide          from '@/components/FireGuide';
+import InvasiveSpecies    from '@/components/InvasiveSpecies';
 import NaturePhotography  from '@/components/NaturePhotography';
 import GPSTools           from '@/components/GPSTools';
 import { ToastProvider } from '@/components/Toast';
@@ -222,6 +223,7 @@ function AppInner() {
         <Route path="/goc"           element={<BirdMigration />} />
         <Route path="/mevzuat2"      element={<FishingRegulations />} />
         <Route path="/ates"          element={<FireGuide />} />
+        <Route path="/istilaci"      element={<InvasiveSpecies />} />
         <Route path="/dogal-fotograf" element={<NaturePhotography />} />
         <Route path="/gps"           element={<GPSTools />} />
       </Routes>

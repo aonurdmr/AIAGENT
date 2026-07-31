@@ -167,6 +167,7 @@ import NatureCalendar   from '@/components/NatureCalendar';
 import SoilGuide        from '@/components/SoilGuide';
 import WindReading      from '@/components/WindReading';
 import MountainSafety  from '@/components/MountainSafety';
+import FishBehavior    from '@/components/FishBehavior';
 import { ToastProvider } from '@/components/Toast';
 import '@/App.css';
 
@@ -344,6 +345,7 @@ function AppInner() {
         <Route path="/zemin"          element={<SoilGuide />} />
         <Route path="/ruzgar-oku"     element={<WindReading />} />
         <Route path="/dag-guvenlik"   element={<MountainSafety />} />
+        <Route path="/balik-davranis" element={<FishBehavior />} />
       </Routes>
       {!hideNav && <Navbar />}
     </div>

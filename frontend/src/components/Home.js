@@ -173,6 +173,7 @@ const TOOLS = [
   { icon: '🐕', label: 'Av Köpeği Bakımı', sub: '4 ırk · antrenman, bakım & sağlık', path: '/av-kopek-bakim', accent: '#f59e0b' },
   { icon: '🧵', label: 'Olta İpliği Rehberi', sub: '4 ip türü · mono, fluoro, braid, tel', path: '/misina', accent: '#fbbf24' },
   { icon: '⛺', label: 'Kamp Yeri Seçimi', sub: '4 kriter · arazi, su, vahşi hayat & sığınak', path: '/kamp-yer', accent: '#22c55e' },
+  { icon: '🐦', label: 'Kuş Göçü Haritası', sub: '4 güzergah · Türkiye geçiş koridorları', path: '/goc-harita', accent: '#22c55e' },
 ];
 
 const CATS = [

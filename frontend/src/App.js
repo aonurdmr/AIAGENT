@@ -170,7 +170,8 @@ import MountainSafety  from '@/components/MountainSafety';
 import FishBehavior    from '@/components/FishBehavior';
 import HuntingDogCare  from '@/components/HuntingDogCare';
 import FishingLine       from '@/components/FishingLine';
-import CampSiteSelector from '@/components/CampSiteSelector';
+import CampSiteSelector  from '@/components/CampSiteSelector';
+import BirdMigrationMap  from '@/components/BirdMigrationMap';
 import { ToastProvider } from '@/components/Toast';
 import '@/App.css';
 
@@ -352,6 +353,7 @@ function AppInner() {
         <Route path="/av-kopek-bakim" element={<HuntingDogCare />} />
         <Route path="/misina"         element={<FishingLine />} />
         <Route path="/kamp-yer"       element={<CampSiteSelector />} />
+        <Route path="/goc-harita"     element={<BirdMigrationMap />} />
       </Routes>
       {!hideNav && <Navbar />}
     </div>

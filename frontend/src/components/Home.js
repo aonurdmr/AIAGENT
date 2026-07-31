@@ -131,6 +131,11 @@ const TOOLS = [
   { icon: '🌿', label: 'Şifalı Bitkiler', sub: '8 bitki · tıbbi kullanım & zehirli uyarılar', path: '/sifali', accent: '#84cc16' },
   { icon: '🌊', label: 'Irmak Balıkçılığı', sub: '6 ırmak · teknikler & akıntı rehberi', path: '/irmak', accent: '#06b6d4' },
   { icon: '🍳', label: 'Kamp Pişirme', sub: '5 yöntem · ateş, dutch oven & tarifler', path: '/kamp-pisir', accent: '#ef4444' },
+  { icon: '⚖️', label: 'Av Etiği', sub: '6 ilke · sürdürülebilir av & sorumluluk', path: '/av-etik', accent: '#22c55e' },
+  { icon: '🔭', label: 'Optik Rehberi', sub: '4 tip · dürbün, dürbün tüfeği & lazer', path: '/optik', accent: '#818cf8' },
+  { icon: '☀️', label: 'UV Rehberi', sub: 'Saatlik UV indeks · cilt & göz koruma', path: '/uv-rehber', accent: '#f59e0b' },
+  { icon: '🍳', label: 'Balık Pişirme', sub: '5 teknik · temizleme, fileto & tarifler', path: '/balik-pis', accent: '#ef4444' },
+  { icon: '🐻', label: 'Ayı ile Karşılaşma', sub: '3 tür · güvenlik, ürpertici & spray', path: '/ayi-karsi', accent: '#92400e' },
 ];
 
 const CATS = [

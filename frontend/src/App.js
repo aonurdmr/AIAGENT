@@ -129,6 +129,11 @@ import CarpFishing        from '@/components/CarpFishing';
 import HerbGuide          from '@/components/HerbGuide';
 import RiverFishing       from '@/components/RiverFishing';
 import OutdoorCooking     from '@/components/OutdoorCooking';
+import HuntingEthics     from '@/components/HuntingEthics';
+import OpticsGuide       from '@/components/OpticsGuide';
+import UVGuide           from '@/components/UVGuide';
+import FishCooking       from '@/components/FishCooking';
+import BearEncounter     from '@/components/BearEncounter';
 import { ToastProvider } from '@/components/Toast';
 import '@/App.css';
 
@@ -268,6 +273,11 @@ function AppInner() {
         <Route path="/sifali"        element={<HerbGuide />} />
         <Route path="/irmak"         element={<RiverFishing />} />
         <Route path="/kamp-pisir"    element={<OutdoorCooking />} />
+        <Route path="/av-etik"       element={<HuntingEthics />} />
+        <Route path="/optik"         element={<OpticsGuide />} />
+        <Route path="/uv-rehber"     element={<UVGuide />} />
+        <Route path="/balik-pis"     element={<FishCooking />} />
+        <Route path="/ayi-karsi"     element={<BearEncounter />} />
       </Routes>
       {!hideNav && <Navbar />}
     </div>

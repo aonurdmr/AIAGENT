@@ -117,6 +117,11 @@ const TOOLS = [
   { icon: '🐝', label: 'Tozlaşıcı Rehberi', sub: '7 tür · arı, kelebek & bitki uyumu', path: '/tozlasici', accent: '#84cc16' },
   { icon: '📋', label: 'Balıkçı Ruhsatı', sub: '4 ruhsat türü · başvuru & ceza tablosu', path: '/ruhsat', accent: '#3b82f6' },
   { icon: '📓', label: 'Doğa Günlüğüm', sub: 'Kişisel doğa günlüğü · etiket & arama', path: '/gunlugum', accent: '#22c55e' },
+  { icon: '🥾', label: 'Parkur Durumu', sub: '6 yürüyüş rotası · canlı durum bildirimi', path: '/parkur-durum', accent: '#84cc16' },
+  { icon: '🪰', label: 'Sinek Balıkçılığı', sub: '4 sinek tipi · Türkiye noktaları & düğümler', path: '/sinek-av', accent: '#06b6d4' },
+  { icon: '🐗', label: 'Yaban Domuzu', sub: '5 bölge yoğunluk · 4 taktik & güvenlik', path: '/yaban-domuz', accent: '#f97316' },
+  { icon: '♨️', label: 'Termal Noktalar', sub: '6 kaplıca · kamp & balık kombinasyonu', path: '/termal', accent: '#60a5fa' },
+  { icon: '🎣', label: 'Balıkçılık Havası', sub: '6 konum · saatlik skor & en iyi saat', path: '/balik-hava', accent: '#06b6d4' },
 ];
 
 const CATS = [

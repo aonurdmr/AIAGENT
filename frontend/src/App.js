@@ -115,6 +115,11 @@ import WaterTemp          from '@/components/WaterTemp';
 import PollinatorGuide    from '@/components/PollinatorGuide';
 import FishingLicense     from '@/components/FishingLicense';
 import NatureJournal      from '@/components/NatureJournal';
+import TrailConditions    from '@/components/TrailConditions';
+import FlyFishing         from '@/components/FlyFishing';
+import WildBoarGuide      from '@/components/WildBoarGuide';
+import ThermalSpots       from '@/components/ThermalSpots';
+import FishingWeather     from '@/components/FishingWeather';
 import { ToastProvider } from '@/components/Toast';
 import '@/App.css';
 
@@ -240,6 +245,11 @@ function AppInner() {
         <Route path="/tozlasici"     element={<PollinatorGuide />} />
         <Route path="/ruhsat"        element={<FishingLicense />} />
         <Route path="/gunlugum"      element={<NatureJournal />} />
+        <Route path="/parkur-durum"  element={<TrailConditions />} />
+        <Route path="/sinek-av"      element={<FlyFishing />} />
+        <Route path="/yaban-domuz"   element={<WildBoarGuide />} />
+        <Route path="/termal"        element={<ThermalSpots />} />
+        <Route path="/balik-hava"    element={<FishingWeather />} />
       </Routes>
       {!hideNav && <Navbar />}
     </div>

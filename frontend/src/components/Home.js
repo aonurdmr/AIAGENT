@@ -86,6 +86,8 @@ const TOOLS = [
   { icon: '🏔️', label: 'Hayatta Kalma', sub: '8 senaryo · doğada hayatta kalma', path: '/hayatta-kal', accent: '#ef4444' },
   { icon: '🏪', label: 'Yem Dükkanı Bul', sub: '8 dükkan · Türkiye\'nin önde gelen balıkçı malzemeleri', path: '/yem-bul', accent: '#22c55e' },
   { icon: '📸', label: 'Av Fotoğraf Albümü', sub: 'Kişisel av kaydı ve fotoğraf koleksiyonu', path: '/foto-album', accent: '#a855f7' },
+  { icon: '🌊', label: 'Deniz Hava Durumu', sub: '6 konum · dalga, sıcaklık & balıkçılık skoru', path: '/deniz-hava', accent: '#06b6d4' },
+  { icon: '🔭', label: 'Doğa Gözlemleri', sub: 'iNaturalist · Türkiye gerçek tür gözlemleri', path: '/gozlemler', accent: '#22c55e' },
 ];
 
 const CATS = [

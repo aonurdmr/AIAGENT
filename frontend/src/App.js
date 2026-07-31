@@ -84,6 +84,8 @@ import FishWeightCalc    from '@/components/FishWeightCalc';
 import SurvivalGuide     from '@/components/SurvivalGuide';
 import BaitShopFinder   from '@/components/BaitShopFinder';
 import CatchPhotoAlbum  from '@/components/CatchPhotoAlbum';
+import MarineWeather    from '@/components/MarineWeather';
+import INaturalist      from '@/components/INaturalist';
 import { ToastProvider } from '@/components/Toast';
 import '@/App.css';
 
@@ -178,6 +180,8 @@ function AppInner() {
         <Route path="/hayatta-kal"  element={<SurvivalGuide />} />
         <Route path="/yem-bul"      element={<BaitShopFinder />} />
         <Route path="/foto-album"   element={<CatchPhotoAlbum />} />
+        <Route path="/deniz-hava"   element={<MarineWeather />} />
+        <Route path="/gozlemler"    element={<INaturalist />} />
       </Routes>
       {!hideNav && <Navbar />}
     </div>

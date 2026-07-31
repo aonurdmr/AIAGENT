@@ -175,6 +175,7 @@ const TOOLS = [
   { icon: '⛺', label: 'Kamp Yeri Seçimi', sub: '4 kriter · arazi, su, vahşi hayat & sığınak', path: '/kamp-yer', accent: '#22c55e' },
   { icon: '🐦', label: 'Kuş Göçü Haritası', sub: '4 güzergah · Türkiye geçiş koridorları', path: '/goc-harita', accent: '#22c55e' },
   { icon: '⭐', label: 'Yıldız Navigasyon', sub: '4 yıldız · gece yön bulma & teknikler', path: '/yildiz-nav', accent: '#6366f1' },
+  { icon: '📔', label: 'Balıkçı Günlüğü Pro', sub: 'Av kayıt & istatistik — localStorage', path: '/gunluk-pro', accent: '#06b6d4' },
 ];
 
 const CATS = [

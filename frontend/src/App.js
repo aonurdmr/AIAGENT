@@ -173,6 +173,7 @@ import FishingLine       from '@/components/FishingLine';
 import CampSiteSelector  from '@/components/CampSiteSelector';
 import BirdMigrationMap  from '@/components/BirdMigrationMap';
 import StarNavigation    from '@/components/StarNavigation';
+import FishingJournal   from '@/components/FishingJournal';
 import { ToastProvider } from '@/components/Toast';
 import '@/App.css';
 
@@ -356,6 +357,7 @@ function AppInner() {
         <Route path="/kamp-yer"       element={<CampSiteSelector />} />
         <Route path="/goc-harita"     element={<BirdMigrationMap />} />
         <Route path="/yildiz-nav"     element={<StarNavigation />} />
+        <Route path="/gunluk-pro"     element={<FishingJournal />} />
       </Routes>
       {!hideNav && <Navbar />}
     </div>

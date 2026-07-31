@@ -120,6 +120,11 @@ import FlyFishing         from '@/components/FlyFishing';
 import WildBoarGuide      from '@/components/WildBoarGuide';
 import ThermalSpots       from '@/components/ThermalSpots';
 import FishingWeather     from '@/components/FishingWeather';
+import SpearFishing       from '@/components/SpearFishing';
+import NightFishing       from '@/components/NightFishing';
+import FishAnatomy        from '@/components/FishAnatomy';
+import WeatherPatterns    from '@/components/WeatherPatterns';
+import Phenology          from '@/components/Phenology';
 import { ToastProvider } from '@/components/Toast';
 import '@/App.css';
 
@@ -250,6 +255,11 @@ function AppInner() {
         <Route path="/yaban-domuz"   element={<WildBoarGuide />} />
         <Route path="/termal"        element={<ThermalSpots />} />
         <Route path="/balik-hava"    element={<FishingWeather />} />
+        <Route path="/zipkin"        element={<SpearFishing />} />
+        <Route path="/gece-av"       element={<NightFishing />} />
+        <Route path="/balik-anatomi" element={<FishAnatomy />} />
+        <Route path="/hava-desen"    element={<WeatherPatterns />} />
+        <Route path="/fenoloji"      element={<Phenology />} />
       </Routes>
       {!hideNav && <Navbar />}
     </div>

@@ -122,6 +122,11 @@ const TOOLS = [
   { icon: '🐗', label: 'Yaban Domuzu', sub: '5 bölge yoğunluk · 4 taktik & güvenlik', path: '/yaban-domuz', accent: '#f97316' },
   { icon: '♨️', label: 'Termal Noktalar', sub: '6 kaplıca · kamp & balık kombinasyonu', path: '/termal', accent: '#60a5fa' },
   { icon: '🎣', label: 'Balıkçılık Havası', sub: '6 konum · saatlik skor & en iyi saat', path: '/balik-hava', accent: '#06b6d4' },
+  { icon: '🤿', label: 'Zıpkın Balıkçılığı', sub: '5 hedef tür · teknikler & yasal çerçeve', path: '/zipkin', accent: '#06b6d4' },
+  { icon: '🌙', label: 'Gece Balıkçılığı', sub: '4 tür · ekipman, teknik & güvenlik', path: '/gece-av', accent: '#4f46e5' },
+  { icon: '🔬', label: 'Balık Anatomisi', sub: '4 tür · yüzgeç, yaşam döngüsü & biyoloji', path: '/balik-anatomi', accent: '#3b82f6' },
+  { icon: '📊', label: 'Hava Desenleri', sub: '6 desen · basınç sistemi & balıkçılık etkisi', path: '/hava-desen', accent: '#38bdf8' },
+  { icon: '🌿', label: 'Fenoloji Takvimi', sub: '14 doğa olayı · ay ay Türkiye doğası', path: '/fenoloji', accent: '#22c55e' },
 ];
 
 const CATS = [

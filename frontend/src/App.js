@@ -157,6 +157,10 @@ import WildFoodGuide    from '@/components/WildFoodGuide';
 import KayakGuide       from '@/components/KayakGuide';
 import BinocularsGuide  from '@/components/BinocularsGuide';
 import TurkeyNature     from '@/components/TurkeyNature';
+import LakeFishing      from '@/components/LakeFishing';
+import FishingRig       from '@/components/FishingRig';
+import HuntingSeasons   from '@/components/HuntingSeasons';
+import SeasonRecipes    from '@/components/SeasonRecipes';
 import { ToastProvider } from '@/components/Toast';
 import '@/App.css';
 
@@ -324,6 +328,10 @@ function AppInner() {
         <Route path="/kayak"         element={<KayakGuide />} />
         <Route path="/durbun"        element={<BinocularsGuide />} />
         <Route path="/turkiye-doga"  element={<TurkeyNature />} />
+        <Route path="/gol-balik"     element={<LakeFishing />} />
+        <Route path="/rig-kurulum"   element={<FishingRig />} />
+        <Route path="/av-sezon"      element={<HuntingSeasons />} />
+        <Route path="/mevsim-tarif"  element={<SeasonRecipes />} />
       </Routes>
       {!hideNav && <Navbar />}
     </div>

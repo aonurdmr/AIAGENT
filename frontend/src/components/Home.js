@@ -159,6 +159,10 @@ const TOOLS = [
   { icon: '🛶', label: 'Kano & Kayak', sub: '4 rota · teknikler & su güvenliği', path: '/kayak', accent: '#06b6d4' },
   { icon: '🔭', label: 'Dürbün Rehberi', sub: '4 sınıf · teknik karşılaştırma & kullanım', path: '/durbun', accent: '#f59e0b' },
   { icon: '🗺️', label: 'Türkiye Doğa Atlası', sub: '5 bölge · flora, fauna & av rehberi', path: '/turkiye-doga', accent: '#22c55e' },
+  { icon: '🏞️', label: 'Göl Balıkçılığı', sub: '5 göl · tür, teknik & rekor bilgisi', path: '/gol-balik', accent: '#06b6d4' },
+  { icon: '⚙️', label: 'Olta Kurulumları', sub: '5 rig · adım adım montaj & kullanım', path: '/rig-kurulum', accent: '#22c55e' },
+  { icon: '📅', label: 'Av Sezonu Rehberi', sub: '5 tür · açılış tarihi, limit & mevzuat', path: '/av-sezon', accent: '#f97316' },
+  { icon: '🍽️', label: 'Mevsim Tarifleri', sub: '5 tarif · av ve balık pişirme', path: '/mevsim-tarif', accent: '#f97316' },
 ];
 
 const CATS = [

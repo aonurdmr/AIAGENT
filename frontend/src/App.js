@@ -96,6 +96,7 @@ import RiverWatch         from '@/components/RiverWatch';
 import HuntingWeapons     from '@/components/HuntingWeapons';
 import FishRecipes        from '@/components/FishRecipes';
 import CampingRecipes     from '@/components/CampingRecipes';
+import WeatherAlert       from '@/components/WeatherAlert';
 import NaturePhotography  from '@/components/NaturePhotography';
 import GPSTools           from '@/components/GPSTools';
 import { ToastProvider } from '@/components/Toast';
@@ -204,6 +205,7 @@ function AppInner() {
         <Route path="/silah"        element={<HuntingWeapons />} />
         <Route path="/balik-tarif"  element={<FishRecipes />} />
         <Route path="/kamp-yemek"   element={<CampingRecipes />} />
+        <Route path="/hava-uyari"    element={<WeatherAlert />} />
         <Route path="/dogal-fotograf" element={<NaturePhotography />} />
         <Route path="/gps"           element={<GPSTools />} />
       </Routes>

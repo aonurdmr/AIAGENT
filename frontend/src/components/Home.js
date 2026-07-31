@@ -183,6 +183,16 @@ const TOOLS = [
   { icon: '🌤️', label: 'Hava Durumu Okuma', sub: '5 bulut tipi · basınç & halk tahmini', path: '/hava-oku', accent: '#38bdf8' },
   { icon: '🌊', label: 'Deniz Balıkçılığı', sub: '4 yöntem · surf, jig, trolling, dip avı', path: '/deniz-av', accent: '#06b6d4' },
   { icon: '🔫', label: 'Av Silahı Bakımı', sub: '3 silah tipi · temizlik & güvenlik kuralları', path: '/silah-bakim', accent: '#f97316' },
+  { icon: '🦅', label: 'Yırtıcı Kuşlar', sub: '5 tür · kartal, doğan, atmaca, kerkenez, akbaba', path: '/yirtici-kuslar', accent: '#f59e0b' },
+  { icon: '🌱', label: 'Bitki Tanıma', sub: '4 kategori · yenilebilir, tıbbi, zehirli, gösterge', path: '/bitki-tanima', accent: '#22c55e' },
+  { icon: '🐻', label: 'Yırtıcılarla Karşılaşma', sub: '4 tür · ayı, kurt, domuz, çakal — protokol', path: '/yirtici-karsi', accent: '#92400e' },
+  { icon: '🤿', label: 'Dalış Rehberi', sub: 'Şnorkel · serbest dalış · tüplü — güvenlik', path: '/dalis', accent: '#06b6d4' },
+  { icon: '🧭', label: 'Harita & Pusula', sub: 'İzohips · koordinat · triangülasyon', path: '/harita-oku', accent: '#a78bfa' },
+  { icon: '🌲', label: 'Orman Tipi Rehberi', sub: 'Çam · meşe · kayın · karışık — av ipuçları', path: '/orman-tipi', accent: '#22c55e' },
+  { icon: '🌊', label: 'Akıntı & Dalga', sub: '4 akıntı tipi · dip çekimi & kaçış teknikleri', path: '/akinti', accent: '#06b6d4' },
+  { icon: '🦌', label: 'Büyük Av Rehberi', sub: 'Geyik · karaca · dağ keçisi · domuz', path: '/buyuk-av', accent: '#f59e0b' },
+  { icon: '📡', label: 'Acil Haberleşme', sub: 'Telsiz · uydu · PLB · optik sinyal & Morse', path: '/acil-haberlesme', accent: '#22c55e' },
+  { icon: '🌿', label: 'Doğa Kokuları', sub: 'Hayvan · bitki · su kokuları & avcı koku kontrolü', path: '/doga-koku', accent: '#22c55e' },
 ];
 
 const CATS = [

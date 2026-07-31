@@ -181,6 +181,16 @@ import SeasonalCampFood  from '@/components/SeasonalCampFood';
 import WeatherRead       from '@/components/WeatherRead';
 import SeaFishing       from '@/components/SeaFishing';
 import GunCare         from '@/components/GunCare';
+import RaptorGuide      from '@/components/RaptorGuide';
+import PlantIdentify    from '@/components/PlantIdentify';
+import PredatorSafety   from '@/components/PredatorSafety';
+import DivingGuide      from '@/components/DivingGuide';
+import MapReading       from '@/components/MapReading';
+import ForestTypes      from '@/components/ForestTypes';
+import CurrentsGuide    from '@/components/CurrentsGuide';
+import BigGameGuide     from '@/components/BigGameGuide';
+import EmergencyCom     from '@/components/EmergencyCom';
+import NatureScents     from '@/components/NatureScents';
 import { ToastProvider } from '@/components/Toast';
 import '@/App.css';
 
@@ -372,6 +382,16 @@ function AppInner() {
         <Route path="/hava-oku"       element={<WeatherRead />} />
         <Route path="/deniz-av"       element={<SeaFishing />} />
         <Route path="/silah-bakim"    element={<GunCare />} />
+        <Route path="/yirtici-kuslar" element={<RaptorGuide />} />
+        <Route path="/bitki-tanima"   element={<PlantIdentify />} />
+        <Route path="/yirtici-karsi"  element={<PredatorSafety />} />
+        <Route path="/dalis"          element={<DivingGuide />} />
+        <Route path="/harita-oku"     element={<MapReading />} />
+        <Route path="/orman-tipi"     element={<ForestTypes />} />
+        <Route path="/akinti"         element={<CurrentsGuide />} />
+        <Route path="/buyuk-av"       element={<BigGameGuide />} />
+        <Route path="/acil-haberlesme" element={<EmergencyCom />} />
+        <Route path="/doga-koku"      element={<NatureScents />} />
       </Routes>
       {!hideNav && <Navbar />}
     </div>

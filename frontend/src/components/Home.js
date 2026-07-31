@@ -111,6 +111,7 @@ const TOOLS = [
   { icon: '🔥', label: 'Ateş Rehberi', sub: '4 tip · yangın güvenliği & risk hesabı', path: '/ates', accent: '#f97316' },
   { icon: '🚨', label: 'İstilacı Türler', sub: '6 tür · tehdit seviyesi & bildirim merkezi', path: '/istilaci', accent: '#ef4444' },
   { icon: '🌌', label: 'Yıldız Gözlemi', sub: '8 karanlık nokta · bulut skoru & Bortle', path: '/gozlem', accent: '#4f46e5' },
+  { icon: '🌿', label: 'Günün Türü', sub: '8 tür · her gün farklı tür ansiklopedisi', path: '/gunun-turu', accent: '#22c55e' },
 ];
 
 const CATS = [

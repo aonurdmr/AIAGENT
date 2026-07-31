@@ -107,6 +107,7 @@ import FishingRegulations from '@/components/FishingRegulations';
 import FireGuide          from '@/components/FireGuide';
 import InvasiveSpecies    from '@/components/InvasiveSpecies';
 import StargazingGuide    from '@/components/StargazingGuide';
+import SpeciesOfDay       from '@/components/SpeciesOfDay';
 import NaturePhotography  from '@/components/NaturePhotography';
 import GPSTools           from '@/components/GPSTools';
 import { ToastProvider } from '@/components/Toast';
@@ -226,6 +227,7 @@ function AppInner() {
         <Route path="/ates"          element={<FireGuide />} />
         <Route path="/istilaci"      element={<InvasiveSpecies />} />
         <Route path="/gozlem"        element={<StargazingGuide />} />
+        <Route path="/gunun-turu"    element={<SpeciesOfDay />} />
         <Route path="/dogal-fotograf" element={<NaturePhotography />} />
         <Route path="/gps"           element={<GPSTools />} />
       </Routes>

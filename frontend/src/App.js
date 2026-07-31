@@ -134,6 +134,15 @@ import OpticsGuide       from '@/components/OpticsGuide';
 import UVGuide           from '@/components/UVGuide';
 import FishCooking       from '@/components/FishCooking';
 import BearEncounter     from '@/components/BearEncounter';
+import WolfGuide         from '@/components/WolfGuide';
+import TurkeyHunting     from '@/components/TurkeyHunting';
+import MusselGuide       from '@/components/MusselGuide';
+import CampFireSafety    from '@/components/CampFireSafety';
+import NightSky          from '@/components/NightSky';
+import SeaFishDB         from '@/components/SeaFishDB';
+import HikingGear        from '@/components/HikingGear';
+import FishingKnots      from '@/components/FishingKnots';
+import WildlifeSafety    from '@/components/WildlifeSafety';
 import { ToastProvider } from '@/components/Toast';
 import '@/App.css';
 
@@ -278,6 +287,15 @@ function AppInner() {
         <Route path="/uv-rehber"     element={<UVGuide />} />
         <Route path="/balik-pis"     element={<FishCooking />} />
         <Route path="/ayi-karsi"     element={<BearEncounter />} />
+        <Route path="/kurt"          element={<WolfGuide />} />
+        <Route path="/tuy-av"        element={<TurkeyHunting />} />
+        <Route path="/kabuklu"       element={<MusselGuide />} />
+        <Route path="/kamp-ates"     element={<CampFireSafety />} />
+        <Route path="/gece-gokyuzu"  element={<NightSky />} />
+        <Route path="/deniz-balik"   element={<SeaFishDB />} />
+        <Route path="/yuruyus-gear"  element={<HikingGear />} />
+        <Route path="/dugumler"      element={<FishingKnots />} />
+        <Route path="/dogada-guvenlik" element={<WildlifeSafety />} />
       </Routes>
       {!hideNav && <Navbar />}
     </div>

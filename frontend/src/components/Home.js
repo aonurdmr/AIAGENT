@@ -136,6 +136,15 @@ const TOOLS = [
   { icon: '☀️', label: 'UV Rehberi', sub: 'Saatlik UV indeks · cilt & göz koruma', path: '/uv-rehber', accent: '#f59e0b' },
   { icon: '🍳', label: 'Balık Pişirme', sub: '5 teknik · temizleme, fileto & tarifler', path: '/balik-pis', accent: '#ef4444' },
   { icon: '🐻', label: 'Ayı ile Karşılaşma', sub: '3 tür · güvenlik, ürpertici & spray', path: '/ayi-karsi', accent: '#92400e' },
+  { icon: '🐺', label: 'Kurt Rehberi', sub: 'Türkiye popülasyonu · iz takibi & çatışma', path: '/kurt', accent: '#6b7280' },
+  { icon: '🏹', label: 'Tüy Av Rehberi', sub: 'Keklik · bıldırcın · su kuşu · 5 bölge', path: '/tuy-av', accent: '#84cc16' },
+  { icon: '🦪', label: 'Kabuklu Deniz Ürünleri', sub: 'Midye · istiridye · tarak · güvenlik', path: '/kabuklu', accent: '#06b6d4' },
+  { icon: '🔥', label: 'Kamp Ateşi Güvenliği', sub: '4 ateş tipi · söndürme & yangın riski', path: '/kamp-ates', accent: '#f97316' },
+  { icon: '🌌', label: 'Gece Gökyüzü', sub: 'Takımyıldızlar · gezegenler · karanlık noktalar', path: '/gece-gokyuzu', accent: '#4f46e5' },
+  { icon: '🐟', label: 'Deniz Balıkları DB', sub: '6 tür · habitat, teknik & rekor bilgisi', path: '/deniz-balik', accent: '#3b82f6' },
+  { icon: '🥾', label: 'Yürüyüş Ekipmanı', sub: '5 kategori · seçim rehberi & ağırlık', path: '/yuruyus-gear', accent: '#84cc16' },
+  { icon: '🪢', label: 'Balıkçı Düğümleri', sub: '6 düğüm · adım adım & güç karşılaştırması', path: '/dugumler', accent: '#22c55e' },
+  { icon: '⚠️', label: 'Doğada Güvenlik', sub: '5 tehlikeli tür · önleme & ilk yardım', path: '/dogada-guvenlik', accent: '#ef4444' },
 ];
 
 const CATS = [

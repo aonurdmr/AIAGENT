@@ -110,6 +110,7 @@ const TOOLS = [
   { icon: '⚖️', label: 'Bölgesel Mevzuat', sub: '5 bölge · boy limitleri, ruhsat & ceza', path: '/mevzuat2', accent: '#94a3b8' },
   { icon: '🔥', label: 'Ateş Rehberi', sub: '4 tip · yangın güvenliği & risk hesabı', path: '/ates', accent: '#f97316' },
   { icon: '🚨', label: 'İstilacı Türler', sub: '6 tür · tehdit seviyesi & bildirim merkezi', path: '/istilaci', accent: '#ef4444' },
+  { icon: '🌌', label: 'Yıldız Gözlemi', sub: '8 karanlık nokta · bulut skoru & Bortle', path: '/gozlem', accent: '#4f46e5' },
 ];
 
 const CATS = [

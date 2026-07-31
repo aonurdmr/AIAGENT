@@ -112,6 +112,11 @@ const TOOLS = [
   { icon: '🚨', label: 'İstilacı Türler', sub: '6 tür · tehdit seviyesi & bildirim merkezi', path: '/istilaci', accent: '#ef4444' },
   { icon: '🌌', label: 'Yıldız Gözlemi', sub: '8 karanlık nokta · bulut skoru & Bortle', path: '/gozlem', accent: '#4f46e5' },
   { icon: '🌿', label: 'Günün Türü', sub: '8 tür · her gün farklı tür ansiklopedisi', path: '/gunun-turu', accent: '#22c55e' },
+  { icon: '🐕', label: 'Av Köpekleri', sub: '6 ırk · eğitim rehberi & av uyumu', path: '/av-kopek', accent: '#f59e0b' },
+  { icon: '🌡️', label: 'Su Sıcaklığı', sub: '6 bölge · balık aktivite tahmini', path: '/su-sicak', accent: '#0ea5e9' },
+  { icon: '🐝', label: 'Tozlaşıcı Rehberi', sub: '7 tür · arı, kelebek & bitki uyumu', path: '/tozlasici', accent: '#84cc16' },
+  { icon: '📋', label: 'Balıkçı Ruhsatı', sub: '4 ruhsat türü · başvuru & ceza tablosu', path: '/ruhsat', accent: '#3b82f6' },
+  { icon: '📓', label: 'Doğa Günlüğüm', sub: 'Kişisel doğa günlüğü · etiket & arama', path: '/gunlugum', accent: '#22c55e' },
 ];
 
 const CATS = [

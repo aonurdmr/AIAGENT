@@ -110,6 +110,11 @@ import StargazingGuide    from '@/components/StargazingGuide';
 import SpeciesOfDay       from '@/components/SpeciesOfDay';
 import NaturePhotography  from '@/components/NaturePhotography';
 import GPSTools           from '@/components/GPSTools';
+import HuntingDogs        from '@/components/HuntingDogs';
+import WaterTemp          from '@/components/WaterTemp';
+import PollinatorGuide    from '@/components/PollinatorGuide';
+import FishingLicense     from '@/components/FishingLicense';
+import NatureJournal      from '@/components/NatureJournal';
 import { ToastProvider } from '@/components/Toast';
 import '@/App.css';
 
@@ -230,6 +235,11 @@ function AppInner() {
         <Route path="/gunun-turu"    element={<SpeciesOfDay />} />
         <Route path="/dogal-fotograf" element={<NaturePhotography />} />
         <Route path="/gps"           element={<GPSTools />} />
+        <Route path="/av-kopek"      element={<HuntingDogs />} />
+        <Route path="/su-sicak"      element={<WaterTemp />} />
+        <Route path="/tozlasici"     element={<PollinatorGuide />} />
+        <Route path="/ruhsat"        element={<FishingLicense />} />
+        <Route path="/gunlugum"      element={<NatureJournal />} />
       </Routes>
       {!hideNav && <Navbar />}
     </div>

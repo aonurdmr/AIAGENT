@@ -102,6 +102,7 @@ const TOOLS = [
   { icon: '🧭', label: 'GPS Araçları', sub: 'DD↔DMS dönüştürücü · mesafe & yön hesabı', path: '/gps', accent: '#22c55e' },
   { icon: '🚨', label: 'Hava Uyarıları', sub: '6 şehir · saatlik tehlike skoru & balıkçılık', path: '/hava-uyari', accent: '#ef4444' },
   { icon: '🎣', label: 'Aylık İpuçları', sub: '5 tür · aylık taktik, yem ve derinlik rehberi', path: '/ipuclari', accent: '#06b6d4' },
+  { icon: '⏱️', label: 'Sezon Geri Sayımı', sub: '7 av türü · canlı sezon sayacı', path: '/geri-sayim', accent: '#f59e0b' },
 ];
 
 const CATS = [

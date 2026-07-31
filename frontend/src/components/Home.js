@@ -101,6 +101,7 @@ const TOOLS = [
   { icon: '📷', label: 'Doğa Fotoğrafçılığı', sub: '4 bölüm · ekipman, teknik, kompozisyon', path: '/dogal-fotograf', accent: '#818cf8' },
   { icon: '🧭', label: 'GPS Araçları', sub: 'DD↔DMS dönüştürücü · mesafe & yön hesabı', path: '/gps', accent: '#22c55e' },
   { icon: '🚨', label: 'Hava Uyarıları', sub: '6 şehir · saatlik tehlike skoru & balıkçılık', path: '/hava-uyari', accent: '#ef4444' },
+  { icon: '🎣', label: 'Aylık İpuçları', sub: '5 tür · aylık taktik, yem ve derinlik rehberi', path: '/ipuclari', accent: '#06b6d4' },
 ];
 
 const CATS = [

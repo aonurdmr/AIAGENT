@@ -169,7 +169,8 @@ import WindReading      from '@/components/WindReading';
 import MountainSafety  from '@/components/MountainSafety';
 import FishBehavior    from '@/components/FishBehavior';
 import HuntingDogCare  from '@/components/HuntingDogCare';
-import FishingLine     from '@/components/FishingLine';
+import FishingLine       from '@/components/FishingLine';
+import CampSiteSelector from '@/components/CampSiteSelector';
 import { ToastProvider } from '@/components/Toast';
 import '@/App.css';
 
@@ -350,6 +351,7 @@ function AppInner() {
         <Route path="/balik-davranis" element={<FishBehavior />} />
         <Route path="/av-kopek-bakim" element={<HuntingDogCare />} />
         <Route path="/misina"         element={<FishingLine />} />
+        <Route path="/kamp-yer"       element={<CampSiteSelector />} />
       </Routes>
       {!hideNav && <Navbar />}
     </div>

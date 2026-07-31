@@ -178,6 +178,7 @@ const TOOLS = [
   { icon: '📔', label: 'Balıkçı Günlüğü Pro', sub: 'Av kayıt & istatistik — localStorage', path: '/gunluk-pro', accent: '#06b6d4' },
   { icon: '🪤', label: 'Av Tuzak Teknikleri', sub: '4 tuzak · kamera, koku, iz & ses', path: '/tuzak', accent: '#f59e0b' },
   { icon: '📸', label: 'Doğa Fotoğrafı Teknik', sub: '4 teknik · ışık, kuş, makro, yaban', path: '/foto-teknik', accent: '#f59e0b' },
+  { icon: '🏞️', label: 'Nehir Rehberi', sub: '5 nehir · balıkçılık, rafting & nehir okuma', path: '/nehir-harita', accent: '#3b82f6' },
 ];
 
 const CATS = [

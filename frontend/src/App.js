@@ -147,6 +147,12 @@ import DeerGuide         from '@/components/DeerGuide';
 import WeatherSafety     from '@/components/WeatherSafety';
 import AquaticPlants     from '@/components/AquaticPlants';
 import PhotoSpots        from '@/components/PhotoSpots';
+import ButterflyGuide   from '@/components/ButterflyGuide';
+import RockClimbing     from '@/components/RockClimbing';
+import WildflowerGuide  from '@/components/WildflowerGuide';
+import ForestBathing    from '@/components/ForestBathing';
+import CaveGuide        from '@/components/CaveGuide';
+import SnowSafety       from '@/components/SnowSafety';
 import { ToastProvider } from '@/components/Toast';
 import '@/App.css';
 
@@ -304,6 +310,12 @@ function AppInner() {
         <Route path="/hava-tehlike"   element={<WeatherSafety />} />
         <Route path="/su-bitkileri"   element={<AquaticPlants />} />
         <Route path="/foto-noktalar"  element={<PhotoSpots />} />
+        <Route path="/kelebek"        element={<ButterflyGuide />} />
+        <Route path="/kaya-tirmanis" element={<RockClimbing />} />
+        <Route path="/yabani-cicek"  element={<WildflowerGuide />} />
+        <Route path="/orman-banyo"   element={<ForestBathing />} />
+        <Route path="/magara"        element={<CaveGuide />} />
+        <Route path="/kar-guvenlik"  element={<SnowSafety />} />
       </Routes>
       {!hideNav && <Navbar />}
     </div>

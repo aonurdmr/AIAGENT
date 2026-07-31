@@ -149,6 +149,12 @@ const TOOLS = [
   { icon: '🌩️', label: 'Hava Tehlikeleri', sub: 'Yıldırım · hipotermi · sel · sıcak çarpması', path: '/hava-tehlike', accent: '#fbbf24' },
   { icon: '🪷', label: 'Su Bitkileri', sub: '5 tür · balıkçılık habitatı & ekoloji', path: '/su-bitkileri', accent: '#ec4899' },
   { icon: '📸', label: 'Fotoğraf Noktaları', sub: '6 konum · yaban hayatı & manzara', path: '/foto-noktalar', accent: '#818cf8' },
+  { icon: '🦋', label: 'Kelebek Rehberi', sub: '6 tür · habitat, sezon & fotoğrafçılık', path: '/kelebek', accent: '#a78bfa' },
+  { icon: '🧗', label: 'Kaya Tırmanışı', sub: '4 saha · güzergah, derece & güvenlik', path: '/kaya-tirmanis', accent: '#ef4444' },
+  { icon: '🌸', label: 'Yabani Çiçekler', sub: '6 tür · sezon, bölge & fotoğraf rehberi', path: '/yabani-cicek', accent: '#ec4899' },
+  { icon: '🌲', label: 'Orman Banyosu', sub: 'Shinrin-yoku · 4 orman & faydalar', path: '/orman-banyo', accent: '#22c55e' },
+  { icon: '🦇', label: 'Mağara Rehberi', sub: '5 mağara · speleoloji & ekipman', path: '/magara', accent: '#06b6d4' },
+  { icon: '❄️', label: 'Kar Güvenliği', sub: 'Çığ · tipi · buz · donma tehlikeleri', path: '/kar-guvenlik', accent: '#3b82f6' },
 ];
 
 const CATS = [

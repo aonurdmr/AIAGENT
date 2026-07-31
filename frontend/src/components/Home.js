@@ -94,6 +94,8 @@ const TOOLS = [
   { icon: '⛰️', label: 'Yükseklik Haritası', sub: 'Open-Elevation · koordinat yükseklik sorgula', path: '/yukseklik', accent: '#60a5fa' },
   { icon: '🌍', label: 'Deprem Takibi', sub: 'USGS · Türkiye gerçek zamanlı depremler', path: '/deprem', accent: '#ef4444' },
   { icon: '🌅', label: 'Altın Saat Rehberi', sub: '8 fotoğraf noktası · gün batımı saatleri', path: '/altin-saat', accent: '#f59e0b' },
+  { icon: '🏞️', label: 'Akarsu Takibi', sub: '6 nehir · seviye, berraklık & balıkçılık', path: '/nehir', accent: '#06b6d4' },
+  { icon: '🔫', label: 'Av Silahları Rehberi', sub: 'Tüfek, fişek & Türkiye mevzuatı', path: '/silah', accent: '#f59e0b' },
 ];
 
 const CATS = [

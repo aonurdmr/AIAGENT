@@ -178,6 +178,7 @@ import HuntingTraps      from '@/components/HuntingTraps';
 import NaturePhotoTech  from '@/components/NaturePhotoTech';
 import RiverMap           from '@/components/RiverMap';
 import SeasonalCampFood  from '@/components/SeasonalCampFood';
+import WeatherRead       from '@/components/WeatherRead';
 import { ToastProvider } from '@/components/Toast';
 import '@/App.css';
 
@@ -366,6 +367,7 @@ function AppInner() {
         <Route path="/foto-teknik"    element={<NaturePhotoTech />} />
         <Route path="/nehir-harita"   element={<RiverMap />} />
         <Route path="/mevsim-kamp"    element={<SeasonalCampFood />} />
+        <Route path="/hava-oku"       element={<WeatherRead />} />
       </Routes>
       {!hideNav && <Navbar />}
     </div>

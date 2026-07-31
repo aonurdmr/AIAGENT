@@ -174,7 +174,8 @@ import CampSiteSelector  from '@/components/CampSiteSelector';
 import BirdMigrationMap  from '@/components/BirdMigrationMap';
 import StarNavigation    from '@/components/StarNavigation';
 import FishingJournal   from '@/components/FishingJournal';
-import HuntingTraps    from '@/components/HuntingTraps';
+import HuntingTraps      from '@/components/HuntingTraps';
+import NaturePhotoTech  from '@/components/NaturePhotoTech';
 import { ToastProvider } from '@/components/Toast';
 import '@/App.css';
 
@@ -360,6 +361,7 @@ function AppInner() {
         <Route path="/yildiz-nav"     element={<StarNavigation />} />
         <Route path="/gunluk-pro"     element={<FishingJournal />} />
         <Route path="/tuzak"          element={<HuntingTraps />} />
+        <Route path="/foto-teknik"    element={<NaturePhotoTech />} />
       </Routes>
       {!hideNav && <Navbar />}
     </div>

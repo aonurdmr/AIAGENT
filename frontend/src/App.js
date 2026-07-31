@@ -100,6 +100,7 @@ import WeatherAlert       from '@/components/WeatherAlert';
 import FishingTips        from '@/components/FishingTips';
 import HuntingCountdown   from '@/components/HuntingCountdown';
 import GearPack           from '@/components/GearPack';
+import PersonalBest       from '@/components/PersonalBest';
 import NaturePhotography  from '@/components/NaturePhotography';
 import GPSTools           from '@/components/GPSTools';
 import { ToastProvider } from '@/components/Toast';
@@ -212,6 +213,7 @@ function AppInner() {
         <Route path="/ipuclari"      element={<FishingTips />} />
         <Route path="/geri-sayim"    element={<HuntingCountdown />} />
         <Route path="/paket"         element={<GearPack />} />
+        <Route path="/rekor"         element={<PersonalBest />} />
         <Route path="/dogal-fotograf" element={<NaturePhotography />} />
         <Route path="/gps"           element={<GPSTools />} />
       </Routes>

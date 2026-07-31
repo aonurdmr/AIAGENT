@@ -104,6 +104,7 @@ const TOOLS = [
   { icon: '🎣', label: 'Aylık İpuçları', sub: '5 tür · aylık taktik, yem ve derinlik rehberi', path: '/ipuclari', accent: '#06b6d4' },
   { icon: '⏱️', label: 'Sezon Geri Sayımı', sub: '7 av türü · canlı sezon sayacı', path: '/geri-sayim', accent: '#f59e0b' },
   { icon: '🎒', label: 'Paket Rehberi', sub: '6 kategori · ağırlık takibi & kontrol listesi', path: '/paket', accent: '#3b82f6' },
+  { icon: '🏅', label: 'Kişisel Rekorlar', sub: 'En büyük balığını kaydet & Türkiye rekorları', path: '/rekor', accent: '#f59e0b' },
 ];
 
 const CATS = [

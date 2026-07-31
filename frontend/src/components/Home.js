@@ -170,6 +170,7 @@ const TOOLS = [
   { icon: '💨', label: 'Rüzgar & Hava Okuma', sub: 'Beaufort skalası · yön & işaret okuma', path: '/ruzgar-oku', accent: '#3b82f6' },
   { icon: '🏔️', label: 'Dağ Güvenliği', sub: '4 tehlike · önleme & acil eylem rehberi', path: '/dag-guvenlik', accent: '#a78bfa' },
   { icon: '🐟', label: 'Balık Davranışı', sub: '5 model · beslenme, göç & su sıcaklığı', path: '/balik-davranis', accent: '#06b6d4' },
+  { icon: '🐕', label: 'Av Köpeği Bakımı', sub: '4 ırk · antrenman, bakım & sağlık', path: '/av-kopek-bakim', accent: '#f59e0b' },
 ];
 
 const CATS = [

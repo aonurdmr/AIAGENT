@@ -106,6 +106,7 @@ const TOOLS = [
   { icon: '🎒', label: 'Paket Rehberi', sub: '6 kategori · ağırlık takibi & kontrol listesi', path: '/paket', accent: '#3b82f6' },
   { icon: '🏅', label: 'Kişisel Rekorlar', sub: 'En büyük balığını kaydet & Türkiye rekorları', path: '/rekor', accent: '#f59e0b' },
   { icon: '💨', label: 'Rüzgar Tahmini', sub: '6 nokta · Beaufort skalası & aktivite skoru', path: '/ruzgar', accent: '#60a5fa' },
+  { icon: '🦢', label: 'Kuş Göç Takvimi', sub: '8 tür · göç dönemi, rota & gözlem defteri', path: '/goc', accent: '#22c55e' },
 ];
 
 const CATS = [

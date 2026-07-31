@@ -86,6 +86,8 @@ import BaitShopFinder   from '@/components/BaitShopFinder';
 import CatchPhotoAlbum  from '@/components/CatchPhotoAlbum';
 import MarineWeather    from '@/components/MarineWeather';
 import INaturalist      from '@/components/INaturalist';
+import GBIFSpecies      from '@/components/GBIFSpecies';
+import AirQuality       from '@/components/AirQuality';
 import { ToastProvider } from '@/components/Toast';
 import '@/App.css';
 
@@ -182,6 +184,8 @@ function AppInner() {
         <Route path="/foto-album"   element={<CatchPhotoAlbum />} />
         <Route path="/deniz-hava"   element={<MarineWeather />} />
         <Route path="/gozlemler"    element={<INaturalist />} />
+        <Route path="/gbif"         element={<GBIFSpecies />} />
+        <Route path="/hava-kalite"  element={<AirQuality />} />
       </Routes>
       {!hideNav && <Navbar />}
     </div>

@@ -88,6 +88,8 @@ const TOOLS = [
   { icon: '📸', label: 'Av Fotoğraf Albümü', sub: 'Kişisel av kaydı ve fotoğraf koleksiyonu', path: '/foto-album', accent: '#a855f7' },
   { icon: '🌊', label: 'Deniz Hava Durumu', sub: '6 konum · dalga, sıcaklık & balıkçılık skoru', path: '/deniz-hava', accent: '#06b6d4' },
   { icon: '🔭', label: 'Doğa Gözlemleri', sub: 'iNaturalist · Türkiye gerçek tür gözlemleri', path: '/gozlemler', accent: '#22c55e' },
+  { icon: '🧬', label: 'GBIF Tür Arama', sub: '60M+ kayıt · taksonomik sınıflandırma', path: '/gbif', accent: '#a855f7' },
+  { icon: '💨', label: 'Hava Kalitesi', sub: '6 şehir · PM2.5, ozon ve aktivite skoru', path: '/hava-kalite', accent: '#06b6d4' },
 ];
 
 const CATS = [

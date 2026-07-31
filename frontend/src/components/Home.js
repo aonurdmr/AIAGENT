@@ -155,6 +155,10 @@ const TOOLS = [
   { icon: '🌲', label: 'Orman Banyosu', sub: 'Shinrin-yoku · 4 orman & faydalar', path: '/orman-banyo', accent: '#22c55e' },
   { icon: '🦇', label: 'Mağara Rehberi', sub: '5 mağara · speleoloji & ekipman', path: '/magara', accent: '#06b6d4' },
   { icon: '❄️', label: 'Kar Güvenliği', sub: 'Çığ · tipi · buz · donma tehlikeleri', path: '/kar-guvenlik', accent: '#3b82f6' },
+  { icon: '🫐', label: 'Yabani Gıda', sub: '6 tür · doğadan yenilebilir bitki & mantar', path: '/yabani-gida', accent: '#22c55e' },
+  { icon: '🛶', label: 'Kano & Kayak', sub: '4 rota · teknikler & su güvenliği', path: '/kayak', accent: '#06b6d4' },
+  { icon: '🔭', label: 'Dürbün Rehberi', sub: '4 sınıf · teknik karşılaştırma & kullanım', path: '/durbun', accent: '#f59e0b' },
+  { icon: '🗺️', label: 'Türkiye Doğa Atlası', sub: '5 bölge · flora, fauna & av rehberi', path: '/turkiye-doga', accent: '#22c55e' },
 ];
 
 const CATS = [

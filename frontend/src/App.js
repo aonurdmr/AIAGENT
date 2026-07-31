@@ -153,6 +153,10 @@ import WildflowerGuide  from '@/components/WildflowerGuide';
 import ForestBathing    from '@/components/ForestBathing';
 import CaveGuide        from '@/components/CaveGuide';
 import SnowSafety       from '@/components/SnowSafety';
+import WildFoodGuide    from '@/components/WildFoodGuide';
+import KayakGuide       from '@/components/KayakGuide';
+import BinocularsGuide  from '@/components/BinocularsGuide';
+import TurkeyNature     from '@/components/TurkeyNature';
 import { ToastProvider } from '@/components/Toast';
 import '@/App.css';
 
@@ -316,6 +320,10 @@ function AppInner() {
         <Route path="/orman-banyo"   element={<ForestBathing />} />
         <Route path="/magara"        element={<CaveGuide />} />
         <Route path="/kar-guvenlik"  element={<SnowSafety />} />
+        <Route path="/yabani-gida"   element={<WildFoodGuide />} />
+        <Route path="/kayak"         element={<KayakGuide />} />
+        <Route path="/durbun"        element={<BinocularsGuide />} />
+        <Route path="/turkiye-doga"  element={<TurkeyNature />} />
       </Routes>
       {!hideNav && <Navbar />}
     </div>

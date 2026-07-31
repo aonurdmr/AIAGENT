@@ -163,6 +163,9 @@ const TOOLS = [
   { icon: '⚙️', label: 'Olta Kurulumları', sub: '5 rig · adım adım montaj & kullanım', path: '/rig-kurulum', accent: '#22c55e' },
   { icon: '📅', label: 'Av Sezonu Rehberi', sub: '5 tür · açılış tarihi, limit & mevzuat', path: '/av-sezon', accent: '#f97316' },
   { icon: '🍽️', label: 'Mevsim Tarifleri', sub: '5 tarif · av ve balık pişirme', path: '/mevsim-tarif', accent: '#f97316' },
+  { icon: '🎵', label: 'Kuş Sesleri', sub: '6 tür · ötüş, habitat & tanımlama', path: '/kus-sesleri', accent: '#22c55e' },
+  { icon: '🌊', label: 'Deniz Canlıları', sub: '6 tür · habitat, avlanma & koruma', path: '/deniz-canlı', accent: '#06b6d4' },
+  { icon: '🍂', label: 'Doğa Takvimi', sub: '12 ay · doğa olayları & sezon rehberi', path: '/doga-takvim', accent: '#22c55e' },
 ];
 
 const CATS = [

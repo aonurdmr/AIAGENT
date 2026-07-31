@@ -161,6 +161,9 @@ import LakeFishing      from '@/components/LakeFishing';
 import FishingRig       from '@/components/FishingRig';
 import HuntingSeasons   from '@/components/HuntingSeasons';
 import SeasonRecipes    from '@/components/SeasonRecipes';
+import BirdSong         from '@/components/BirdSong';
+import MarineLife       from '@/components/MarineLife';
+import NatureCalendar   from '@/components/NatureCalendar';
 import { ToastProvider } from '@/components/Toast';
 import '@/App.css';
 
@@ -332,6 +335,9 @@ function AppInner() {
         <Route path="/rig-kurulum"   element={<FishingRig />} />
         <Route path="/av-sezon"      element={<HuntingSeasons />} />
         <Route path="/mevsim-tarif"  element={<SeasonRecipes />} />
+        <Route path="/kus-sesleri"   element={<BirdSong />} />
+        <Route path="/deniz-canlı"   element={<MarineLife />} />
+        <Route path="/doga-takvim"   element={<NatureCalendar />} />
       </Routes>
       {!hideNav && <Navbar />}
     </div>

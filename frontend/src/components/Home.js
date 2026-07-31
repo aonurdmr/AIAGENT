@@ -182,6 +182,7 @@ const TOOLS = [
   { icon: '🍳', label: 'Mevsimsel Kamp Yemekleri', sub: '4 mevsim · doğal malzeme & tarifler', path: '/mevsim-kamp', accent: '#22c55e' },
   { icon: '🌤️', label: 'Hava Durumu Okuma', sub: '5 bulut tipi · basınç & halk tahmini', path: '/hava-oku', accent: '#38bdf8' },
   { icon: '🌊', label: 'Deniz Balıkçılığı', sub: '4 yöntem · surf, jig, trolling, dip avı', path: '/deniz-av', accent: '#06b6d4' },
+  { icon: '🔫', label: 'Av Silahı Bakımı', sub: '3 silah tipi · temizlik & güvenlik kuralları', path: '/silah-bakim', accent: '#f97316' },
 ];
 
 const CATS = [

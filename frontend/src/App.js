@@ -180,6 +180,7 @@ import RiverMap           from '@/components/RiverMap';
 import SeasonalCampFood  from '@/components/SeasonalCampFood';
 import WeatherRead       from '@/components/WeatherRead';
 import SeaFishing       from '@/components/SeaFishing';
+import GunCare         from '@/components/GunCare';
 import { ToastProvider } from '@/components/Toast';
 import '@/App.css';
 
@@ -370,6 +371,7 @@ function AppInner() {
         <Route path="/mevsim-kamp"    element={<SeasonalCampFood />} />
         <Route path="/hava-oku"       element={<WeatherRead />} />
         <Route path="/deniz-av"       element={<SeaFishing />} />
+        <Route path="/silah-bakim"    element={<GunCare />} />
       </Routes>
       {!hideNav && <Navbar />}
     </div>

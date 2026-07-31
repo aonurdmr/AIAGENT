@@ -181,6 +181,7 @@ const TOOLS = [
   { icon: '🏞️', label: 'Nehir Rehberi', sub: '5 nehir · balıkçılık, rafting & nehir okuma', path: '/nehir-harita', accent: '#3b82f6' },
   { icon: '🍳', label: 'Mevsimsel Kamp Yemekleri', sub: '4 mevsim · doğal malzeme & tarifler', path: '/mevsim-kamp', accent: '#22c55e' },
   { icon: '🌤️', label: 'Hava Durumu Okuma', sub: '5 bulut tipi · basınç & halk tahmini', path: '/hava-oku', accent: '#38bdf8' },
+  { icon: '🌊', label: 'Deniz Balıkçılığı', sub: '4 yöntem · surf, jig, trolling, dip avı', path: '/deniz-av', accent: '#06b6d4' },
 ];
 
 const CATS = [

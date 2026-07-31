@@ -105,6 +105,7 @@ const TOOLS = [
   { icon: '⏱️', label: 'Sezon Geri Sayımı', sub: '7 av türü · canlı sezon sayacı', path: '/geri-sayim', accent: '#f59e0b' },
   { icon: '🎒', label: 'Paket Rehberi', sub: '6 kategori · ağırlık takibi & kontrol listesi', path: '/paket', accent: '#3b82f6' },
   { icon: '🏅', label: 'Kişisel Rekorlar', sub: 'En büyük balığını kaydet & Türkiye rekorları', path: '/rekor', accent: '#f59e0b' },
+  { icon: '💨', label: 'Rüzgar Tahmini', sub: '6 nokta · Beaufort skalası & aktivite skoru', path: '/ruzgar', accent: '#60a5fa' },
 ];
 
 const CATS = [

@@ -166,6 +166,7 @@ const TOOLS = [
   { icon: '🎵', label: 'Kuş Sesleri', sub: '6 tür · ötüş, habitat & tanımlama', path: '/kus-sesleri', accent: '#22c55e' },
   { icon: '🌊', label: 'Deniz Canlıları', sub: '6 tür · habitat, avlanma & koruma', path: '/deniz-canlı', accent: '#06b6d4' },
   { icon: '🍂', label: 'Doğa Takvimi', sub: '12 ay · doğa olayları & sezon rehberi', path: '/doga-takvim', accent: '#22c55e' },
+  { icon: '🌍', label: 'Zemin & Su Okuma', sub: '4 zemin tipi · balıkçılık & av işareti', path: '/zemin', accent: '#92400e' },
 ];
 
 const CATS = [

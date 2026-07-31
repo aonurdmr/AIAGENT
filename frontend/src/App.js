@@ -164,6 +164,7 @@ import SeasonRecipes    from '@/components/SeasonRecipes';
 import BirdSong         from '@/components/BirdSong';
 import MarineLife       from '@/components/MarineLife';
 import NatureCalendar   from '@/components/NatureCalendar';
+import SoilGuide        from '@/components/SoilGuide';
 import { ToastProvider } from '@/components/Toast';
 import '@/App.css';
 
@@ -338,6 +339,7 @@ function AppInner() {
         <Route path="/kus-sesleri"   element={<BirdSong />} />
         <Route path="/deniz-canlı"   element={<MarineLife />} />
         <Route path="/doga-takvim"   element={<NatureCalendar />} />
+        <Route path="/zemin"          element={<SoilGuide />} />
       </Routes>
       {!hideNav && <Navbar />}
     </div>

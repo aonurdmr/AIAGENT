@@ -125,6 +125,10 @@ import NightFishing       from '@/components/NightFishing';
 import FishAnatomy        from '@/components/FishAnatomy';
 import WeatherPatterns    from '@/components/WeatherPatterns';
 import Phenology          from '@/components/Phenology';
+import CarpFishing        from '@/components/CarpFishing';
+import HerbGuide          from '@/components/HerbGuide';
+import RiverFishing       from '@/components/RiverFishing';
+import OutdoorCooking     from '@/components/OutdoorCooking';
 import { ToastProvider } from '@/components/Toast';
 import '@/App.css';
 
@@ -260,6 +264,10 @@ function AppInner() {
         <Route path="/balik-anatomi" element={<FishAnatomy />} />
         <Route path="/hava-desen"    element={<WeatherPatterns />} />
         <Route path="/fenoloji"      element={<Phenology />} />
+        <Route path="/sazan"         element={<CarpFishing />} />
+        <Route path="/sifali"        element={<HerbGuide />} />
+        <Route path="/irmak"         element={<RiverFishing />} />
+        <Route path="/kamp-pisir"    element={<OutdoorCooking />} />
       </Routes>
       {!hideNav && <Navbar />}
     </div>

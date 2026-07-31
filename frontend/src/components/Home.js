@@ -127,6 +127,10 @@ const TOOLS = [
   { icon: '🔬', label: 'Balık Anatomisi', sub: '4 tür · yüzgeç, yaşam döngüsü & biyoloji', path: '/balik-anatomi', accent: '#3b82f6' },
   { icon: '📊', label: 'Hava Desenleri', sub: '6 desen · basınç sistemi & balıkçılık etkisi', path: '/hava-desen', accent: '#38bdf8' },
   { icon: '🌿', label: 'Fenoloji Takvimi', sub: '14 doğa olayı · ay ay Türkiye doğası', path: '/fenoloji', accent: '#22c55e' },
+  { icon: '🐟', label: 'Sazan Balıkçılığı', sub: '4 teknik · yemler & Türkiye baraj noktaları', path: '/sazan', accent: '#22c55e' },
+  { icon: '🌿', label: 'Şifalı Bitkiler', sub: '8 bitki · tıbbi kullanım & zehirli uyarılar', path: '/sifali', accent: '#84cc16' },
+  { icon: '🌊', label: 'Irmak Balıkçılığı', sub: '6 ırmak · teknikler & akıntı rehberi', path: '/irmak', accent: '#06b6d4' },
+  { icon: '🍳', label: 'Kamp Pişirme', sub: '5 yöntem · ateş, dutch oven & tarifler', path: '/kamp-pisir', accent: '#ef4444' },
 ];
 
 const CATS = [

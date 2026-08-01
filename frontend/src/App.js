@@ -325,6 +325,16 @@ import MarineKnots     from '@/components/MarineKnots';
 import GarfishGuide    from '@/components/GarfishGuide';
 import UrchinCollect   from '@/components/UrchinCollect';
 import BackcountrySkiing from '@/components/BackcountrySkiing';
+import MosquitoSafety  from '@/components/MosquitoSafety';
+import PheasantCook    from '@/components/PheasantCook';
+import BeachCasting    from '@/components/BeachCasting';
+import WaterSnake      from '@/components/WaterSnake';
+import RayGuide        from '@/components/RayGuide';
+import CampLantern     from '@/components/CampLantern';
+import HuntingEthics2  from '@/components/HuntingEthics2';
+import RockpoolGuide   from '@/components/RockpoolGuide';
+import SunfishGuide    from '@/components/SunfishGuide';
+import MountainGoat    from '@/components/MountainGoat';
 import { ToastProvider } from '@/components/Toast';
 import '@/App.css';
 
@@ -660,6 +670,16 @@ function AppInner() {
         <Route path="/zargana"          element={<GarfishGuide />} />
         <Route path="/deniz-kirpisi"    element={<UrchinCollect />} />
         <Route path="/arazi-kayak"      element={<BackcountrySkiing />} />
+        <Route path="/sivrisinek-guvenlik" element={<MosquitoSafety />} />
+        <Route path="/sulun-pisirme"    element={<PheasantCook />} />
+        <Route path="/sahil-casting"    element={<BeachCasting />} />
+        <Route path="/su-yilani"        element={<WaterSnake />} />
+        <Route path="/vatoz-rehber"     element={<RayGuide />} />
+        <Route path="/kamp-fener"       element={<CampLantern />} />
+        <Route path="/av-etik-ilkeler"  element={<HuntingEthics2 />} />
+        <Route path="/kayalik-havuz"    element={<RockpoolGuide />} />
+        <Route path="/cipura-av"        element={<SunfishGuide />} />
+        <Route path="/yaban-keci"       element={<MountainGoat />} />
       </Routes>
       {!hideNav && <Navbar />}
     </div>

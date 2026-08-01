@@ -327,6 +327,16 @@ const TOOLS = [
   { icon: '🐟', label: 'Zargana Avı', sub: 'Habitat · yöntemler · pişirme', path: '/zargana', accent: '#22c55e' },
   { icon: '🦔', label: 'Deniz Kirpisi Toplama', sub: 'Toplama · açma · pişirme', path: '/deniz-kirpisi', accent: '#06b6d4' },
   { icon: '⛷️', label: 'Arazi Kayakçılığı', sub: 'Ekipman · tırmanış · lawina güvenliği', path: '/arazi-kayak', accent: '#60a5fa' },
+  { icon: '🦟', label: 'Sivrisinek Güvenliği', sub: 'Korunma · hastalık · önlemler', path: '/sivrisinek-guvenlik', accent: '#22c55e' },
+  { icon: '🦚', label: 'Sülün Pişirme', sub: 'Temizleme · yumuşatma · pişirme', path: '/sulun-pisirme', accent: '#f59e0b' },
+  { icon: '🌊', label: 'Sahil Casting', sub: 'Atış tekniği · donanım · surf fishing', path: '/sahil-casting', accent: '#06b6d4' },
+  { icon: '🐍', label: 'Su Yılanları', sub: 'Türler · tanıma · güvenlik', path: '/su-yilani', accent: '#22c55e' },
+  { icon: '🐡', label: 'Vatoz & Torpil Rehberi', sub: 'Türler · güvenlik · pişirme', path: '/vatoz-rehber', accent: '#06b6d4' },
+  { icon: '🏮', label: 'Kamp Feneri Rehberi', sub: 'Fener türleri · kullanım · ışık', path: '/kamp-fener', accent: '#f59e0b' },
+  { icon: '🏹', label: 'Avcılık Etiği İlkeleri', sub: 'Temiz atış · saygı · gelenek', path: '/av-etik-ilkeler', accent: '#f97316' },
+  { icon: '🌊', label: 'Kayalık Havuz Rehberi', sub: 'Canlılar · gözlem · etik', path: '/kayalik-havuz', accent: '#06b6d4' },
+  { icon: '🐠', label: 'Çipura & Sargo Avı', sub: 'Türler · yemler · teknikler', path: '/cipura-av', accent: '#06b6d4' },
+  { icon: '🐐', label: 'Yaban Keçisi Gözlemi', sub: 'Habitat · gözlem · türler', path: '/yaban-keci', accent: '#a78bfa' },
 ];
 
 const CATS = [

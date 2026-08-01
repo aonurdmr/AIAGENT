@@ -386,6 +386,13 @@ const TOOLS = [
   { icon: '🕳️', label: 'Mağara Keşfi', sub: 'Güvenlik · doğa · ekipman', path: '/magara-kesfi', accent: '#8b5cf6' },
   { icon: '💧', label: 'Su Arıtma', sub: 'Yöntemler · kaynaklar · güvenli', path: '/su-aritma', accent: '#0369a1' },
   { icon: '🌊', label: 'Gel-Git Balıkçılığı', sub: 'Zamanlama · teknik · takvim', path: '/gelgit-balik', accent: '#0284c7' },
+  { icon: '🌄', label: 'Gündoğumu Yürüyüşü', sub: 'Planlama · gece yürüyüş · deneyim', path: '/gundogumu-yuruyus', accent: '#ea580c' },
+  { icon: '🚣', label: 'Deniz Kaykı', sub: 'Teknik · güvenlik · açık deniz', path: '/deniz-kayak', accent: '#0369a1' },
+  { icon: '🦌', label: 'Karaca Takibi', sub: 'İzler · davranış · habitat', path: '/karaca-takibi', accent: '#78350f' },
+  { icon: '🍂', label: 'Sonbahar Kuş Gözlemi', sub: 'Türler · göç · gözlem noktası', path: '/sonbahar-kus', accent: '#b45309' },
+  { icon: '🦞', label: 'Istakoz Rehberi', sub: 'Yakalama · yasal · pişirme', path: '/istakoz', accent: '#dc2626' },
+  { icon: '🐟', label: 'Hamsi Avcılığı', sub: 'Teknik · sürü · pişirme', path: '/hamsi-av', accent: '#0284c7' },
+  { icon: '🧼', label: 'Kamp Hijyeni', sub: 'Kişisel · kamp · LNT', path: '/kamp-hijyen', accent: '#0e7490' },
 ];
 
 const CATS = [

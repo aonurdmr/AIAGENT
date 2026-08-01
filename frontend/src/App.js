@@ -384,6 +384,13 @@ import TurkeyCooking    from '@/components/TurkeyCooking';
 import CaveExploring    from '@/components/CaveExploring';
 import WaterPurify      from '@/components/WaterPurify';
 import TidalFishing     from '@/components/TidalFishing';
+import SunriseHiking    from '@/components/SunriseHiking';
+import SeaKayaking      from '@/components/SeaKayaking';
+import DeerTracking     from '@/components/DeerTracking';
+import AutumnBirding    from '@/components/AutumnBirding';
+import LobsterGuide     from '@/components/LobsterGuide';
+import AnchoryFishing   from '@/components/AnchoryFishing';
+import CampingHygiene   from '@/components/CampingHygiene';
 import { ToastProvider } from '@/components/Toast';
 import '@/App.css';
 
@@ -778,6 +785,13 @@ function AppInner() {
         <Route path="/magara-kesfi"     element={<CaveExploring />} />
         <Route path="/su-aritma"        element={<WaterPurify />} />
         <Route path="/gelgit-balik"     element={<TidalFishing />} />
+        <Route path="/gundogumu-yuruyus" element={<SunriseHiking />} />
+        <Route path="/deniz-kayak"      element={<SeaKayaking />} />
+        <Route path="/karaca-takibi"    element={<DeerTracking />} />
+        <Route path="/sonbahar-kus"     element={<AutumnBirding />} />
+        <Route path="/istakoz"          element={<LobsterGuide />} />
+        <Route path="/hamsi-av"         element={<AnchoryFishing />} />
+        <Route path="/kamp-hijyen"      element={<CampingHygiene />} />
       </Routes>
       {!hideNav && <Navbar />}
     </div>

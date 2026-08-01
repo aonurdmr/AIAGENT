@@ -263,6 +263,16 @@ const TOOLS = [
   { icon: '🏡', label: 'Kuş Evi Yapımı', sub: 'Tür boyutları · konum · bakım', path: '/kus-evi-yap', accent: '#a78bfa' },
   { icon: '🐝', label: 'Arı Güvenliği', sub: 'Önleme · sting tedavisi · türler', path: '/ari-guvenlik', accent: '#f59e0b' },
   { icon: '🏃', label: 'Doğa Koşusu', sub: 'Ekipman · teknik · beslenme · güvenlik', path: '/doga-kos', accent: '#f97316' },
+  { icon: '🌊', label: 'Göl Ekolojisi', sub: 'Bölgeler · balık türleri · mevsimsel', path: '/gol-ekoloji', accent: '#06b6d4' },
+  { icon: '🐟', label: 'Göç Eden Balıklar', sub: 'Lüfer · palamut · torik · alabalık', path: '/goc-balik', accent: '#06b6d4' },
+  { icon: '🏕️', label: 'Vahşi Doğa Kampı', sub: 'Yer seçimi · çadır kurulumu · LNT', path: '/vahsi-kamp', accent: '#22c55e' },
+  { icon: '🦅', label: 'Deniz Kuşları', sub: 'Karabatak · martı · dalgıç · şeytan kuşu', path: '/deniz-kuslar', accent: '#06b6d4' },
+  { icon: '⚖️', label: 'Avcılık Etiği', sub: 'Fair chase · sorumluluk · koruma', path: '/av-etik-ileri', accent: '#f97316' },
+  { icon: '🦜', label: 'Mevsimsel Kuş Gözlemi', sub: 'İlkbahar · yaz · sonbahar · kış', path: '/mevsim-kus', accent: '#22c55e' },
+  { icon: '🎣', label: 'Boilies Rehberi', sub: 'Tarif · teknik · saklama', path: '/boilies', accent: '#f59e0b' },
+  { icon: '🦢', label: 'Su Kuşları', sub: 'Balıkçıl · batagan · kazlar · turna', path: '/su-kuslar', accent: '#06b6d4' },
+  { icon: '🪶', label: 'Tüy Tanıma', sub: 'Tüy tipleri · tanıma ipuçları', path: '/tuy-tanimi', accent: '#a78bfa' },
+  { icon: '🐗', label: 'Domuz Av Koku Kontrolu', sub: 'Koku yönetimi · domuz davranışı', path: '/domuz-koku', accent: '#f97316' },
 ];
 
 const CATS = [

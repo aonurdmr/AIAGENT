@@ -261,6 +261,16 @@ import NaturalCamo     from '@/components/NaturalCamo';
 import BirdHouse       from '@/components/BirdHouse';
 import BeeSafety       from '@/components/BeeSafety';
 import TrailRunning    from '@/components/TrailRunning';
+import LakeEcology     from '@/components/LakeEcology';
+import MigratoryFish   from '@/components/MigratoryFish';
+import WildCamping     from '@/components/WildCamping';
+import SeabirdGuide    from '@/components/SeabirdGuide';
+import HuntingEthicsAdv from '@/components/HuntingEthicsAdv';
+import SeasonalBirding from '@/components/SeasonalBirding';
+import CarpBoilies     from '@/components/CarpBoilies';
+import WaterBirds      from '@/components/WaterBirds';
+import FeatherGuide    from '@/components/FeatherGuide';
+import BoarScent       from '@/components/BoarScent';
 import { ToastProvider } from '@/components/Toast';
 import '@/App.css';
 
@@ -532,6 +542,16 @@ function AppInner() {
         <Route path="/kus-evi-yap"    element={<BirdHouse />} />
         <Route path="/ari-guvenlik"   element={<BeeSafety />} />
         <Route path="/doga-kos"       element={<TrailRunning />} />
+        <Route path="/gol-ekoloji"    element={<LakeEcology />} />
+        <Route path="/goc-balik"      element={<MigratoryFish />} />
+        <Route path="/vahsi-kamp"     element={<WildCamping />} />
+        <Route path="/deniz-kuslar"   element={<SeabirdGuide />} />
+        <Route path="/av-etik-ileri"  element={<HuntingEthicsAdv />} />
+        <Route path="/mevsim-kus"     element={<SeasonalBirding />} />
+        <Route path="/boilies"        element={<CarpBoilies />} />
+        <Route path="/su-kuslar"      element={<WaterBirds />} />
+        <Route path="/tuy-tanimi"     element={<FeatherGuide />} />
+        <Route path="/domuz-koku"     element={<BoarScent />} />
       </Routes>
       {!hideNav && <Navbar />}
     </div>

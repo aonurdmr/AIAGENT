@@ -345,6 +345,16 @@ import CampingFood     from '@/components/CampingFood';
 import NightCamping    from '@/components/NightCamping';
 import WoodlandBirds   from '@/components/WoodlandBirds';
 import NightVision     from '@/components/NightVision';
+import DuckCooking     from '@/components/DuckCooking';
+import SharkGuide      from '@/components/SharkGuide';
+import CanyonHiking    from '@/components/CanyonHiking';
+import PartridgeHunt   from '@/components/PartridgeHunt';
+import CoralGuide      from '@/components/CoralGuide';
+import WildSalad       from '@/components/WildSalad';
+import CampingGas      from '@/components/CampingGas';
+import WildFlowerID    from '@/components/WildFlowerID';
+import SummerCamping   from '@/components/SummerCamping';
+import PikeFishing     from '@/components/PikeFishing';
 import { ToastProvider } from '@/components/Toast';
 import '@/App.css';
 
@@ -700,6 +710,16 @@ function AppInner() {
         <Route path="/gece-kamp"        element={<NightCamping />} />
         <Route path="/orman-kuslari"    element={<WoodlandBirds />} />
         <Route path="/gece-gorus"       element={<NightVision />} />
+        <Route path="/ordek-pisirme"    element={<DuckCooking />} />
+        <Route path="/kopekbaligi"      element={<SharkGuide />} />
+        <Route path="/kanyon-yuruyus"   element={<CanyonHiking />} />
+        <Route path="/keklik-av"        element={<PartridgeHunt />} />
+        <Route path="/mercan-rehber"    element={<CoralGuide />} />
+        <Route path="/yabani-salata"    element={<WildSalad />} />
+        <Route path="/kamp-yakit"       element={<CampingGas />} />
+        <Route path="/yabani-cicek-id"  element={<WildFlowerID />} />
+        <Route path="/yaz-kamp"         element={<SummerCamping />} />
+        <Route path="/turna-balik"      element={<PikeFishing />} />
       </Routes>
       {!hideNav && <Navbar />}
     </div>

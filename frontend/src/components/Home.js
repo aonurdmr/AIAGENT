@@ -347,6 +347,16 @@ const TOOLS = [
   { icon: '🌙', label: 'Gece Kampı Rehberi', sub: 'Hazırlık · konfor · güvenlik', path: '/gece-kamp', accent: '#818cf8' },
   { icon: '🐦', label: 'Orman Kuşları Rehberi', sub: 'Türler · katmanlar · gözlem', path: '/orman-kuslari', accent: '#22c55e' },
   { icon: '🌙', label: 'Gece Görüş Cihazları', sub: 'Teknoloji · seçim · kullanım', path: '/gece-gorus', accent: '#6366f1' },
+  { icon: '🦆', label: 'Ördek Pişirme', sub: 'Temizleme · marinasyon · pişirme', path: '/ordek-pisirme', accent: '#f59e0b' },
+  { icon: '🦈', label: 'Köpekbalığı Rehberi', sub: 'Türler · davranış · güvenlik', path: '/kopekbaligi', accent: '#3b82f6' },
+  { icon: '🏔️', label: 'Kanyon Yürüyüşü', sub: 'Güvenlik · sel riski · ekipman', path: '/kanyon-yuruyus', accent: '#f97316' },
+  { icon: '🦤', label: 'Keklik Avı', sub: 'Yöntemler · alan · mevsim', path: '/keklik-av', accent: '#f97316' },
+  { icon: '🪸', label: 'Mercan Rehberi', sub: 'Gözlem · koruma · snorkel', path: '/mercan-rehber', accent: '#f97316' },
+  { icon: '🥗', label: 'Yabani Salata Bitkileri', sub: 'Bitkiler · toplama · güvenlik', path: '/yabani-salata', accent: '#22c55e' },
+  { icon: '⛽', label: 'Kamp Yakıt Rehberi', sub: 'Yakıt türleri · güvenlik · seçim', path: '/kamp-yakit', accent: '#f97316' },
+  { icon: '🌸', label: 'Yabani Çiçek Tanıma', sub: 'İlkbahar · yaz · alan türleri', path: '/yabani-cicek-id', accent: '#ec4899' },
+  { icon: '☀️', label: 'Yaz Kampı Rehberi', sub: 'İpuçları · sıcak hava · ekipman', path: '/yaz-kamp', accent: '#f59e0b' },
+  { icon: '🐟', label: 'Turna Balığı Avı', sub: 'Teknikler · habitat · mevsim', path: '/turna-balik', accent: '#22c55e' },
 ];
 
 const CATS = [

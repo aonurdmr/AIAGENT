@@ -391,6 +391,12 @@ import AutumnBirding    from '@/components/AutumnBirding';
 import LobsterGuide     from '@/components/LobsterGuide';
 import AnchoryFishing   from '@/components/AnchoryFishing';
 import CampingHygiene   from '@/components/CampingHygiene';
+import WildBoarCooking  from '@/components/WildBoarCooking';
+import TurtleWatching   from '@/components/TurtleWatching';
+import IceHiking        from '@/components/IceHiking';
+import WaterFowlDecoy   from '@/components/WaterFowlDecoy';
+import MossBiodiversity from '@/components/MossBiodiversity';
+import TunnelFishing    from '@/components/TunnelFishing';
 import { ToastProvider } from '@/components/Toast';
 import '@/App.css';
 
@@ -791,7 +797,13 @@ function AppInner() {
         <Route path="/sonbahar-kus"     element={<AutumnBirding />} />
         <Route path="/istakoz"          element={<LobsterGuide />} />
         <Route path="/hamsi-av"         element={<AnchoryFishing />} />
-        <Route path="/kamp-hijyen"      element={<CampingHygiene />} />
+        <Route path="/kamp-hijyeni"     element={<CampingHygiene />} />
+        <Route path="/yaban-dom-pisir"  element={<WildBoarCooking />} />
+        <Route path="/kaplumbaga-gozlem" element={<TurtleWatching />} />
+        <Route path="/buz-yuruyu"       element={<IceHiking />} />
+        <Route path="/su-kusu-yem"      element={<WaterFowlDecoy />} />
+        <Route path="/yosun-ekosistem"  element={<MossBiodiversity />} />
+        <Route path="/kanal-balikcilik" element={<TunnelFishing />} />
       </Routes>
       {!hideNav && <Navbar />}
     </div>

@@ -392,7 +392,13 @@ const TOOLS = [
   { icon: '🍂', label: 'Sonbahar Kuş Gözlemi', sub: 'Türler · göç · gözlem noktası', path: '/sonbahar-kus', accent: '#b45309' },
   { icon: '🦞', label: 'Istakoz Rehberi', sub: 'Yakalama · yasal · pişirme', path: '/istakoz', accent: '#dc2626' },
   { icon: '🐟', label: 'Hamsi Avcılığı', sub: 'Teknik · sürü · pişirme', path: '/hamsi-av', accent: '#0284c7' },
-  { icon: '🧼', label: 'Kamp Hijyeni', sub: 'Kişisel · kamp · LNT', path: '/kamp-hijyen', accent: '#0e7490' },
+  { icon: '🧼', label: 'Kamp Hijyeni 2', sub: 'Kişisel · kamp · LNT', path: '/kamp-hijyeni', accent: '#0e7490' },
+  { icon: '🐗', label: 'Yaban Domuzu Pişirme', sub: 'Hazırlık · marinasyon · pişirme', path: '/yaban-dom-pisir', accent: '#f59e0b' },
+  { icon: '🐢', label: 'Kaplumbağa Gözlemi', sub: 'Türler · yuvalama · gözlem', path: '/kaplumbaga-gozlem', accent: '#15803d' },
+  { icon: '🧊', label: 'Buz Yürüyüşü', sub: 'Ekipman · güvenlik · buz testi', path: '/buz-yuruyu', accent: '#60a5fa' },
+  { icon: '🦆', label: 'Su Kuşu Yem Kurulumu', sub: 'Kurulum · çağrı · teknik', path: '/su-kusu-yem', accent: '#1d4ed8' },
+  { icon: '🌿', label: 'Yosun Biyoçeşitliliği', sub: 'Türler · ekoloji · habitat', path: '/yosun-ekosistem', accent: '#166534' },
+  { icon: '🌊', label: 'Kanal Balıkçılığı', sub: 'Teknik · noktalar · akıntı', path: '/kanal-balikcilik', accent: '#155e75' },
 ];
 
 const CATS = [

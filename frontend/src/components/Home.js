@@ -357,6 +357,16 @@ const TOOLS = [
   { icon: '🌸', label: 'Yabani Çiçek Tanıma', sub: 'İlkbahar · yaz · alan türleri', path: '/yabani-cicek-id', accent: '#ec4899' },
   { icon: '☀️', label: 'Yaz Kampı Rehberi', sub: 'İpuçları · sıcak hava · ekipman', path: '/yaz-kamp', accent: '#f59e0b' },
   { icon: '🐟', label: 'Turna Balığı Avı', sub: 'Teknikler · habitat · mevsim', path: '/turna-balik', accent: '#22c55e' },
+  { icon: '🌧️', label: 'Yağmurda Balıkçılık', sub: 'İpuçları · ekipman · teknik', path: '/yagmurda-balikcilik', accent: '#3b82f6' },
+  { icon: '🥜', label: 'Yürüyüş Atıştırmalıkları', sub: 'Enerji · paketleme · tarifler', path: '/yuruyus-atistirmalik', accent: '#f59e0b' },
+  { icon: '🐚', label: 'Sahil Toplama', sub: 'Ne bulunur · ipuçları', path: '/sahil-toplama', accent: '#06b6d4' },
+  { icon: '🐦', label: 'Karabatak Rehberi', sub: 'Türler · habitat · gözlem', path: '/karabatak', accent: '#06b6d4' },
+  { icon: '🦌', label: 'Geyik Çağrısı Teknikleri', sub: 'Çağrı türleri · zamanlama', path: '/geyik-sesleri', accent: '#f59e0b' },
+  { icon: '🌿', label: 'Eğreltiotu Rehberi', sub: 'Türler · habitat · ekoloji', path: '/egrelti', accent: '#22c55e' },
+  { icon: '💨', label: 'Balık Tütsüleme', sub: 'Hazırlık · tuzlama · yöntemler', path: '/balik-tutsuleme2', accent: '#f97316' },
+  { icon: '🐦', label: 'Nehir Kuşları', sub: 'Türler · habitat · gözlem', path: '/nehir-kuslari', accent: '#06b6d4' },
+  { icon: '🌙', label: 'Gece Yüzme', sub: 'Güvenlik · biyolüminesans', path: '/gece-yuzme', accent: '#818cf8' },
+  { icon: '🌸', label: 'İlkbahar Balıkçılığı', sub: 'Noktalar · teknikler · mevsim', path: '/ilkbahar-balik', accent: '#34d399' },
 ];
 
 const CATS = [

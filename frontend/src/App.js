@@ -397,6 +397,14 @@ import IceHiking        from '@/components/IceHiking';
 import WaterFowlDecoy   from '@/components/WaterFowlDecoy';
 import MossBiodiversity from '@/components/MossBiodiversity';
 import TunnelFishing    from '@/components/TunnelFishing';
+import HighAltitudeHiking from '@/components/HighAltitudeHiking';
+import MackerelFishing  from '@/components/MackerelFishing';
+import BoulderingGuide  from '@/components/BoulderingGuide';
+import WildHerbs        from '@/components/WildHerbs';
+import SunfishFishing   from '@/components/SunfishFishing';
+import HazardousBees    from '@/components/HazardousBees';
+import RiverCrossing    from '@/components/RiverCrossing';
+import LichenGuide      from '@/components/LichenGuide';
 import { ToastProvider } from '@/components/Toast';
 import '@/App.css';
 
@@ -804,6 +812,14 @@ function AppInner() {
         <Route path="/su-kusu-yem"      element={<WaterFowlDecoy />} />
         <Route path="/yosun-ekosistem"  element={<MossBiodiversity />} />
         <Route path="/kanal-balikcilik" element={<TunnelFishing />} />
+        <Route path="/yuksek-irtifa"    element={<HighAltitudeHiking />} />
+        <Route path="/uskumru-av"       element={<MackerelFishing />} />
+        <Route path="/bouldering"       element={<BoulderingGuide />} />
+        <Route path="/yabani-otlar"     element={<WildHerbs />} />
+        <Route path="/cipura-av2"       element={<SunfishFishing />} />
+        <Route path="/ari-guvenligi"    element={<HazardousBees />} />
+        <Route path="/nehir-gecisi"     element={<RiverCrossing />} />
+        <Route path="/liken-rehberi"    element={<LichenGuide />} />
       </Routes>
       {!hideNav && <Navbar />}
     </div>

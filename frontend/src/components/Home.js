@@ -399,6 +399,14 @@ const TOOLS = [
   { icon: '🦆', label: 'Su Kuşu Yem Kurulumu', sub: 'Kurulum · çağrı · teknik', path: '/su-kusu-yem', accent: '#1d4ed8' },
   { icon: '🌿', label: 'Yosun Biyoçeşitliliği', sub: 'Türler · ekoloji · habitat', path: '/yosun-ekosistem', accent: '#166534' },
   { icon: '🌊', label: 'Kanal Balıkçılığı', sub: 'Teknik · noktalar · akıntı', path: '/kanal-balikcilik', accent: '#155e75' },
+  { icon: '🏔️', label: 'Yüksek İrtifa Yürüyüşü', sub: 'Aklimatizasyon · ekipman · AMS', path: '/yuksek-irtifa', accent: '#4338ca' },
+  { icon: '🐟', label: 'Uskumru Avcılığı', sub: 'Teknik · sürü · pişirme', path: '/uskumru-av', accent: '#0369a1' },
+  { icon: '🧗', label: 'Bouldering Rehberi', sub: 'Teknik · güvenlik · kaya', path: '/bouldering', accent: '#9333ea' },
+  { icon: '🌿', label: 'Yabani Otlar & Baharatlar', sub: 'Baharatlar · toplama · saklama', path: '/yabani-otlar', accent: '#22c55e' },
+  { icon: '🐟', label: 'Çipura Avı', sub: 'Teknik · noktalar · yem', path: '/cipura-av2', accent: '#0369a1' },
+  { icon: '🐝', label: 'Arı Güvenliği', sub: 'Türler · ilk yardım · anafilaksi', path: '/ari-guvenligi', accent: '#b45309' },
+  { icon: '🌊', label: 'Nehir Geçişi', sub: 'Değerlendirme · teknik · güvenlik', path: '/nehir-gecisi', accent: '#06b6d4' },
+  { icon: '🪨', label: 'Liken Rehberi', sub: 'Türler · ekoloji · biyoindikatör', path: '/liken-rehberi', accent: '#65a30d' },
 ];
 
 const CATS = [

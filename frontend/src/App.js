@@ -211,6 +211,16 @@ import AmmunitionGuide  from '@/components/AmmunitionGuide';
 import SeasonFishing    from '@/components/SeasonFishing';
 import CamouflageGuide  from '@/components/CamouflageGuide';
 import FirstAidOutdoor  from '@/components/FirstAidOutdoor';
+import FlyCastingGuide  from '@/components/FlyCastingGuide';
+import WildlifePhoto    from '@/components/WildlifePhoto';
+import BoatFishing      from '@/components/BoatFishing';
+import MountainHunting  from '@/components/MountainHunting';
+import ArcheryHunting   from '@/components/ArcheryHunting';
+import WetlandBirding   from '@/components/WetlandBirding';
+import TreeStand        from '@/components/TreeStand';
+import WildEdibles      from '@/components/WildEdibles';
+import CarpRigs         from '@/components/CarpRigs';
+import BackpackGear     from '@/components/BackpackGear';
 import { ToastProvider } from '@/components/Toast';
 import '@/App.css';
 
@@ -431,7 +441,17 @@ function AppInner() {
         <Route path="/mermi-rehber"   element={<AmmunitionGuide />} />
         <Route path="/mevsim-balik"   element={<SeasonFishing />} />
         <Route path="/kamuflaj"       element={<CamouflageGuide />} />
-        <Route path="/ilk-yardim"     element={<FirstAidOutdoor />} />
+        <Route path="/doga-ilk-yardim" element={<FirstAidOutdoor />} />
+        <Route path="/sinek-casting"  element={<FlyCastingGuide />} />
+        <Route path="/yaban-foto"     element={<WildlifePhoto />} />
+        <Route path="/tekne-balik"    element={<BoatFishing />} />
+        <Route path="/dag-avi"        element={<MountainHunting />} />
+        <Route path="/ok-avcilik"     element={<ArcheryHunting />} />
+        <Route path="/sulak-kus"      element={<WetlandBirding />} />
+        <Route path="/pusu-rehber"    element={<TreeStand />} />
+        <Route path="/yabani-besin"   element={<WildEdibles />} />
+        <Route path="/sazan-rig"      element={<CarpRigs />} />
+        <Route path="/sirt-cantasi"   element={<BackpackGear />} />
       </Routes>
       {!hideNav && <Navbar />}
     </div>

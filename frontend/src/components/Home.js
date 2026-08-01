@@ -212,7 +212,17 @@ const TOOLS = [
   { icon: '🎯', label: 'Mermi Rehberi', sub: 'Av tüfeği · tüfek kalibre · yasal çerçeve', path: '/mermi-rehber', accent: '#ef4444' },
   { icon: '📅', label: 'Mevsimlik Balık', sub: 'İlkbahar · yaz · sonbahar · kış stratejisi', path: '/mevsim-balik', accent: '#06b6d4' },
   { icon: '🌿', label: 'Kamuflaj Rehberi', sub: 'Orman · açık alan · ghillie · koku kontrolü', path: '/kamuflaj', accent: '#22c55e' },
-  { icon: '🚑', label: 'Doğada İlk Yardım', sub: 'Yara · kırık · hipotermi · yılan ısırığı', path: '/ilk-yardim', accent: '#ef4444' },
+  { icon: '🚑', label: 'Doğada İlk Yardım', sub: 'Yara · kırık · hipotermi · yılan ısırığı', path: '/doga-ilk-yardim', accent: '#ef4444' },
+  { icon: '🎣', label: 'Sinek Atış Teknikleri', sub: 'Üst atış · rulo · spey · sinek tipleri', path: '/sinek-casting', accent: '#06b6d4' },
+  { icon: '📷', label: 'Yaban Hayatı Fotoğrafı', sub: 'Yaklaşma · ışık · kamera ayarı · etik', path: '/yaban-foto', accent: '#f59e0b' },
+  { icon: '⛵', label: 'Tekne Balıkçılığı', sub: 'Troll · jiging · demirli av', path: '/tekne-balik', accent: '#06b6d4' },
+  { icon: '🏔️', label: 'Dağ Avı', sub: 'Dağ keçisi · domuz · geyik — strateji', path: '/dag-avi', accent: '#a78bfa' },
+  { icon: '🏹', label: 'Ok Avcılığı', sub: 'Yay tipi · atış tekniği · etik mesafe', path: '/ok-avcilik', accent: '#f59e0b' },
+  { icon: '🦆', label: 'Sulak Alan Kuşları', sub: 'Ördek · kaz · suçuluk · balıkçıl', path: '/sulak-kus', accent: '#06b6d4' },
+  { icon: '🌲', label: 'Pusu Rehberi', sub: 'Tırmanma pususu · yer pusası · zamanlama', path: '/pusu-rehber', accent: '#22c55e' },
+  { icon: '🌿', label: 'Yabani Besinler', sub: 'Yeşillikler · kökler · meyveler — güvenli', path: '/yabani-besin', accent: '#22c55e' },
+  { icon: '🐟', label: 'Sazan Kurulumu', sub: 'Hair rig · method feeder · chod · spod', path: '/sazan-rig', accent: '#f59e0b' },
+  { icon: '🎒', label: 'Sırt Çantası Ekipmanı', sub: 'Barınak · giysi · su-yemek · navigasyon', path: '/sirt-cantasi', accent: '#06b6d4' },
 ];
 
 const CATS = [

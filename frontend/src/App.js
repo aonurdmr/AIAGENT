@@ -335,6 +335,16 @@ import HuntingEthics2  from '@/components/HuntingEthics2';
 import RockpoolGuide   from '@/components/RockpoolGuide';
 import SunfishGuide    from '@/components/SunfishGuide';
 import MountainGoat    from '@/components/MountainGoat';
+import TidePoolSafety  from '@/components/TidePoolSafety';
+import BowHunting      from '@/components/BowHunting';
+import SeaweedGuide    from '@/components/SeaweedGuide';
+import LakeSwimming    from '@/components/LakeSwimming';
+import DragonFlyGuide  from '@/components/DragonFlyGuide';
+import SaltwaterFishing from '@/components/SaltwaterFishing';
+import CampingFood     from '@/components/CampingFood';
+import NightCamping    from '@/components/NightCamping';
+import WoodlandBirds   from '@/components/WoodlandBirds';
+import NightVision     from '@/components/NightVision';
 import { ToastProvider } from '@/components/Toast';
 import '@/App.css';
 
@@ -680,6 +690,16 @@ function AppInner() {
         <Route path="/kayalik-havuz"    element={<RockpoolGuide />} />
         <Route path="/cipura-av"        element={<SunfishGuide />} />
         <Route path="/yaban-keci"       element={<MountainGoat />} />
+        <Route path="/gelgit-guvenlik"  element={<TidePoolSafety />} />
+        <Route path="/yay-avciligi"     element={<BowHunting />} />
+        <Route path="/deniz-yosunu"     element={<SeaweedGuide />} />
+        <Route path="/gol-yuzme"        element={<LakeSwimming />} />
+        <Route path="/yusufcuk"         element={<DragonFlyGuide />} />
+        <Route path="/tuzlu-su-balik"   element={<SaltwaterFishing />} />
+        <Route path="/kamp-yemek-plan"  element={<CampingFood />} />
+        <Route path="/gece-kamp"        element={<NightCamping />} />
+        <Route path="/orman-kuslari"    element={<WoodlandBirds />} />
+        <Route path="/gece-gorus"       element={<NightVision />} />
       </Routes>
       {!hideNav && <Navbar />}
     </div>

@@ -337,6 +337,16 @@ const TOOLS = [
   { icon: '🌊', label: 'Kayalık Havuz Rehberi', sub: 'Canlılar · gözlem · etik', path: '/kayalik-havuz', accent: '#06b6d4' },
   { icon: '🐠', label: 'Çipura & Sargo Avı', sub: 'Türler · yemler · teknikler', path: '/cipura-av', accent: '#06b6d4' },
   { icon: '🐐', label: 'Yaban Keçisi Gözlemi', sub: 'Habitat · gözlem · türler', path: '/yaban-keci', accent: '#a78bfa' },
+  { icon: '🌊', label: 'Gelgit Havuzu Güvenliği', sub: 'Güvenlik · ekipman · gözlem', path: '/gelgit-guvenlik', accent: '#06b6d4' },
+  { icon: '🏹', label: 'Yay Avcılığı', sub: 'Yay türleri · teknik · taktikler', path: '/yay-avciligi', accent: '#f59e0b' },
+  { icon: '🌿', label: 'Deniz Yosunu Rehberi', sub: 'Türler · yenilebilir · kullanım', path: '/deniz-yosunu', accent: '#22c55e' },
+  { icon: '🏊', label: 'Gölde Güvenli Yüzme', sub: 'Güvenlik · alg · ipuçları', path: '/gol-yuzme', accent: '#3b82f6' },
+  { icon: '🦋', label: 'Yusufcuk Rehberi', sub: 'Türler · habitat · gözlem', path: '/yusufcuk', accent: '#06b6d4' },
+  { icon: '🌊', label: 'Tuzlu Su Balıkçılığı', sub: 'Alanlar · teknikler · donanım', path: '/tuzlu-su-balik', accent: '#06b6d4' },
+  { icon: '🍳', label: 'Kamp Yemek Planlaması', sub: 'Planlama · depolama · tarifler', path: '/kamp-yemek-plan', accent: '#22c55e' },
+  { icon: '🌙', label: 'Gece Kampı Rehberi', sub: 'Hazırlık · konfor · güvenlik', path: '/gece-kamp', accent: '#818cf8' },
+  { icon: '🐦', label: 'Orman Kuşları Rehberi', sub: 'Türler · katmanlar · gözlem', path: '/orman-kuslari', accent: '#22c55e' },
+  { icon: '🌙', label: 'Gece Görüş Cihazları', sub: 'Teknoloji · seçim · kullanım', path: '/gece-gorus', accent: '#6366f1' },
 ];
 
 const CATS = [

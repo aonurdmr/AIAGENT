@@ -287,6 +287,16 @@ import WildBoarHunting from '@/components/WildBoarHunting';
 import NightSkyCamp    from '@/components/NightSkyCamp';
 import SaltwaterFly    from '@/components/SaltwaterFly';
 import WinterCamp      from '@/components/WinterCamp';
+import ForestForaging  from '@/components/ForestForaging';
+import OctopusGuide    from '@/components/OctopusGuide';
+import DeerCallers     from '@/components/DeerCallers';
+import BoatMaintenance from '@/components/BoatMaintenance';
+import CatfishGuide    from '@/components/CatfishGuide';
+import BeeKeeping      from '@/components/BeeKeeping';
+import EelGuide        from '@/components/EelGuide';
+import CloudReading    from '@/components/CloudReading';
+import HawkWatch       from '@/components/HawkWatch';
+import MossGuide       from '@/components/MossGuide';
 import { ToastProvider } from '@/components/Toast';
 import '@/App.css';
 
@@ -584,6 +594,16 @@ function AppInner() {
         <Route path="/kamp-gokyuzu"   element={<NightSkyCamp />} />
         <Route path="/tuzlu-sinek"    element={<SaltwaterFly />} />
         <Route path="/kis-kamp"       element={<WinterCamp />} />
+        <Route path="/orman-toplama"  element={<ForestForaging />} />
+        <Route path="/ahtapot-av"     element={<OctopusGuide />} />
+        <Route path="/geyik-cagri"    element={<DeerCallers />} />
+        <Route path="/tekne-bakim"    element={<BoatMaintenance />} />
+        <Route path="/yayin-balik"    element={<CatfishGuide />} />
+        <Route path="/dogal-aricilik" element={<BeeKeeping />} />
+        <Route path="/yilan-balik"    element={<EelGuide />} />
+        <Route path="/bulut-oku"      element={<CloudReading />} />
+        <Route path="/sahi-kus"       element={<HawkWatch />} />
+        <Route path="/yosun-rehber"   element={<MossGuide />} />
       </Routes>
       {!hideNav && <Navbar />}
     </div>

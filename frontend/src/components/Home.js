@@ -289,6 +289,16 @@ const TOOLS = [
   { icon: '🌌', label: 'Kampta Gökyüzü', sub: 'Yıldız gözlemi · meteor · Samanyolu', path: '/kamp-gokyuzu', accent: '#818cf8' },
   { icon: '🎣', label: 'Tuzlu Su Sinek Casting', sub: 'Ekipman · hedef türler · teknikler', path: '/tuzlu-sinek', accent: '#06b6d4' },
   { icon: '❄️', label: 'Kış Kampı', sub: 'Barınak · ısı yönetimi · güvenlik', path: '/kis-kamp', accent: '#60a5fa' },
+  { icon: '🌲', label: 'Orman Toplama', sub: 'Yenilebilir bitkiler · güvenlik · mevsim', path: '/orman-toplama', accent: '#22c55e' },
+  { icon: '🐙', label: 'Ahtapot Avı', sub: 'Yöntemler · ipuçları · temizleme', path: '/ahtapot-av', accent: '#f97316' },
+  { icon: '🦌', label: 'Geyik Çağrısı', sub: 'Çağrı türleri · zamanlama · teknik', path: '/geyik-cagri', accent: '#f59e0b' },
+  { icon: '🛥️', label: 'Tekne Bakımı', sub: 'Motor · gövde · güvenlik ekipmanı', path: '/tekne-bakim', accent: '#f97316' },
+  { icon: '🐠', label: 'Yayın Balığı', sub: 'Habitat · yemler · donanım', path: '/yayin-balik', accent: '#06b6d4' },
+  { icon: '🐝', label: 'Doğal Arıcılık', sub: 'Kovan · bal hasadı · arılık yeri', path: '/dogal-aricilik', accent: '#f59e0b' },
+  { icon: '🐍', label: 'Yılan Balığı Avı', sub: 'Habitat · yem · teknik · pişirme', path: '/yilan-balik', accent: '#06b6d4' },
+  { icon: '☁️', label: 'Bulut Okuma', sub: 'Doğa meteorolojisi · hava işaretleri', path: '/bulut-oku', accent: '#60a5fa' },
+  { icon: '🦅', label: 'Yırtıcı Kuş Gözlemi', sub: 'Türler · tanıma · termal süzülme', path: '/sahi-kus', accent: '#f59e0b' },
+  { icon: '🌿', label: 'Yosun Rehberi', sub: 'Yön bulma · nem işareti · doğa okuması', path: '/yosun-rehber', accent: '#22c55e' },
 ];
 
 const CATS = [

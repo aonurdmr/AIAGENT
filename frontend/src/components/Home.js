@@ -367,6 +367,16 @@ const TOOLS = [
   { icon: '🐦', label: 'Nehir Kuşları', sub: 'Türler · habitat · gözlem', path: '/nehir-kuslari', accent: '#06b6d4' },
   { icon: '🌙', label: 'Gece Yüzme', sub: 'Güvenlik · biyolüminesans', path: '/gece-yuzme', accent: '#818cf8' },
   { icon: '🌸', label: 'İlkbahar Balıkçılığı', sub: 'Noktalar · teknikler · mevsim', path: '/ilkbahar-balik', accent: '#34d399' },
+  { icon: '🟤', label: 'Çamurlu Su Balıkçılığı', sub: 'Teknik · noktalar · yem', path: '/camurlu-su', accent: '#a16207' },
+  { icon: '🦉', label: 'Baykuş Gözlemi', sub: 'Türler · habitat · gece', path: '/baykus-gozlem', accent: '#7c3aed' },
+  { icon: '🐗', label: 'Yaban Domuzu Takibi', sub: 'İzler · davranış · güvenlik', path: '/yaban-domuzu', accent: '#f97316' },
+  { icon: '🐟', label: 'Levrek Avı', sub: 'Teknik · noktalar · yem', path: '/levrek-av', accent: '#2563eb' },
+  { icon: '❄️', label: 'Kış Kampçılığı', sub: 'Barınak · ısı · hayatta kalma', path: '/kis-kamp', accent: '#60a5fa' },
+  { icon: '🍄', label: 'Yabani Mantar Tanıma', sub: 'Yenilebilir · tehlikeli', path: '/yabani-mantar', accent: '#f59e0b' },
+  { icon: '🎣', label: 'Fly Fishing Rehberi', sub: 'Teknik · sinekler · alabalık', path: '/fly-fishing', accent: '#0ea5e9' },
+  { icon: '🐻', label: 'Ayı Güvenliği', sub: 'Önleme · karşılaşma · spray', path: '/ayi-guvenligi', accent: '#f59e0b' },
+  { icon: '🐟', label: 'Alabalık Pişirme', sub: 'Temizleme · pişirme · tarifler', path: '/alabalik-pisirme', accent: '#16a34a' },
+  { icon: '🦅', label: 'Göçmen Kuşlar', sub: 'Türler · rota · mevsim', path: '/gocmen-kuslar', accent: '#0284c7' },
 ];
 
 const CATS = [

@@ -375,6 +375,15 @@ import FlyfishingGuide from '@/components/FlyfishingGuide';
 import BearSafety      from '@/components/BearSafety';
 import TroutCooking    from '@/components/TroutCooking';
 import MigrationBirds  from '@/components/MigrationBirds';
+import CliffFishing     from '@/components/CliffFishing';
+import CampfireFood     from '@/components/CampfireFood';
+import WolfTracking     from '@/components/WolfTracking';
+import MoonFishing      from '@/components/MoonFishing';
+import MountainHerbalism from '@/components/MountainHerbalism';
+import TurkeyCooking    from '@/components/TurkeyCooking';
+import CaveExploring    from '@/components/CaveExploring';
+import WaterPurify      from '@/components/WaterPurify';
+import TidalFishing     from '@/components/TidalFishing';
 import { ToastProvider } from '@/components/Toast';
 import '@/App.css';
 
@@ -760,6 +769,15 @@ function AppInner() {
         <Route path="/ayi-guvenligi"    element={<BearSafety />} />
         <Route path="/alabalik-pisirme" element={<TroutCooking />} />
         <Route path="/gocmen-kuslar"    element={<MigrationBirds />} />
+        <Route path="/kayalik-olta"     element={<CliffFishing />} />
+        <Route path="/kamp-atesi-yemek" element={<CampfireFood />} />
+        <Route path="/kurt-takibi"      element={<WolfTracking />} />
+        <Route path="/ay-balikcilik"    element={<MoonFishing />} />
+        <Route path="/dag-bitkileri"    element={<MountainHerbalism />} />
+        <Route path="/yaban-hindi-pis"  element={<TurkeyCooking />} />
+        <Route path="/magara-kesfi"     element={<CaveExploring />} />
+        <Route path="/su-aritma"        element={<WaterPurify />} />
+        <Route path="/gelgit-balik"     element={<TidalFishing />} />
       </Routes>
       {!hideNav && <Navbar />}
     </div>

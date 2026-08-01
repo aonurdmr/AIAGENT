@@ -377,6 +377,15 @@ const TOOLS = [
   { icon: '🐻', label: 'Ayı Güvenliği', sub: 'Önleme · karşılaşma · spray', path: '/ayi-guvenligi', accent: '#f59e0b' },
   { icon: '🐟', label: 'Alabalık Pişirme', sub: 'Temizleme · pişirme · tarifler', path: '/alabalik-pisirme', accent: '#16a34a' },
   { icon: '🦅', label: 'Göçmen Kuşlar', sub: 'Türler · rota · mevsim', path: '/gocmen-kuslar', accent: '#0284c7' },
+  { icon: '🪨', label: 'Kayalık Olta', sub: 'Teknik · güvenlik · ekipman', path: '/kayalik-olta', accent: '#0891b2' },
+  { icon: '🔥', label: 'Kamp Ateşi Yemekleri', sub: 'Hazırlık · tarifler · kamp', path: '/kamp-atesi-yemek', accent: '#f97316' },
+  { icon: '🐺', label: 'Kurt Takibi', sub: 'İzler · davranış · güvenlik', path: '/kurt-takibi', accent: '#6b7280' },
+  { icon: '🌕', label: 'Ay Etkili Balıkçılık', sub: 'Ay fazları · gel-git · gece', path: '/ay-balikcilik', accent: '#4338ca' },
+  { icon: '🌿', label: 'Dağ Bitkileri Kullanımı', sub: 'Bitkiler · toplama · kullanım', path: '/dag-bitkileri', accent: '#22c55e' },
+  { icon: '🦃', label: 'Yaban Hindi Pişirme', sub: 'Hazırlık · marinasyon · pişirme', path: '/yaban-hindi-pis', accent: '#b45309' },
+  { icon: '🕳️', label: 'Mağara Keşfi', sub: 'Güvenlik · doğa · ekipman', path: '/magara-kesfi', accent: '#8b5cf6' },
+  { icon: '💧', label: 'Su Arıtma', sub: 'Yöntemler · kaynaklar · güvenli', path: '/su-aritma', accent: '#0369a1' },
+  { icon: '🌊', label: 'Gel-Git Balıkçılığı', sub: 'Zamanlama · teknik · takvim', path: '/gelgit-balik', accent: '#0284c7' },
 ];
 
 const CATS = [

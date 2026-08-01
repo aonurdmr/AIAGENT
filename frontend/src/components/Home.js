@@ -299,6 +299,16 @@ const TOOLS = [
   { icon: '☁️', label: 'Bulut Okuma', sub: 'Doğa meteorolojisi · hava işaretleri', path: '/bulut-oku', accent: '#60a5fa' },
   { icon: '🦅', label: 'Yırtıcı Kuş Gözlemi', sub: 'Türler · tanıma · termal süzülme', path: '/sahi-kus', accent: '#f59e0b' },
   { icon: '🌿', label: 'Yosun Rehberi', sub: 'Yön bulma · nem işareti · doğa okuması', path: '/yosun-rehber', accent: '#22c55e' },
+  { icon: '🐸', label: 'Kurbağa Yem Teknikleri', sub: 'Yüzey yemi · kanca · çekme tekniği', path: '/kurbaga-yem', accent: '#22c55e' },
+  { icon: '🐟', label: 'Orkinos & Palamut Avı', sub: 'Türler · troll · jigging · açık deniz', path: '/orkinos-av', accent: '#06b6d4' },
+  { icon: '🦪', label: 'İstiridye Toplama', sub: 'Habitat · toplama · açma · pişirme', path: '/istiridye', accent: '#06b6d4' },
+  { icon: '🪱', label: 'Solucan Yetiştirme', sub: 'Kutu kurulumu · besleme · yem hasadı', path: '/solucan-yetistir', accent: '#22c55e' },
+  { icon: '🐗', label: 'Domuz İzi Okuma', sub: 'Yaban domuzu takibi · iz tipleri', path: '/domuz-iz', accent: '#f97316' },
+  { icon: '🏊', label: 'Nehirde Güvenli Yüzme', sub: 'Riskler · güvenlik · teknikler', path: '/nehir-yuzme', accent: '#06b6d4' },
+  { icon: '🍯', label: 'Yabani Bal Arama', sub: 'Kovan bulma · güvenli toplama · türler', path: '/yabani-bal', accent: '#f59e0b' },
+  { icon: '🕷️', label: 'Zehirli Örümcekler', sub: 'Karakurt · korunma · ilk yardım', path: '/orumcek-guvenlik', accent: '#a78bfa' },
+  { icon: '🛶', label: 'Kayaktan Balıkçılık', sub: 'Kayak kurulumu · teknikler · güvenlik', path: '/kayak-balik', accent: '#06b6d4' },
+  { icon: '🌊', label: 'Kıyı Yenilebilir Toplama', sub: 'Deniz yiyecekleri · güvenlik · mevsim', path: '/kiyi-toplama', accent: '#06b6d4' },
 ];
 
 const CATS = [

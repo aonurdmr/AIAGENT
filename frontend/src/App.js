@@ -297,6 +297,16 @@ import EelGuide        from '@/components/EelGuide';
 import CloudReading    from '@/components/CloudReading';
 import HawkWatch       from '@/components/HawkWatch';
 import MossGuide       from '@/components/MossGuide';
+import FrogBait        from '@/components/FrogBait';
+import TunaGuide       from '@/components/TunaGuide';
+import OysterCollect   from '@/components/OysterCollect';
+import WormFarming     from '@/components/WormFarming';
+import BoarSign        from '@/components/BoarSign';
+import RiverSwimming   from '@/components/RiverSwimming';
+import WildHoney       from '@/components/WildHoney';
+import SpiderSafety    from '@/components/SpiderSafety';
+import FishingKayak    from '@/components/FishingKayak';
+import CoastalForaging from '@/components/CoastalForaging';
 import { ToastProvider } from '@/components/Toast';
 import '@/App.css';
 
@@ -604,6 +614,16 @@ function AppInner() {
         <Route path="/bulut-oku"      element={<CloudReading />} />
         <Route path="/sahi-kus"       element={<HawkWatch />} />
         <Route path="/yosun-rehber"   element={<MossGuide />} />
+        <Route path="/kurbaga-yem"    element={<FrogBait />} />
+        <Route path="/orkinos-av"     element={<TunaGuide />} />
+        <Route path="/istiridye"      element={<OysterCollect />} />
+        <Route path="/solucan-yetistir" element={<WormFarming />} />
+        <Route path="/domuz-iz"       element={<BoarSign />} />
+        <Route path="/nehir-yuzme"    element={<RiverSwimming />} />
+        <Route path="/yabani-bal"     element={<WildHoney />} />
+        <Route path="/orumcek-guvenlik" element={<SpiderSafety />} />
+        <Route path="/kayak-balik"    element={<FishingKayak />} />
+        <Route path="/kiyi-toplama"   element={<CoastalForaging />} />
       </Routes>
       {!hideNav && <Navbar />}
     </div>

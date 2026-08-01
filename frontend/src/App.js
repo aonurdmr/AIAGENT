@@ -307,6 +307,14 @@ import WildHoney       from '@/components/WildHoney';
 import SpiderSafety    from '@/components/SpiderSafety';
 import FishingKayak    from '@/components/FishingKayak';
 import CoastalForaging from '@/components/CoastalForaging';
+import LandNavigation  from '@/components/LandNavigation';
+import SeasonalFood    from '@/components/SeasonalFood';
+import BirdNesting     from '@/components/BirdNesting';
+import FishingLine2    from '@/components/FishingLine2';
+import ThermalHunting  from '@/components/ThermalHunting';
+import LureMaking      from '@/components/LureMaking';
+import WildTurkey      from '@/components/WildTurkey';
+import SeaSnail        from '@/components/SeaSnail';
 import { ToastProvider } from '@/components/Toast';
 import '@/App.css';
 
@@ -624,6 +632,14 @@ function AppInner() {
         <Route path="/orumcek-guvenlik" element={<SpiderSafety />} />
         <Route path="/kayak-balik"    element={<FishingKayak />} />
         <Route path="/kiyi-toplama"   element={<CoastalForaging />} />
+        <Route path="/arazi-nav"      element={<LandNavigation />} />
+        <Route path="/mevsim-besin"   element={<SeasonalFood />} />
+        <Route path="/kus-yuvasi"     element={<BirdNesting />} />
+        <Route path="/misina-secimi"  element={<FishingLine2 />} />
+        <Route path="/termal-av"      element={<ThermalHunting />} />
+        <Route path="/sahte-yem-yap"  element={<LureMaking />} />
+        <Route path="/yabani-hindi"   element={<WildTurkey />} />
+        <Route path="/deniz-salyangozu" element={<SeaSnail />} />
       </Routes>
       {!hideNav && <Navbar />}
     </div>

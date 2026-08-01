@@ -309,6 +309,14 @@ const TOOLS = [
   { icon: '🕷️', label: 'Zehirli Örümcekler', sub: 'Karakurt · korunma · ilk yardım', path: '/orumcek-guvenlik', accent: '#a78bfa' },
   { icon: '🛶', label: 'Kayaktan Balıkçılık', sub: 'Kayak kurulumu · teknikler · güvenlik', path: '/kayak-balik', accent: '#06b6d4' },
   { icon: '🌊', label: 'Kıyı Yenilebilir Toplama', sub: 'Deniz yiyecekleri · güvenlik · mevsim', path: '/kiyi-toplama', accent: '#06b6d4' },
+  { icon: '🧭', label: 'Arazi Navigasyonu', sub: 'Pusula · topografik harita · doğal yön', path: '/arazi-nav', accent: '#f59e0b' },
+  { icon: '🍃', label: 'Mevsimlik Yabani Besinler', sub: 'İlkbahar · yaz · sonbahar · toplama', path: '/mevsim-besin', accent: '#22c55e' },
+  { icon: '🐦', label: 'Kuş Yuvası Rehberi', sub: 'Yuva tipleri · gözlem etiği · koruma', path: '/kus-yuvasi', accent: '#22c55e' },
+  { icon: '🧵', label: 'Misina Seçimi & Düğümler', sub: 'Misina tipleri · düğüm teknikleri', path: '/misina-secimi', accent: '#3b82f6' },
+  { icon: '🌡️', label: 'Termal Akımlar & Avcılık', sub: 'Hava dinamikleri · kuş takibi · rüzgar', path: '/termal-av', accent: '#f97316' },
+  { icon: '🎨', label: 'El Yapımı Sahte Yem', sub: 'Streamer · teneke kaşık · jig yapımı', path: '/sahte-yem-yap', accent: '#f97316' },
+  { icon: '🦃', label: 'Yabani Hindi Avı', sub: 'Çağrı türleri · zamanlama · teknikler', path: '/yabani-hindi', accent: '#f59e0b' },
+  { icon: '🐚', label: 'Deniz Salyangozları', sub: 'Türler · toplama · pişirme rehberi', path: '/deniz-salyangozu', accent: '#06b6d4' },
 ];
 
 const CATS = [

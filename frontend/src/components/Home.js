@@ -243,6 +243,16 @@ const TOOLS = [
   { icon: '🌿', label: 'Sulak Alan Rehberi', sub: 'Bataklık · kıyı · delta · turbalık', path: '/sulak-alan', accent: '#22c55e' },
   { icon: '🐗', label: 'Yaban Domuzu Mutfağı', sub: 'Güveç · şiş · sucuk · parçalama', path: '/domuz-yemek', accent: '#f97316' },
   { icon: '🧭', label: 'Hayatta Kalma Navigasyonu', sub: 'Güneş · yıldız · doğal işaret · sinyal', path: '/hayatta-nav', accent: '#f59e0b' },
+  { icon: '❄️', label: 'Kış Avı Stratejileri', sub: 'Kar üstü iz · soğuk · kış ekipmanı', path: '/kis-av', accent: '#60a5fa' },
+  { icon: '🦞', label: 'Kerevit Avı Rehberi', sub: 'Tuzak · elle yakalama · pişirme', path: '/kerevit', accent: '#f97316' },
+  { icon: '🏕️', label: 'Av Pusu İnşası', sub: 'Yer pusası · hub · platform · doğal', path: '/av-pusu', accent: '#22c55e' },
+  { icon: '🌊', label: 'Akdeniz Balıkları', sub: 'Çipura · levrek · kefal · sinarit', path: '/akdeniz-balik', accent: '#06b6d4' },
+  { icon: '🧂', label: 'Tuzluk Kurulumu', sub: 'Mineral blok · granül · yerleştirme', path: '/tuzluk', accent: '#f59e0b' },
+  { icon: '🌊', label: 'Nehir Okuma', sub: 'Aktı · havuz · ters akıntı · oyuk kıyı', path: '/nehir-oku', accent: '#06b6d4' },
+  { icon: '🎣', label: 'Yakala-Bırak Teknikleri', sub: 'Doğru tutma · kanca · canlandırma', path: '/yakala-birak', accent: '#22c55e' },
+  { icon: '🥾', label: 'Yürüyüşte Beslenme', sub: 'Kalori · yiyecek · hidrasyon · zamanlama', path: '/yuruyus-beslen', accent: '#f97316' },
+  { icon: '🏕️', label: 'Kamp Hijyeni', sub: 'Kişisel · yemek · atık · LNT prensipleri', path: '/kamp-hijyen', accent: '#22c55e' },
+  { icon: '🏔️', label: 'Yüksek Dağ Rehberi', sub: 'İklim kuşakları · güvenlik · alp ekipman', path: '/alp-rehber', accent: '#60a5fa' },
 ];
 
 const CATS = [

@@ -241,6 +241,16 @@ import TrailCamera     from '@/components/TrailCamera';
 import WetlandGuide    from '@/components/WetlandGuide';
 import BoarCooking     from '@/components/BoarCooking';
 import SurvivalNav     from '@/components/SurvivalNav';
+import WinterHunting   from '@/components/WinterHunting';
+import CrayfishGuide   from '@/components/CrayfishGuide';
+import HuntingBlind    from '@/components/HuntingBlind';
+import MedFish         from '@/components/MedFish';
+import SaltLick        from '@/components/SaltLick';
+import RiverReading    from '@/components/RiverReading';
+import CatchRelease    from '@/components/CatchRelease';
+import HikingNutrition from '@/components/HikingNutrition';
+import CampHygiene     from '@/components/CampHygiene';
+import AlpineGuide     from '@/components/AlpineGuide';
 import { ToastProvider } from '@/components/Toast';
 import '@/App.css';
 
@@ -492,6 +502,16 @@ function AppInner() {
         <Route path="/sulak-alan"     element={<WetlandGuide />} />
         <Route path="/domuz-yemek"    element={<BoarCooking />} />
         <Route path="/hayatta-nav"    element={<SurvivalNav />} />
+        <Route path="/kis-av"         element={<WinterHunting />} />
+        <Route path="/kerevit"        element={<CrayfishGuide />} />
+        <Route path="/av-pusu"        element={<HuntingBlind />} />
+        <Route path="/akdeniz-balik"  element={<MedFish />} />
+        <Route path="/tuzluk"         element={<SaltLick />} />
+        <Route path="/nehir-oku"      element={<RiverReading />} />
+        <Route path="/yakala-birak"   element={<CatchRelease />} />
+        <Route path="/yuruyus-beslen" element={<HikingNutrition />} />
+        <Route path="/kamp-hijyen"    element={<CampHygiene />} />
+        <Route path="/alp-rehber"     element={<AlpineGuide />} />
       </Routes>
       {!hideNav && <Navbar />}
     </div>

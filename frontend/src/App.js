@@ -201,6 +201,16 @@ import CampingKnots     from '@/components/CampingKnots';
 import NightHunting     from '@/components/NightHunting';
 import HunterCalendar   from '@/components/HunterCalendar';
 import InsectFishing    from '@/components/InsectFishing';
+import TideGuide        from '@/components/TideGuide';
+import WildlifeSounds   from '@/components/WildlifeSounds';
+import CampCooking      from '@/components/CampCooking';
+import FishingStructure from '@/components/FishingStructure';
+import ShelterBuilding  from '@/components/ShelterBuilding';
+import HikingTrails     from '@/components/HikingTrails';
+import AmmunitionGuide  from '@/components/AmmunitionGuide';
+import SeasonFishing    from '@/components/SeasonFishing';
+import CamouflageGuide  from '@/components/CamouflageGuide';
+import FirstAidOutdoor  from '@/components/FirstAidOutdoor';
 import { ToastProvider } from '@/components/Toast';
 import '@/App.css';
 
@@ -412,6 +422,16 @@ function AppInner() {
         <Route path="/gece-av-teknik" element={<NightHunting />} />
         <Route path="/avci-takvim"    element={<HunterCalendar />} />
         <Route path="/yem-rehber"     element={<InsectFishing />} />
+        <Route path="/gelgit"         element={<TideGuide />} />
+        <Route path="/yaban-ses"      element={<WildlifeSounds />} />
+        <Route path="/kamp-yemek"     element={<CampCooking />} />
+        <Route path="/balik-yapi"     element={<FishingStructure />} />
+        <Route path="/siginak-yap"    element={<ShelterBuilding />} />
+        <Route path="/yuruyus"        element={<HikingTrails />} />
+        <Route path="/mermi-rehber"   element={<AmmunitionGuide />} />
+        <Route path="/mevsim-balik"   element={<SeasonFishing />} />
+        <Route path="/kamuflaj"       element={<CamouflageGuide />} />
+        <Route path="/ilk-yardim"     element={<FirstAidOutdoor />} />
       </Routes>
       {!hideNav && <Navbar />}
     </div>

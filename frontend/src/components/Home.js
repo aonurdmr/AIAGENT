@@ -203,6 +203,16 @@ const TOOLS = [
   { icon: '🌙', label: 'Gece Av Teknikleri', sub: 'Spotlight · termal · gece görüş · kamera tuzak', path: '/gece-av-teknik', accent: '#6366f1' },
   { icon: '📅', label: 'Avcı Takvimi', sub: 'Sezona göre tür · açık-kapalı dönemler', path: '/avci-takvim', accent: '#f97316' },
   { icon: '🪱', label: 'Yem & Suni Yem', sub: 'Sinek · yapay yem · canlı yem · boilie', path: '/yem-rehber', accent: '#f59e0b' },
+  { icon: '🌊', label: 'Gelgit Rehberi', sub: 'Yükselen-alçalan su · balık aktivitesi & spot', path: '/gelgit', accent: '#06b6d4' },
+  { icon: '🔊', label: 'Yaban Hayatı Sesleri', sub: 'Tehlike · aktivite · gece sesleri', path: '/yaban-ses', accent: '#6366f1' },
+  { icon: '🍳', label: 'Kamp Mutfağı', sub: 'Ateş · ocak · hayatta kalma tarifi', path: '/kamp-yemek', accent: '#f97316' },
+  { icon: '🪨', label: 'Balık Yapı Rehberi', sub: 'Su altı yapı · bitki · akıntı · mevsimsel', path: '/balik-yapi', accent: '#a78bfa' },
+  { icon: '🏕️', label: 'Sığınak Yapımı', sub: 'Lean-to · debris · branda · kar sığınağı', path: '/siginak-yap', accent: '#22c55e' },
+  { icon: '🥾', label: 'Doğa Yürüyüşü', sub: 'Günübirlik · çok günlü · navigasyon · acil', path: '/yuruyus', accent: '#22c55e' },
+  { icon: '🎯', label: 'Mermi Rehberi', sub: 'Av tüfeği · tüfek kalibre · yasal çerçeve', path: '/mermi-rehber', accent: '#ef4444' },
+  { icon: '📅', label: 'Mevsimlik Balık', sub: 'İlkbahar · yaz · sonbahar · kış stratejisi', path: '/mevsim-balik', accent: '#06b6d4' },
+  { icon: '🌿', label: 'Kamuflaj Rehberi', sub: 'Orman · açık alan · ghillie · koku kontrolü', path: '/kamuflaj', accent: '#22c55e' },
+  { icon: '🚑', label: 'Doğada İlk Yardım', sub: 'Yara · kırık · hipotermi · yılan ısırığı', path: '/ilk-yardim', accent: '#ef4444' },
 ];
 
 const CATS = [

@@ -273,6 +273,14 @@ const TOOLS = [
   { icon: '🦢', label: 'Su Kuşları', sub: 'Balıkçıl · batagan · kazlar · turna', path: '/su-kuslar', accent: '#06b6d4' },
   { icon: '🪶', label: 'Tüy Tanıma', sub: 'Tüy tipleri · tanıma ipuçları', path: '/tuy-tanimi', accent: '#a78bfa' },
   { icon: '🐗', label: 'Domuz Av Koku Kontrolu', sub: 'Koku yönetimi · domuz davranışı', path: '/domuz-koku', accent: '#f97316' },
+  { icon: '🏖️', label: 'Kıyıdan Balıkçılık', sub: 'Noktalar · donanım · gelgit zamanı', path: '/kiyi-olta', accent: '#06b6d4' },
+  { icon: '🦉', label: 'Baykuş Rehberi', sub: 'Türkiye baykuşları · habitat · gece gözlemi', path: '/baykus-rehber', accent: '#a78bfa' },
+  { icon: '🏞️', label: 'Nehir Ekolojisi', sub: 'Bölgeler · canlılar · sağlık göstergeleri', path: '/nehir-ekoloji', accent: '#06b6d4' },
+  { icon: '🐸', label: 'Amfibi Rehberi', sub: 'Kurbagalar · semenderler · habitat', path: '/amfibi', accent: '#22c55e' },
+  { icon: '🐕', label: 'Av Köpeği Eğitimi', sub: 'Irklar · temel eğitim · saha bakımı', path: '/kopek-egitim', accent: '#f97316' },
+  { icon: '🛶', label: 'Deniz Kayangu', sub: 'Ekipman · teknikler · güvenlik', path: '/deniz-kayak', accent: '#06b6d4' },
+  { icon: '🍄', label: 'Mantar Güvenliği', sub: 'Zehirliler · güvenlik kuralları · yenilebilir', path: '/mantar-guvenlik', accent: '#f97316' },
+  { icon: '⛵', label: 'Açık Deniz Rehberi', sub: 'Güvenlik · balıkçılık · navigasyon', path: '/acik-deniz', accent: '#06b6d4' },
 ];
 
 const CATS = [

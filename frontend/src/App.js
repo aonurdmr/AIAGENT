@@ -271,6 +271,14 @@ import CarpBoilies     from '@/components/CarpBoilies';
 import WaterBirds      from '@/components/WaterBirds';
 import FeatherGuide    from '@/components/FeatherGuide';
 import BoarScent       from '@/components/BoarScent';
+import ShoreFishing    from '@/components/ShoreFishing';
+import OwlGuide        from '@/components/OwlGuide';
+import RiverEcology    from '@/components/RiverEcology';
+import AmphibianGuide  from '@/components/AmphibianGuide';
+import DogTraining     from '@/components/DogTraining';
+import SeaKayak        from '@/components/SeaKayak';
+import MushroomSafety  from '@/components/MushroomSafety';
+import HighSeas        from '@/components/HighSeas';
 import { ToastProvider } from '@/components/Toast';
 import '@/App.css';
 
@@ -552,6 +560,14 @@ function AppInner() {
         <Route path="/su-kuslar"      element={<WaterBirds />} />
         <Route path="/tuy-tanimi"     element={<FeatherGuide />} />
         <Route path="/domuz-koku"     element={<BoarScent />} />
+        <Route path="/kiyi-olta"      element={<ShoreFishing />} />
+        <Route path="/baykus-rehber"  element={<OwlGuide />} />
+        <Route path="/nehir-ekoloji"  element={<RiverEcology />} />
+        <Route path="/amfibi"         element={<AmphibianGuide />} />
+        <Route path="/kopek-egitim"   element={<DogTraining />} />
+        <Route path="/deniz-kayak"    element={<SeaKayak />} />
+        <Route path="/mantar-guvenlik" element={<MushroomSafety />} />
+        <Route path="/acik-deniz"     element={<HighSeas />} />
       </Routes>
       {!hideNav && <Navbar />}
     </div>

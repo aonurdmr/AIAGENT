@@ -223,6 +223,16 @@ const TOOLS = [
   { icon: '🌿', label: 'Yabani Besinler', sub: 'Yeşillikler · kökler · meyveler — güvenli', path: '/yabani-besin', accent: '#22c55e' },
   { icon: '🐟', label: 'Sazan Kurulumu', sub: 'Hair rig · method feeder · chod · spod', path: '/sazan-rig', accent: '#f59e0b' },
   { icon: '🎒', label: 'Sırt Çantası Ekipmanı', sub: 'Barınak · giysi · su-yemek · navigasyon', path: '/sirt-cantasi', accent: '#06b6d4' },
+  { icon: '🦊', label: 'Tilki Avı', sub: 'Çağrı · pusu · köpekle av · gece teknikleri', path: '/tilki-av', accent: '#f97316' },
+  { icon: '🐇', label: 'Yaban Tavşanı Avı', sub: 'Yürüyerek · beagle · tuzak · akşam pusası', path: '/tavsan-av', accent: '#a78bfa' },
+  { icon: '🐟', label: 'Balık Tütsüleme', sub: 'Sıcak · soğuk · tuzlama · kurutma', path: '/balik-tutsule', accent: '#f97316' },
+  { icon: '🦆', label: 'Ördek Tuzak Heykeli', sub: 'Kurulum desenleri · çağrı teknikleri', path: '/ordek-heykel', accent: '#06b6d4' },
+  { icon: '🛶', label: 'Kano Rehberi', sub: 'Kürek darbesi · manevralar · güvenlik', path: '/kano-rehber', accent: '#06b6d4' },
+  { icon: '🦅', label: 'Kuş Tanımlama', sub: 'Yırtıcı · su kuşu · ötücü · av kuşu', path: '/kus-tanimi', accent: '#f97316' },
+  { icon: '🌾', label: 'Sazlık Balıkçılığı', sub: 'Kenar avı · sazlık delme · yapay yem', path: '/sazlik-balik', accent: '#22c55e' },
+  { icon: '👃', label: 'Koku Kontrolü', sub: 'Vücut · kıyafet · rüzgar · çekici', path: '/koku-kontrol', accent: '#22c55e' },
+  { icon: '🌊', label: 'Kıyı Balıkçılığı', sub: 'Surf casting · kayalık · iskele · suya girerek', path: '/kiyi-balik', accent: '#06b6d4' },
+  { icon: '🌀', label: 'Spinner ve Yapay Yem', sub: 'Spinner · kaşık · jig · crankbait', path: '/spinner-balik', accent: '#f59e0b' },
 ];
 
 const CATS = [

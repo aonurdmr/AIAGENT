@@ -221,6 +221,16 @@ import TreeStand        from '@/components/TreeStand';
 import WildEdibles      from '@/components/WildEdibles';
 import CarpRigs         from '@/components/CarpRigs';
 import BackpackGear     from '@/components/BackpackGear';
+import FoxHunting      from '@/components/FoxHunting';
+import RabbitHunting   from '@/components/RabbitHunting';
+import SmokingFish     from '@/components/SmokingFish';
+import DuckDecoys      from '@/components/DuckDecoys';
+import CanoeGuide      from '@/components/CanoeGuide';
+import WildBirdID      from '@/components/WildBirdID';
+import ReedFishing     from '@/components/ReedFishing';
+import ScentControl    from '@/components/ScentControl';
+import SurfFishing     from '@/components/SurfFishing';
+import SpinFishing     from '@/components/SpinFishing';
 import { ToastProvider } from '@/components/Toast';
 import '@/App.css';
 
@@ -452,6 +462,16 @@ function AppInner() {
         <Route path="/yabani-besin"   element={<WildEdibles />} />
         <Route path="/sazan-rig"      element={<CarpRigs />} />
         <Route path="/sirt-cantasi"   element={<BackpackGear />} />
+        <Route path="/tilki-av"       element={<FoxHunting />} />
+        <Route path="/tavsan-av"      element={<RabbitHunting />} />
+        <Route path="/balik-tutsule"  element={<SmokingFish />} />
+        <Route path="/ordek-heykel"   element={<DuckDecoys />} />
+        <Route path="/kano-rehber"    element={<CanoeGuide />} />
+        <Route path="/kus-tanimi"     element={<WildBirdID />} />
+        <Route path="/sazlik-balik"   element={<ReedFishing />} />
+        <Route path="/koku-kontrol"   element={<ScentControl />} />
+        <Route path="/kiyi-balik"     element={<SurfFishing />} />
+        <Route path="/spinner-balik"  element={<SpinFishing />} />
       </Routes>
       {!hideNav && <Navbar />}
     </div>

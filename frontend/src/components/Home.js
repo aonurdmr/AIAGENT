@@ -407,6 +407,16 @@ const TOOLS = [
   { icon: '🐝', label: 'Arı Güvenliği', sub: 'Türler · ilk yardım · anafilaksi', path: '/ari-guvenligi', accent: '#b45309' },
   { icon: '🌊', label: 'Nehir Geçişi', sub: 'Değerlendirme · teknik · güvenlik', path: '/nehir-gecisi', accent: '#06b6d4' },
   { icon: '🪨', label: 'Liken Rehberi', sub: 'Türler · ekoloji · biyoindikatör', path: '/liken-rehberi', accent: '#65a30d' },
+  { icon: '🦅', label: 'Yırtıcı Kuş Gözlemi', sub: 'Türler · gözlem · habitat', path: '/yirtici-kus-gozlem', accent: '#b45309' },
+  { icon: '🦪', label: 'Midye Pişirme', sub: 'Toplama · pişirme · güvenlik', path: '/midye-pisirme', accent: '#0e7490' },
+  { icon: '🥾', label: 'Kar Ayakkabısı', sub: 'Teknik · ekipman · güzergah', path: '/kar-ayakkabisi', accent: '#1d4ed8' },
+  { icon: '🦆', label: 'Sulak Alan Kuşları', sub: 'Türler · gözlem · mevsim', path: '/sulak-alan-kuslari', accent: '#0e7490' },
+  { icon: '🌿', label: 'Yabani Umbel Bitkiler', sub: 'Yenilebilir · zehirli · teşhis', path: '/yabani-umbel', accent: '#f59e0b' },
+  { icon: '🪂', label: 'Yamaç Paraşütü', sub: 'Ekipman · güvenlik · hava', path: '/yamac-parasut', accent: '#0284c7' },
+  { icon: '🦦', label: 'Vizon Takibi', sub: 'İzler · davranış · habitat', path: '/vizon-takibi', accent: '#818cf8' },
+  { icon: '🐢', label: 'Deniz Kaplumbağası', sub: 'Türler · dalış · koruma', path: '/deniz-kaplum-dalisi', accent: '#2dd4bf' },
+  { icon: '🍵', label: 'Yabani Çay Rehberi', sub: 'Bitkiler · toplama · demleme', path: '/yabani-cay', accent: '#4ade80' },
+  { icon: '🍄', label: 'Orman Mantarları', sub: 'Yenilebilir · zehirli · teşhis', path: '/orman-mantarlari', accent: '#d97706' },
 ];
 
 const CATS = [

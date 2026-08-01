@@ -405,6 +405,16 @@ import SunfishFishing   from '@/components/SunfishFishing';
 import HazardousBees    from '@/components/HazardousBees';
 import RiverCrossing    from '@/components/RiverCrossing';
 import LichenGuide      from '@/components/LichenGuide';
+import HawkWatching     from '@/components/HawkWatching';
+import MusselCooking    from '@/components/MusselCooking';
+import SnowShoeHiking   from '@/components/SnowShoeHiking';
+import WetlandsBirds    from '@/components/WetlandsBirds';
+import WildCarrot       from '@/components/WildCarrot';
+import DeltaPlaning     from '@/components/DeltaPlaning';
+import MinkTracking     from '@/components/MinkTracking';
+import SeaTurtleDive    from '@/components/SeaTurtleDive';
+import WildTeaGuide     from '@/components/WildTeaGuide';
+import ForestFungi      from '@/components/ForestFungi';
 import { ToastProvider } from '@/components/Toast';
 import '@/App.css';
 
@@ -820,6 +830,16 @@ function AppInner() {
         <Route path="/ari-guvenligi"    element={<HazardousBees />} />
         <Route path="/nehir-gecisi"     element={<RiverCrossing />} />
         <Route path="/liken-rehberi"    element={<LichenGuide />} />
+        <Route path="/yirtici-kus-gozlem" element={<HawkWatching />} />
+        <Route path="/midye-pisirme"    element={<MusselCooking />} />
+        <Route path="/kar-ayakkabisi"   element={<SnowShoeHiking />} />
+        <Route path="/sulak-alan-kuslari" element={<WetlandsBirds />} />
+        <Route path="/yabani-umbel"     element={<WildCarrot />} />
+        <Route path="/yamac-parasut"    element={<DeltaPlaning />} />
+        <Route path="/vizon-takibi"     element={<MinkTracking />} />
+        <Route path="/deniz-kaplum-dalisi" element={<SeaTurtleDive />} />
+        <Route path="/yabani-cay"       element={<WildTeaGuide />} />
+        <Route path="/orman-mantarlari" element={<ForestFungi />} />
       </Routes>
       {!hideNav && <Navbar />}
     </div>

@@ -315,6 +315,16 @@ import ThermalHunting  from '@/components/ThermalHunting';
 import LureMaking      from '@/components/LureMaking';
 import WildTurkey      from '@/components/WildTurkey';
 import SeaSnail        from '@/components/SeaSnail';
+import CrabFishing     from '@/components/CrabFishing';
+import NightHiking     from '@/components/NightHiking';
+import SquidFishing    from '@/components/SquidFishing';
+import SandstormSafe   from '@/components/SandstormSafe';
+import CampTarp        from '@/components/CampTarp';
+import WildGoose       from '@/components/WildGoose';
+import MarineKnots     from '@/components/MarineKnots';
+import GarfishGuide    from '@/components/GarfishGuide';
+import UrchinCollect   from '@/components/UrchinCollect';
+import BackcountrySkiing from '@/components/BackcountrySkiing';
 import { ToastProvider } from '@/components/Toast';
 import '@/App.css';
 
@@ -640,6 +650,16 @@ function AppInner() {
         <Route path="/sahte-yem-yap"  element={<LureMaking />} />
         <Route path="/yabani-hindi"   element={<WildTurkey />} />
         <Route path="/deniz-salyangozu" element={<SeaSnail />} />
+        <Route path="/yengec-av"        element={<CrabFishing />} />
+        <Route path="/gece-yuruyus"     element={<NightHiking />} />
+        <Route path="/kalamar-av"       element={<SquidFishing />} />
+        <Route path="/toz-firtinasi"    element={<SandstormSafe />} />
+        <Route path="/kamp-tarp"        element={<CampTarp />} />
+        <Route path="/yabani-kaz"       element={<WildGoose />} />
+        <Route path="/denizci-dugum"    element={<MarineKnots />} />
+        <Route path="/zargana"          element={<GarfishGuide />} />
+        <Route path="/deniz-kirpisi"    element={<UrchinCollect />} />
+        <Route path="/arazi-kayak"      element={<BackcountrySkiing />} />
       </Routes>
       {!hideNav && <Navbar />}
     </div>

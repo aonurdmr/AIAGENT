@@ -317,6 +317,16 @@ const TOOLS = [
   { icon: '🎨', label: 'El Yapımı Sahte Yem', sub: 'Streamer · teneke kaşık · jig yapımı', path: '/sahte-yem-yap', accent: '#f97316' },
   { icon: '🦃', label: 'Yabani Hindi Avı', sub: 'Çağrı türleri · zamanlama · teknikler', path: '/yabani-hindi', accent: '#f59e0b' },
   { icon: '🐚', label: 'Deniz Salyangozları', sub: 'Türler · toplama · pişirme rehberi', path: '/deniz-salyangozu', accent: '#06b6d4' },
+  { icon: '🦀', label: 'Yengec Avcilik', sub: 'Yöntemler · türler · haşlama', path: '/yengec-av', accent: '#f97316' },
+  { icon: '🌙', label: 'Gece Yürüyüsü', sub: 'Güvenlik · aydınlatma · ekipman', path: '/gece-yuruyus', accent: '#6366f1' },
+  { icon: '🦑', label: 'Kalamar Avı', sub: 'Egi jig · ekipman · pişirme', path: '/kalamar-av', accent: '#a78bfa' },
+  { icon: '🌪️', label: 'Kum Fırtınası Güvenlik', sub: 'İşaretler · korunma · ekipman', path: '/toz-firtinasi', accent: '#f59e0b' },
+  { icon: '⛺', label: 'Kamp Tarpı Rehberi', sub: 'Kurulum · gergi · tarp türleri', path: '/kamp-tarp', accent: '#22c55e' },
+  { icon: '🦢', label: 'Yabani Kaz Avı', sub: 'Çağrı · heykel · mevsim', path: '/yabani-kaz', accent: '#60a5fa' },
+  { icon: '🪢', label: 'Denizci Düğüm Rehberi', sub: 'Temel düğümler · güvenlik', path: '/denizci-dugum', accent: '#06b6d4' },
+  { icon: '🐟', label: 'Zargana Avı', sub: 'Habitat · yöntemler · pişirme', path: '/zargana', accent: '#22c55e' },
+  { icon: '🦔', label: 'Deniz Kirpisi Toplama', sub: 'Toplama · açma · pişirme', path: '/deniz-kirpisi', accent: '#06b6d4' },
+  { icon: '⛷️', label: 'Arazi Kayakçılığı', sub: 'Ekipman · tırmanış · lawina güvenliği', path: '/arazi-kayak', accent: '#60a5fa' },
 ];
 
 const CATS = [

@@ -279,6 +279,14 @@ import DogTraining     from '@/components/DogTraining';
 import SeaKayak        from '@/components/SeaKayak';
 import MushroomSafety  from '@/components/MushroomSafety';
 import HighSeas        from '@/components/HighSeas';
+import SaltMarsh       from '@/components/SaltMarsh';
+import FishingPhysics  from '@/components/FishingPhysics';
+import LizardGuide     from '@/components/LizardGuide';
+import BiodiversitySpots from '@/components/BiodiversitySpots';
+import WildBoarHunting from '@/components/WildBoarHunting';
+import NightSkyCamp    from '@/components/NightSkyCamp';
+import SaltwaterFly    from '@/components/SaltwaterFly';
+import WinterCamp      from '@/components/WinterCamp';
 import { ToastProvider } from '@/components/Toast';
 import '@/App.css';
 
@@ -568,6 +576,14 @@ function AppInner() {
         <Route path="/deniz-kayak"    element={<SeaKayak />} />
         <Route path="/mantar-guvenlik" element={<MushroomSafety />} />
         <Route path="/acik-deniz"     element={<HighSeas />} />
+        <Route path="/bataklık"        element={<SaltMarsh />} />
+        <Route path="/balik-fizik"    element={<FishingPhysics />} />
+        <Route path="/kertenkele"     element={<LizardGuide />} />
+        <Route path="/biyocesitlilik" element={<BiodiversitySpots />} />
+        <Route path="/yaban-domuz-av" element={<WildBoarHunting />} />
+        <Route path="/kamp-gokyuzu"   element={<NightSkyCamp />} />
+        <Route path="/tuzlu-sinek"    element={<SaltwaterFly />} />
+        <Route path="/kis-kamp"       element={<WinterCamp />} />
       </Routes>
       {!hideNav && <Navbar />}
     </div>

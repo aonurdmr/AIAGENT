@@ -281,6 +281,14 @@ const TOOLS = [
   { icon: '🛶', label: 'Deniz Kayangu', sub: 'Ekipman · teknikler · güvenlik', path: '/deniz-kayak', accent: '#06b6d4' },
   { icon: '🍄', label: 'Mantar Güvenliği', sub: 'Zehirliler · güvenlik kuralları · yenilebilir', path: '/mantar-guvenlik', accent: '#f97316' },
   { icon: '⛵', label: 'Açık Deniz Rehberi', sub: 'Güvenlik · balıkçılık · navigasyon', path: '/acik-deniz', accent: '#06b6d4' },
+  { icon: '🌾', label: 'Bataklık Rehberi', sub: 'Sazlık yaban hayatı · gözlem', path: '/bataklık', accent: '#22c55e' },
+  { icon: '🔬', label: 'Balıkçılık Fiziği', sub: 'Atış mekaniği · su fiziği · algı', path: '/balik-fizik', accent: '#06b6d4' },
+  { icon: '🦎', label: 'Kertenkele Rehberi', sub: 'Türkiye türleri · habitat · gözlem', path: '/kertenkele', accent: '#22c55e' },
+  { icon: '🗺️', label: 'Biyoçeşitlilik Noktaları', sub: 'Türkiye en zengin doğa alanları', path: '/biyocesitlilik', accent: '#22c55e' },
+  { icon: '🐗', label: 'Yaban Domuzu Avı', sub: 'Davranış · taktikler · güvenlik', path: '/yaban-domuz-av', accent: '#f97316' },
+  { icon: '🌌', label: 'Kampta Gökyüzü', sub: 'Yıldız gözlemi · meteor · Samanyolu', path: '/kamp-gokyuzu', accent: '#818cf8' },
+  { icon: '🎣', label: 'Tuzlu Su Sinek Casting', sub: 'Ekipman · hedef türler · teknikler', path: '/tuzlu-sinek', accent: '#06b6d4' },
+  { icon: '❄️', label: 'Kış Kampı', sub: 'Barınak · ısı yönetimi · güvenlik', path: '/kis-kamp', accent: '#60a5fa' },
 ];
 
 const CATS = [

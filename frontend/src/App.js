@@ -231,6 +231,16 @@ import ReedFishing     from '@/components/ReedFishing';
 import ScentControl    from '@/components/ScentControl';
 import SurfFishing     from '@/components/SurfFishing';
 import SpinFishing     from '@/components/SpinFishing';
+import PheasantHunting from '@/components/PheasantHunting';
+import QuailCalling    from '@/components/QuailCalling';
+import DeerScouting    from '@/components/DeerScouting';
+import TrollingGuide   from '@/components/TrollingGuide';
+import FishAttractor   from '@/components/FishAttractor';
+import NightBirds      from '@/components/NightBirds';
+import TrailCamera     from '@/components/TrailCamera';
+import WetlandGuide    from '@/components/WetlandGuide';
+import BoarCooking     from '@/components/BoarCooking';
+import SurvivalNav     from '@/components/SurvivalNav';
 import { ToastProvider } from '@/components/Toast';
 import '@/App.css';
 
@@ -472,6 +482,16 @@ function AppInner() {
         <Route path="/koku-kontrol"   element={<ScentControl />} />
         <Route path="/kiyi-balik"     element={<SurfFishing />} />
         <Route path="/spinner-balik"  element={<SpinFishing />} />
+        <Route path="/sulun-av"       element={<PheasantHunting />} />
+        <Route path="/buldircin-av"   element={<QuailCalling />} />
+        <Route path="/geyik-scout"    element={<DeerScouting />} />
+        <Route path="/trol-balik"     element={<TrollingGuide />} />
+        <Route path="/balik-cekici"   element={<FishAttractor />} />
+        <Route path="/gece-kuslar"    element={<NightBirds />} />
+        <Route path="/kamera-tuzak"   element={<TrailCamera />} />
+        <Route path="/sulak-alan"     element={<WetlandGuide />} />
+        <Route path="/domuz-yemek"    element={<BoarCooking />} />
+        <Route path="/hayatta-nav"    element={<SurvivalNav />} />
       </Routes>
       {!hideNav && <Navbar />}
     </div>

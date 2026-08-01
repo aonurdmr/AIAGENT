@@ -233,6 +233,16 @@ const TOOLS = [
   { icon: '👃', label: 'Koku Kontrolü', sub: 'Vücut · kıyafet · rüzgar · çekici', path: '/koku-kontrol', accent: '#22c55e' },
   { icon: '🌊', label: 'Kıyı Balıkçılığı', sub: 'Surf casting · kayalık · iskele · suya girerek', path: '/kiyi-balik', accent: '#06b6d4' },
   { icon: '🌀', label: 'Spinner ve Yapay Yem', sub: 'Spinner · kaşık · jig · crankbait', path: '/spinner-balik', accent: '#f59e0b' },
+  { icon: '🦜', label: 'Sülün Avı', sub: 'Köpekle · drive · yürüyerek tarama', path: '/sulun-av', accent: '#f97316' },
+  { icon: '🐦', label: 'Bıldırcın Avı ve Çağrı', sub: 'Islık çağrı · sürü toplama · habitat', path: '/buldircin-av', accent: '#f59e0b' },
+  { icon: '🦌', label: 'Geyik Scouting', sub: 'İz okuma · rub · nada · yatak bulma', path: '/geyik-scout', accent: '#a78bfa' },
+  { icon: '⛵', label: 'Trol Balıkçılığı', sub: 'Temel trol · downrigger · planer · deniz', path: '/trol-balik', accent: '#06b6d4' },
+  { icon: '🚀', label: 'Balık Çekici Sistemleri', sub: 'Spod · bait boat · PVA · method feeder', path: '/balik-cekici', accent: '#f97316' },
+  { icon: '🦉', label: 'Gece Kuşları', sub: 'Baykuş · çobanaldatan · gece balıkçıl', path: '/gece-kuslar', accent: '#a78bfa' },
+  { icon: '📷', label: 'Kamera Tuzak Rehberi', sub: 'Yerleştirme · ayarlar · güç · analiz', path: '/kamera-tuzak', accent: '#f97316' },
+  { icon: '🌿', label: 'Sulak Alan Rehberi', sub: 'Bataklık · kıyı · delta · turbalık', path: '/sulak-alan', accent: '#22c55e' },
+  { icon: '🐗', label: 'Yaban Domuzu Mutfağı', sub: 'Güveç · şiş · sucuk · parçalama', path: '/domuz-yemek', accent: '#f97316' },
+  { icon: '🧭', label: 'Hayatta Kalma Navigasyonu', sub: 'Güneş · yıldız · doğal işaret · sinyal', path: '/hayatta-nav', accent: '#f59e0b' },
 ];
 
 const CATS = [

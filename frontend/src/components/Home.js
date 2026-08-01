@@ -193,6 +193,16 @@ const TOOLS = [
   { icon: '🦌', label: 'Büyük Av Rehberi', sub: 'Geyik · karaca · dağ keçisi · domuz', path: '/buyuk-av', accent: '#f59e0b' },
   { icon: '📡', label: 'Acil Haberleşme', sub: 'Telsiz · uydu · PLB · optik sinyal & Morse', path: '/acil-haberlesme', accent: '#22c55e' },
   { icon: '🌿', label: 'Doğa Kokuları', sub: 'Hayvan · bitki · su kokuları & avcı koku kontrolü', path: '/doga-koku', accent: '#22c55e' },
+  { icon: '🧊', label: 'Buz Balıkçılığı', sub: 'Delik açma · jig · tip-up · güvenlik', path: '/buz-balik', accent: '#60a5fa' },
+  { icon: '🫐', label: 'Yabani Meyveler', sub: 'Güvenli · zehirli · fındık — tanıma rehberi', path: '/yabani-meyve', accent: '#a78bfa' },
+  { icon: '🎵', label: 'Kuş Sesi Rehberi', sub: 'Alarm · aktivite · mevsim & av çağrıları', path: '/kus-sesi-rehber', accent: '#f59e0b' },
+  { icon: '🐾', label: 'İz Takip Rehberi', sub: '5 tür · domuz, geyik, kurt, ayı, tavşan', path: '/iz-takip', accent: '#f97316' },
+  { icon: '🔥', label: 'Ateş Yakma', sub: 'Sürtünme · kıvılcım · mercek · pil — hayatta kalma', path: '/hayatta-ates', accent: '#ef4444' },
+  { icon: '💧', label: 'Su Arıtma Rehberi', sub: 'Kaynatma · süzme · güneş · kimyasal', path: '/su-aritma', accent: '#06b6d4' },
+  { icon: '🪢', label: 'Kamp Düğümleri', sub: '6 temel düğüm · adım adım bağlama rehberi', path: '/kamp-dugum', accent: '#22c55e' },
+  { icon: '🌙', label: 'Gece Av Teknikleri', sub: 'Spotlight · termal · gece görüş · kamera tuzak', path: '/gece-av-teknik', accent: '#6366f1' },
+  { icon: '📅', label: 'Avcı Takvimi', sub: 'Sezona göre tür · açık-kapalı dönemler', path: '/avci-takvim', accent: '#f97316' },
+  { icon: '🪱', label: 'Yem & Suni Yem', sub: 'Sinek · yapay yem · canlı yem · boilie', path: '/yem-rehber', accent: '#f59e0b' },
 ];
 
 const CATS = [

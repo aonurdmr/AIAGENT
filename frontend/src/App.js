@@ -191,6 +191,16 @@ import CurrentsGuide    from '@/components/CurrentsGuide';
 import BigGameGuide     from '@/components/BigGameGuide';
 import EmergencyCom     from '@/components/EmergencyCom';
 import NatureScents     from '@/components/NatureScents';
+import IceFishing       from '@/components/IceFishing';
+import WildBerries      from '@/components/WildBerries';
+import BirdCallGuide    from '@/components/BirdCallGuide';
+import AnimalTracking   from '@/components/AnimalTracking';
+import SurvivalFire     from '@/components/SurvivalFire';
+import WaterSurvival    from '@/components/WaterSurvival';
+import CampingKnots     from '@/components/CampingKnots';
+import NightHunting     from '@/components/NightHunting';
+import HunterCalendar   from '@/components/HunterCalendar';
+import InsectFishing    from '@/components/InsectFishing';
 import { ToastProvider } from '@/components/Toast';
 import '@/App.css';
 
@@ -392,6 +402,16 @@ function AppInner() {
         <Route path="/buyuk-av"       element={<BigGameGuide />} />
         <Route path="/acil-haberlesme" element={<EmergencyCom />} />
         <Route path="/doga-koku"      element={<NatureScents />} />
+        <Route path="/buz-balik"      element={<IceFishing />} />
+        <Route path="/yabani-meyve"   element={<WildBerries />} />
+        <Route path="/kus-sesi-rehber" element={<BirdCallGuide />} />
+        <Route path="/iz-takip"       element={<AnimalTracking />} />
+        <Route path="/hayatta-ates"   element={<SurvivalFire />} />
+        <Route path="/su-aritma"      element={<WaterSurvival />} />
+        <Route path="/kamp-dugum"     element={<CampingKnots />} />
+        <Route path="/gece-av-teknik" element={<NightHunting />} />
+        <Route path="/avci-takvim"    element={<HunterCalendar />} />
+        <Route path="/yem-rehber"     element={<InsectFishing />} />
       </Routes>
       {!hideNav && <Navbar />}
     </div>

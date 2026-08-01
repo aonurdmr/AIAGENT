@@ -253,6 +253,16 @@ const TOOLS = [
   { icon: '🥾', label: 'Yürüyüşte Beslenme', sub: 'Kalori · yiyecek · hidrasyon · zamanlama', path: '/yuruyus-beslen', accent: '#f97316' },
   { icon: '🏕️', label: 'Kamp Hijyeni', sub: 'Kişisel · yemek · atık · LNT prensipleri', path: '/kamp-hijyen', accent: '#22c55e' },
   { icon: '🏔️', label: 'Yüksek Dağ Rehberi', sub: 'İklim kuşakları · güvenlik · alp ekipman', path: '/alp-rehber', accent: '#60a5fa' },
+  { icon: '🦇', label: 'Yarasa Gözlemi', sub: 'Türler · dedektör · gözlem teknikleri', path: '/yarasa-gozlem', accent: '#6366f1' },
+  { icon: '🪸', label: 'Yapay Resif Balıkçılığı', sub: 'Resif türleri · hedef balıklar · jig', path: '/yapay-resif', accent: '#06b6d4' },
+  { icon: '🌾', label: 'Bozkir Kuşları', sub: 'Keklik · bıldırcın · bozkirlak · kerkenez', path: '/bozkir-kuslar', accent: '#f59e0b' },
+  { icon: '🐟', label: 'Alabalık Avcılığı', sub: 'Habitat · yemler · sezon · kurallar', path: '/alabalik-av', accent: '#06b6d4' },
+  { icon: '📸', label: 'Foto Pusu', sub: 'Pusu türleri · kurulum · ekipman · etik', path: '/foto-pusu', accent: '#22c55e' },
+  { icon: '🌳', label: 'Ağaç Tanıma', sub: 'Türkiye orman ağaçları · tanıma teknikleri', path: '/agac-tanimi', accent: '#22c55e' },
+  { icon: '🎭', label: 'Doğal Kamuflaj', sub: 'Siluet · malzeme · hareket tekniği', path: '/dogal-kamuflaj', accent: '#22c55e' },
+  { icon: '🏡', label: 'Kuş Evi Yapımı', sub: 'Tür boyutları · konum · bakım', path: '/kus-evi-yap', accent: '#a78bfa' },
+  { icon: '🐝', label: 'Arı Güvenliği', sub: 'Önleme · sting tedavisi · türler', path: '/ari-guvenlik', accent: '#f59e0b' },
+  { icon: '🏃', label: 'Doğa Koşusu', sub: 'Ekipman · teknik · beslenme · güvenlik', path: '/doga-kos', accent: '#f97316' },
 ];
 
 const CATS = [

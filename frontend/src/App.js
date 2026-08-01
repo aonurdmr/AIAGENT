@@ -251,6 +251,16 @@ import CatchRelease    from '@/components/CatchRelease';
 import HikingNutrition from '@/components/HikingNutrition';
 import CampHygiene     from '@/components/CampHygiene';
 import AlpineGuide     from '@/components/AlpineGuide';
+import BatObserve      from '@/components/BatObserve';
+import ArtificialReef  from '@/components/ArtificialReef';
+import GrasslandBirds  from '@/components/GrasslandBirds';
+import TroutFishing    from '@/components/TroutFishing';
+import PhotoHide       from '@/components/PhotoHide';
+import TreeIdentify    from '@/components/TreeIdentify';
+import NaturalCamo     from '@/components/NaturalCamo';
+import BirdHouse       from '@/components/BirdHouse';
+import BeeSafety       from '@/components/BeeSafety';
+import TrailRunning    from '@/components/TrailRunning';
 import { ToastProvider } from '@/components/Toast';
 import '@/App.css';
 
@@ -512,6 +522,16 @@ function AppInner() {
         <Route path="/yuruyus-beslen" element={<HikingNutrition />} />
         <Route path="/kamp-hijyen"    element={<CampHygiene />} />
         <Route path="/alp-rehber"     element={<AlpineGuide />} />
+        <Route path="/yarasa-gozlem"  element={<BatObserve />} />
+        <Route path="/yapay-resif"    element={<ArtificialReef />} />
+        <Route path="/bozkir-kuslar"  element={<GrasslandBirds />} />
+        <Route path="/alabalik-av"    element={<TroutFishing />} />
+        <Route path="/foto-pusu"      element={<PhotoHide />} />
+        <Route path="/agac-tanimi"    element={<TreeIdentify />} />
+        <Route path="/dogal-kamuflaj" element={<NaturalCamo />} />
+        <Route path="/kus-evi-yap"    element={<BirdHouse />} />
+        <Route path="/ari-guvenlik"   element={<BeeSafety />} />
+        <Route path="/doga-kos"       element={<TrailRunning />} />
       </Routes>
       {!hideNav && <Navbar />}
     </div>

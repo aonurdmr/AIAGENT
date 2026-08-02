@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">DoğaAI</string>
+    <string name="btn_login">Giriş Yap</string>
+    <string name="btn_register">Kayıt Ol</string>
+    <string name="btn_send">Gönder</string>
+    <string name="hint_email">E-posta</string>
+    <string name="hint_password">Şifre</string>
+    <string name="hint_username">Kullanıcı adı</string>
+    <string name="hint_fullname">Ad Soyad</string>
+    <string name="hint_message">Mesajınızı yazın…</string>
+    <string name="label_score">SKOR</string>
+    <string name="label_spots">Nokta</string>
+    <string name="label_species">Tür Tanındı</string>
+    <string name="label_users">Kullanıcı</string>
+    <string name="nav_home">Ana Sayfa</string>
+    <string name="nav_identify">Tanımla</string>
+    <string name="nav_map">Harita</string>
+    <string name="nav_community">Topluluk</string>
+    <string name="nav_profile">Profil</string>
+</resources>

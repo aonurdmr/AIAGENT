@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Brand greens -->
+    <color name="accent">#22C55E</color>
+    <color name="accent_dark">#16A34A</color>
+    <color name="accent_darker">#15803D</color>
+    <color name="accent_light">#86EFAC</color>
+    <color name="accent_dim">#4A7A4A</color>
+
+    <!-- Backgrounds -->
+    <color name="bg">#040D04</color>
+    <color name="surface0">#070F07</color>
+    <color name="surface1">#0D1F0D</color>
+    <color name="surface2">#122212</color>
+    <color name="surface3">#1A2E1A</color>
+
+    <!-- Text -->
+    <color name="text_primary">#F0FAF0</color>
+    <color name="text_mid">#A8D4A8</color>
+    <color name="text_mute">#4A7A4A</color>
+
+    <!-- Semantic -->
+    <color name="blue">#60A5FA</color>
+    <color name="red">#F87171</color>
+    <color name="amber">#FBBF24</color>
+    <color name="purple">#C084FC</color>
+    <color name="teal">#34D399</color>
+
+    <!-- System -->
+    <color name="white">#FFFFFF</color>
+    <color name="transparent">#00000000</color>
+</resources>

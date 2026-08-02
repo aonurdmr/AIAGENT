@@ -426,6 +426,14 @@ const TOOLS = [
   { icon: '🦉', label: 'Baykuş Yuvalama', sub: 'Türler · gözlem · ses', path: '/baykus-yuvalama', accent: '#d1d5db' },
   { icon: '🧊', label: 'Buz Tırmanışı', sub: 'Ekipman · teknik · güvenlik', path: '/buz-tirmanis', accent: '#38bdf8' },
   { icon: '🐗', label: 'Domuz Eti Tarifleri', sub: 'Hazırlık · marine · pişirme', path: '/domuz-tarifleri', accent: '#fbbf24' },
+  { icon: '🦟', label: 'Sivrisinek Rehberi', sub: 'Tanımlama · korunma · hastalık', path: '/sivrisinek-rehberi', accent: '#dc2626' },
+  { icon: '🦞', label: 'Tatlısu Yengeci', sub: 'Habitat · ekoloji · koruma', path: '/tatlisuyu-yengeci', accent: '#4ade80' },
+  { icon: '🤿', label: 'Mağara Dalışı', sub: 'Ekipman · güvenlik · noktalar', path: '/magara-dalisi', accent: '#38bdf8' },
+  { icon: '🍂', label: 'Sonbahar Hasatı', sub: 'Toplama · saklama · tarifler', path: '/sonbahar-hasati', accent: '#fb923c' },
+  { icon: '🏖️', label: 'Kumul Ekolojisi', sub: 'Ekoloji · fauna · aktivite', path: '/kumul-ekoloji', accent: '#fde047' },
+  { icon: '🐺', label: 'Kurt Davranışı', sub: 'İzler · ekoloji · güvenlik', path: '/kurt-davranisi', accent: '#9ca3af' },
+  { icon: '🐟', label: 'Alabalık Rehberi', sub: 'Doğal av · sezon · pişirme', path: '/alabalik-rehberi', accent: '#2dd4bf' },
+  { icon: '🌿', label: 'Yosun Tanımlama', sub: 'Türler · ekoloji · kılavuz', path: '/yosun-tanimlama', accent: '#86efac' },
 ];
 
 const CATS = [

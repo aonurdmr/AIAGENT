@@ -424,6 +424,14 @@ import SqouidFishing    from '@/components/SqouidFishing';
 import OwlNesting       from '@/components/OwlNesting';
 import IceClimbing      from '@/components/IceClimbing';
 import WildBoarCookbook from '@/components/WildBoarCookbook';
+import TigerMosquito   from '@/components/TigerMosquito';
+import FreshwaterCrab  from '@/components/FreshwaterCrab';
+import CaveDiving      from '@/components/CaveDiving';
+import AutumnHarvest   from '@/components/AutumnHarvest';
+import SandDunes       from '@/components/SandDunes';
+import WolfBehavior    from '@/components/WolfBehavior';
+import TroutFarm       from '@/components/TroutFarm';
+import MossIdentify    from '@/components/MossIdentify';
 import { ToastProvider } from '@/components/Toast';
 import '@/App.css';
 
@@ -858,6 +866,14 @@ function AppInner() {
         <Route path="/baykus-yuvalama"  element={<OwlNesting />} />
         <Route path="/buz-tirmanis"     element={<IceClimbing />} />
         <Route path="/domuz-tarifleri"  element={<WildBoarCookbook />} />
+        <Route path="/sivrisinek-rehberi" element={<TigerMosquito />} />
+        <Route path="/tatlisuyu-yengeci" element={<FreshwaterCrab />} />
+        <Route path="/magara-dalisi"    element={<CaveDiving />} />
+        <Route path="/sonbahar-hasati"  element={<AutumnHarvest />} />
+        <Route path="/kumul-ekoloji"    element={<SandDunes />} />
+        <Route path="/kurt-davranisi"   element={<WolfBehavior />} />
+        <Route path="/alabalik-rehberi" element={<TroutFarm />} />
+        <Route path="/yosun-tanimlama"  element={<MossIdentify />} />
       </Routes>
       {!hideNav && <Navbar />}
     </div>

@@ -530,6 +530,13 @@ const TOOLS = [
   { icon: '🐠', label: 'İskorpit Rehberi', sub: 'Avcılık · güvenlik · tarif', path: '/iskorpit-rehberi', accent: '#c2410c' },
   { icon: '🍇', label: 'Mürver', sub: 'Çiçek · meyve · şurup', path: '/murver', accent: '#7e22ce' },
   { icon: '🐝', label: 'Yabani Arı', sub: 'Gözlem · bal · kovan', path: '/yabani-ari', accent: '#d97706' },
+  { icon: '🦜', label: 'Arıkuşu', sub: 'Tanıma · renkler · davranış', path: '/arikusu', accent: '#059669' },
+  { icon: '🌿', label: 'Yabani Fıstık', sub: 'Menengiç · kahve · yağ', path: '/yabani-fistik', accent: '#65a30d' },
+  { icon: '🐟', label: 'Ton Balığı', sub: 'Boğaz göçü · sashimi · kota', path: '/ton-baligi', accent: '#1d4ed8' },
+  { icon: '🦅', label: 'Yırtıcı Göçü', sub: 'Çamlıca · türler · sezon', path: '/yirtici-gocu', accent: '#c2410c' },
+  { icon: '🍑', label: 'Yabani Kayısı', sub: 'Malatya · kurutma · pestil', path: '/yabani-kayisi', accent: '#ea580c' },
+  { icon: '🐦', label: 'Batağan Gözlemi', sub: 'Dans · dalış · habitat', path: '/batagan-gozu', accent: '#0891b2' },
+  { icon: '🌰', label: 'Yabani Ceviz', sub: 'Hasat · reçel · yağ', path: '/yabani-ceviz', accent: '#78350f' },
 ];
 
 const CATS = [

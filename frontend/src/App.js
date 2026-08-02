@@ -528,6 +528,13 @@ import WildAnise       from '@/components/WildAnise';
 import ScorpionFish    from '@/components/ScorpionFish';
 import WildElderberry  from '@/components/WildElderberry';
 import WildHoneybee    from '@/components/WildHoneybee';
+import BeeEaterWatch   from '@/components/BeeEaterWatch';
+import WildPistachio   from '@/components/WildPistachio';
+import TuneFishing     from '@/components/TuneFishing';
+import RaptorMigration from '@/components/RaptorMigration';
+import WildApricot     from '@/components/WildApricot';
+import GrebeWatch      from '@/components/GrebeWatch';
+import WildWalnut      from '@/components/WildWalnut';
 import { ToastProvider } from '@/components/Toast';
 import '@/App.css';
 
@@ -1066,6 +1073,13 @@ function AppInner() {
         <Route path="/iskorpit-rehberi"  element={<ScorpionFish />} />
         <Route path="/murver"            element={<WildElderberry />} />
         <Route path="/yabani-ari"        element={<WildHoneybee />} />
+        <Route path="/arikusu"           element={<BeeEaterWatch />} />
+        <Route path="/yabani-fistik"     element={<WildPistachio />} />
+        <Route path="/ton-baligi"        element={<TuneFishing />} />
+        <Route path="/yirtici-gocu"      element={<RaptorMigration />} />
+        <Route path="/yabani-kayisi"     element={<WildApricot />} />
+        <Route path="/batagan-gozu"      element={<GrebeWatch />} />
+        <Route path="/yabani-ceviz"      element={<WildWalnut />} />
       </Routes>
       {!hideNav && <Navbar />}
     </div>

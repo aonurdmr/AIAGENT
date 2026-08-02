@@ -494,6 +494,12 @@ const TOOLS = [
   { icon: '🌊', label: 'Karadeniz Balıkları', sub: 'Türler · avcılık · sezon', path: '/karadeniz-balık', accent: '#1e3a5f' },
   { icon: '🌲', label: 'Orman Hayatta Kalma', sub: 'Beceriler · acil durum · su', path: '/orman-hayatta', accent: '#166534' },
   { icon: '🐐', label: 'Yaban Keçisi Gözlemi', sub: 'Biyoloji · habitat · koruma', path: '/yaban-kecisi', accent: '#374151' },
+  { icon: '🌿', label: 'Yabani Biberiye', sub: 'Toplama · kullanım · aromaterapi', path: '/yabani-biberiye', accent: '#166534' },
+  { icon: '🤿', label: 'Deniz Dalışı', sub: 'Teknikler · lokasyonlar · güvenlik', path: '/deniz-dalisi', accent: '#0c4a6e' },
+  { icon: '🌊', label: 'Ege Balıkları', sub: 'Türler · avcılık · kota', path: '/ege-baliklari', accent: '#0369a1' },
+  { icon: '🌿', label: 'Yabani Nane', sub: 'Toplama · çay · tıbbi kullanım', path: '/yabani-nane', accent: '#059669' },
+  { icon: '🍵', label: 'Doğal Çaylar', sub: 'Bitkiler · demleme · şifa', path: '/dogal-caylar', accent: '#be123c' },
+  { icon: '🏖️', label: 'Sahil Kampı', sub: 'Kurulum · aktiviteler · gelgit', path: '/sahil-kampi', accent: '#0891b2' },
 ];
 
 const CATS = [

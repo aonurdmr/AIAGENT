@@ -492,6 +492,12 @@ import AnchovyCooking from '@/components/AnchovyCooking';
 import BlackSeaFish   from '@/components/BlackSeaFish';
 import ForestSurvival from '@/components/ForestSurvival';
 import MountainGoatWatch from '@/components/MountainGoatWatch';
+import WildRosmary    from '@/components/WildRosmary';
+import MarineDiving   from '@/components/MarineDiving';
+import AegeanFish     from '@/components/AegeanFish';
+import WildMint       from '@/components/WildMint';
+import TurkishTea     from '@/components/TurkishTea';
+import BeachCamping   from '@/components/BeachCamping';
 import { ToastProvider } from '@/components/Toast';
 import '@/App.css';
 
@@ -994,6 +1000,12 @@ function AppInner() {
         <Route path="/karadeniz-balık"  element={<BlackSeaFish />} />
         <Route path="/orman-hayatta"    element={<ForestSurvival />} />
         <Route path="/yaban-kecisi"     element={<MountainGoatWatch />} />
+        <Route path="/yabani-biberiye"  element={<WildRosmary />} />
+        <Route path="/deniz-dalisi"     element={<MarineDiving />} />
+        <Route path="/ege-baliklari"    element={<AegeanFish />} />
+        <Route path="/yabani-nane"      element={<WildMint />} />
+        <Route path="/dogal-caylar"     element={<TurkishTea />} />
+        <Route path="/sahil-kampi"      element={<BeachCamping />} />
       </Routes>
       {!hideNav && <Navbar />}
     </div>

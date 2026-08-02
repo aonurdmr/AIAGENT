@@ -417,6 +417,15 @@ const TOOLS = [
   { icon: '🐢', label: 'Deniz Kaplumbağası', sub: 'Türler · dalış · koruma', path: '/deniz-kaplum-dalisi', accent: '#2dd4bf' },
   { icon: '🍵', label: 'Yabani Çay Rehberi', sub: 'Bitkiler · toplama · demleme', path: '/yabani-cay', accent: '#4ade80' },
   { icon: '🍄', label: 'Orman Mantarları', sub: 'Yenilebilir · zehirli · teşhis', path: '/orman-mantarlari', accent: '#d97706' },
+  { icon: '🦂', label: 'Akrep Rehberi', sub: 'Tanımlama · güvenlik · ilk yardım', path: '/akrep-rehberi', accent: '#f59e0b' },
+  { icon: '🌸', label: 'Alpin Çiçekler', sub: 'Türler · mevsim · koruma', path: '/alpin-cicekler', accent: '#a78bfa' },
+  { icon: '🏞️', label: 'Nehir Av Haritası', sub: 'Noktalar · sezon · akıntı', path: '/nehir-av-haritasi', accent: '#34d399' },
+  { icon: '🌌', label: 'Gece Gökyüzü', sub: 'Takımyıldız · gözlem · konum', path: '/gece-gokyuzu', accent: '#818cf8' },
+  { icon: '🐍', label: 'Yılan Rehberi', sub: 'Tanımlama · davranış · ilk yardım', path: '/yilan-rehberi', accent: '#16a34a' },
+  { icon: '🦑', label: 'Kalamari Avı', sub: 'Egi · gece · pişirme', path: '/kalamari-av', accent: '#c4b5fd' },
+  { icon: '🦉', label: 'Baykuş Yuvalama', sub: 'Türler · gözlem · ses', path: '/baykus-yuvalama', accent: '#d1d5db' },
+  { icon: '🧊', label: 'Buz Tırmanışı', sub: 'Ekipman · teknik · güvenlik', path: '/buz-tirmanis', accent: '#38bdf8' },
+  { icon: '🐗', label: 'Domuz Eti Tarifleri', sub: 'Hazırlık · marine · pişirme', path: '/domuz-tarifleri', accent: '#fbbf24' },
 ];
 
 const CATS = [

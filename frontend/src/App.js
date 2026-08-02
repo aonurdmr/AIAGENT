@@ -503,6 +503,12 @@ import BearWatch      from '@/components/BearWatch';
 import SunflowerHarvest from '@/components/SunflowerHarvest';
 import ChamomilePicking from '@/components/ChamomilePicking';
 import CapelinFishing from '@/components/CapelinFishing';
+import TruffleHunting  from '@/components/TruffleHunting';
+import WildAsparagus   from '@/components/WildAsparagus';
+import SeaSnailGuide   from '@/components/SeaSnailGuide';
+import PineBeetle      from '@/components/PineBeetle';
+import WildPear        from '@/components/WildPear';
+import LynxWatch       from '@/components/LynxWatch';
 import { ToastProvider } from '@/components/Toast';
 import '@/App.css';
 
@@ -1016,6 +1022,12 @@ function AppInner() {
         <Route path="/aycicegi-hasadi"  element={<SunflowerHarvest />} />
         <Route path="/papatya-toplama"  element={<ChamomilePicking />} />
         <Route path="/istavrit-rehberi" element={<CapelinFishing />} />
+        <Route path="/truffle-avi"       element={<TruffleHunting />} />
+        <Route path="/yabani-kuskonmaz"  element={<WildAsparagus />} />
+        <Route path="/salyangozu-rehberi" element={<SeaSnailGuide />} />
+        <Route path="/cam-bocegi"        element={<PineBeetle />} />
+        <Route path="/yabani-armut"      element={<WildPear />} />
+        <Route path="/vasak-gozu"        element={<LynxWatch />} />
       </Routes>
       {!hideNav && <Navbar />}
     </div>

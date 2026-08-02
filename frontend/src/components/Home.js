@@ -505,6 +505,12 @@ const TOOLS = [
   { icon: '🌻', label: 'Ayçiçeği Hasadı', sub: 'Hasat · tohum · yağ', path: '/aycicegi-hasadi', accent: '#ca8a04' },
   { icon: '🌼', label: 'Papatya Toplama', sub: 'Tanıma · çay · tıbbi', path: '/papatya-toplama', accent: '#d97706' },
   { icon: '🐟', label: 'İstavrit Rehberi', sub: 'Avcılık · pişirme · mevsim', path: '/istavrit-rehberi', accent: '#0369a1' },
+  { icon: '🍄', label: 'Trüf Avı', sub: 'Bulma · köpek · pişirme', path: '/truffle-avi', accent: '#92400e' },
+  { icon: '🌿', label: 'Yabani Kuşkonmaz', sub: 'Toplama · tarif · mevsim', path: '/yabani-kuskonmaz', accent: '#4d7c0f' },
+  { icon: '🐚', label: 'Salyangoz Rehberi', sub: 'Toplama · pişirme · mevsim', path: '/salyangozu-rehberi', accent: '#0e7490' },
+  { icon: '🌲', label: 'Çam Böceği', sub: 'Tanıma · zarar · kontrol', path: '/cam-bocegi', accent: '#78350f' },
+  { icon: '🍐', label: 'Yabani Armut', sub: 'Hasat · reçel · sirke', path: '/yabani-armut', accent: '#854d0e' },
+  { icon: '🐱', label: 'Vaşak Gözlemi', sub: 'Habitat · iz · koruma', path: '/vasak-gozu', accent: '#b45309' },
 ];
 
 const CATS = [

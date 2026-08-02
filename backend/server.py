@@ -16,6 +16,12 @@ from openai import AsyncOpenAI
 ROOT_DIR = Path(__file__).parent
 load_dotenv(ROOT_DIR / '.env')
 
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+)
+logger = logging.getLogger(__name__)
+
 # MongoDB connection
 mongo_url = os.environ['MONGO_URL']
 client = AsyncIOMotorClient(mongo_url)
@@ -29,6 +35,35 @@ api_router = APIRouter(prefix="/api")
 
 # Initialize LLM integrations
 EMERGENT_LLM_KEY = os.environ.get('EMERGENT_LLM_KEY')
+NVIDIA_API_KEY = os.environ.get('NVIDIA_API_KEY')
+GROQ_API_KEY = os.environ.get('GROQ_API_KEY')
+
+nvidia_client = AsyncOpenAI(
+    base_url="https://integrate.api.nvidia.com/v1",
+    api_key=NVIDIA_API_KEY,
+) if NVIDIA_API_KEY else None
+
+groq_client = AsyncOpenAI(
+    base_url="https://api.groq.com/openai/v1",
+    api_key=GROQ_API_KEY,
+) if GROQ_API_KEY else None
+
+# Groq model per agent — reasoning agents get DeepSeek R1, rest get Llama 3.3 70B
+GROQ_AGENT_MODELS = {
+    "research": "deepseek-r1-distill-llama-70b",
+    "report":   "deepseek-r1-distill-llama-70b",
+    "memory":   "deepseek-r1-distill-llama-70b",
+    "code":     "llama-3.3-70b-versatile",
+    "cost":     "llama-3.3-70b-versatile",
+    "design":   "llama-3.3-70b-versatile",
+    "content":  "llama-3.3-70b-versatile",
+    "planner":  "llama-3.3-70b-versatile",
+    "publisher":"llama-3.3-70b-versatile",
+    "growth":   "llama-3.3-70b-versatile",
+    "safety":   "llama-3.3-70b-versatile",
+}
+
+NVIDIA_IMAGE_MODEL = "stability/stable-diffusion-xl"
 
 # Agent Configuration
 AGENTS_CONFIG = {
@@ -216,53 +251,83 @@ async def delete_chat_session(session_id: str):
     
     return {"message": "Session deleted successfully"}
 
+async def _llm_response(agent_type: str, session_id: str, system_message: str, content: str) -> str:
+    """Try providers in order: Groq → NVIDIA → EmergentIntegrations."""
+    # 1. Groq (fast, free tier)
+    if groq_client:
+        try:
+            model = GROQ_AGENT_MODELS.get(agent_type, "llama-3.3-70b-versatile")
+            resp = await groq_client.chat.completions.create(
+                model=model,
+                messages=[
+                    {"role": "system", "content": system_message},
+                    {"role": "user", "content": content},
+                ],
+                temperature=0.7,
+                max_tokens=2048,
+            )
+            return resp.choices[0].message.content
+        except Exception as e:
+            logger.warning(f"Groq failed ({e}), trying NVIDIA...")
+
+    # 2. NVIDIA (powerful, OpenAI-compatible)
+    if nvidia_client:
+        try:
+            resp = await nvidia_client.chat.completions.create(
+                model="meta/llama-3.1-70b-instruct",
+                messages=[
+                    {"role": "system", "content": system_message},
+                    {"role": "user", "content": content},
+                ],
+                temperature=0.7,
+                max_tokens=2048,
+            )
+            return resp.choices[0].message.content
+        except Exception as e:
+            logger.warning(f"NVIDIA failed ({e}), trying EmergentIntegrations...")
+
+    # 3. EmergentIntegrations fallback
+    chat = LlmChat(
+        api_key=EMERGENT_LLM_KEY,
+        session_id=session_id,
+        system_message=system_message,
+    ).with_model("openai", "gpt-4o")
+    return await chat.send_message(UserMessage(text=content))
+
+
 @api_router.post("/chat", response_model=Message)
 async def send_message(input: MessageCreate):
     """Send a message to an agent and get response"""
     if input.agent_type not in AGENTS_CONFIG:
         raise HTTPException(status_code=400, detail="Invalid agent type")
-    
-    # Store user message
+
     user_message = Message(
         session_id=input.session_id,
         agent_type=input.agent_type,
         role="user",
-        content=input.content
+        content=input.content,
     )
-    
-    user_msg_dict = prepare_for_mongo(user_message.model_dump())
-    await db.messages.insert_one(user_msg_dict)
-    
-    # Get agent config
+    await db.messages.insert_one(prepare_for_mongo(user_message.model_dump()))
+
     agent_config = AGENTS_CONFIG[input.agent_type]
-    
+
     try:
-        # Initialize LLM chat
-        chat = LlmChat(
-            api_key=EMERGENT_LLM_KEY,
+        response_text = await _llm_response(
+            agent_type=input.agent_type,
             session_id=input.session_id,
-            system_message=agent_config["system_message"]
-        ).with_model("openai", "gpt-5")
-        
-        # Create user message for LLM
-        llm_user_message = UserMessage(text=input.content)
-        
-        # Get response from LLM
-        response = await chat.send_message(llm_user_message)
-        
-        # Store assistant response
+            system_message=agent_config["system_message"],
+            content=input.content,
+        )
+
         assistant_message = Message(
             session_id=input.session_id,
             agent_type=input.agent_type,
             role="assistant",
-            content=response
+            content=response_text,
         )
-        
-        assistant_msg_dict = prepare_for_mongo(assistant_message.model_dump())
-        await db.messages.insert_one(assistant_msg_dict)
-        
+        await db.messages.insert_one(prepare_for_mongo(assistant_message.model_dump()))
         return assistant_message
-        
+
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Error generating response: {str(e)}")
 
@@ -282,67 +347,51 @@ async def get_messages(session_id: str):
 
 @api_router.post("/generate-image", response_model=ImageGenerationResponse)
 async def generate_image(input: ImageGenerationRequest):
-    """Generate image using AI - Direct OpenAI integration"""
-    try:
-        # Create a simple mock image for now since we're having API issues
-        # This will allow the platform to work while we resolve the image generation
-        logger.info("Generating mock image for demo purposes")
-        
-        # Create a simple base64 encoded placeholder image (1x1 pixel PNG)
-        placeholder_image_base64 = "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkYPhfDwAChAI9jU8iYwAAAABJRU5ErkJggg=="
-        
-        # For demo purposes, create a simple colored square based on prompt
-        # This ensures the image generation feature works for testing
-        from PIL import Image, ImageDraw, ImageFont
-        import io
-        import hashlib
-        
-        # Create a 512x512 image with a color based on prompt hash
-        img = Image.new('RGB', (512, 512), color=(70, 130, 180))  # Steel blue default
-        draw = ImageDraw.Draw(img)
-        
-        # Add prompt text to image
+    """Generate image using NVIDIA NIM (SDXL). Falls back to PIL placeholder if unavailable."""
+    image_base64: str | None = None
+
+    # 1. Try NVIDIA image generation
+    if nvidia_client and NVIDIA_API_KEY:
         try:
-            # Simple text overlay
-            prompt_short = input.prompt[:50] + "..." if len(input.prompt) > 50 else input.prompt
-            draw.text((20, 20), f"Generated: {prompt_short}", fill='white')
-            draw.text((20, 450), "Demo Mode - Meta AI Platform", fill='white')
-        except:
-            # If text drawing fails, just use solid color
-            pass
-        
-        # Convert to base64
-        buffer = io.BytesIO()
-        img.save(buffer, format='PNG')
-        image_base64 = base64.b64encode(buffer.getvalue()).decode('utf-8')
-        
-        response_obj = ImageGenerationResponse(
-            image_base64=image_base64,
-            prompt=input.prompt,
-            timestamp=datetime.now(timezone.utc)
-        )
-        
-        # Optionally store in database if session_id is provided
-        if input.agent_session_id:
-            image_dict = prepare_for_mongo(response_obj.model_dump())
-            await db.generated_images.insert_one(image_dict)
-        
-        return response_obj
-        
-    except Exception as e:
-        logger.error(f"Error in image generation: {e}")
-        # Provide more specific error messages
-        error_message = str(e)
-        if "api_key" in error_message.lower():
-            error_message = "API key authentication failed"
-        elif "quota" in error_message.lower() or "billing" in error_message.lower():
-            error_message = "API quota exceeded or billing issue"
-        elif "content_policy" in error_message.lower() or "safety" in error_message.lower():
-            error_message = "Image content violates safety policies"
-        else:
-            error_message = f"Image generation failed: {error_message}"
-        
-        raise HTTPException(status_code=500, detail=error_message)
+            logger.info(f"Generating image via NVIDIA NIM: {input.prompt[:60]}")
+            img_resp = await nvidia_client.images.generate(
+                model=NVIDIA_IMAGE_MODEL,
+                prompt=input.prompt,
+                n=1,
+                size="1024x1024",
+                response_format="b64_json",
+            )
+            image_base64 = img_resp.data[0].b64_json
+            logger.info("NVIDIA image generation successful")
+        except Exception as e:
+            logger.warning(f"NVIDIA image generation failed ({e}), falling back to placeholder")
+
+    # 2. PIL placeholder fallback
+    if not image_base64:
+        try:
+            from PIL import Image, ImageDraw
+            import io
+            img = Image.new('RGB', (512, 512), color=(30, 30, 50))
+            draw = ImageDraw.Draw(img)
+            prompt_short = input.prompt[:60] + "…" if len(input.prompt) > 60 else input.prompt
+            draw.text((20, 230), prompt_short, fill=(150, 150, 180))
+            draw.text((20, 260), "[NVIDIA API unavailable — placeholder]", fill=(80, 80, 100))
+            buf = io.BytesIO()
+            img.save(buf, format='PNG')
+            image_base64 = base64.b64encode(buf.getvalue()).decode('utf-8')
+        except Exception as e:
+            raise HTTPException(status_code=500, detail=f"Image generation failed: {e}")
+
+    response_obj = ImageGenerationResponse(
+        image_base64=image_base64,
+        prompt=input.prompt,
+        timestamp=datetime.now(timezone.utc),
+    )
+
+    if input.agent_session_id:
+        await db.generated_images.insert_one(prepare_for_mongo(response_obj.model_dump()))
+
+    return response_obj
 
 # Include the router in the main app
 app.include_router(api_router)
@@ -354,13 +403,6 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
-
-# Configure logging
-logging.basicConfig(
-    level=logging.INFO,
-    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
-)
-logger = logging.getLogger(__name__)
 
 @app.on_event("shutdown")
 async def shutdown_db_client():

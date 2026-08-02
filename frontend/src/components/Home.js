@@ -537,6 +537,14 @@ const TOOLS = [
   { icon: '🍑', label: 'Yabani Kayısı', sub: 'Malatya · kurutma · pestil', path: '/yabani-kayisi', accent: '#ea580c' },
   { icon: '🐦', label: 'Batağan Gözlemi', sub: 'Dans · dalış · habitat', path: '/batagan-gozu', accent: '#0891b2' },
   { icon: '🌰', label: 'Yabani Ceviz', sub: 'Hasat · reçel · yağ', path: '/yabani-ceviz', accent: '#78350f' },
+  { icon: '🍋', label: 'Yabani Ayva', sub: 'Hasat · reçel · çay', path: '/yabani-ayva', accent: '#ca8a04' },
+  { icon: '🐟', label: 'Yayın Balığı', sub: 'Gece avı · güveç · nehir', path: '/yayin-baligi', accent: '#1e3a5f' },
+  { icon: '🦢', label: 'Kaşıkçı Kuşu', sub: 'Delta · gaga · koruma', path: '/kasikci-kusu', accent: '#0891b2' },
+  { icon: '🌰', label: 'At Kestanesi', sub: 'Tanıma · tıp · park', path: '/at-kestanesi', accent: '#92400e' },
+  { icon: '🦚', label: 'Tavus Kuşu', sub: 'Göster · bakım · ses', path: '/tavus-kusu', accent: '#0369a1' },
+  { icon: '🫐', label: 'Yabani Dut', sub: 'Hasat · pekmez · reçel', path: '/yabani-dut', accent: '#7e22ce' },
+  { icon: '🔦', label: 'Mağara Balığı', sub: 'Karstik · tür · dalış', path: '/magara-baligi', accent: '#374151' },
+  { icon: '🍒', label: 'Yabani Vişne', sub: 'Hasat · likör · sağlık', path: '/yabani-visne', accent: '#be123c' },
 ];
 
 const CATS = [

@@ -535,6 +535,14 @@ import RaptorMigration from '@/components/RaptorMigration';
 import WildApricot     from '@/components/WildApricot';
 import GrebeWatch      from '@/components/GrebeWatch';
 import WildWalnut      from '@/components/WildWalnut';
+import WildQuince      from '@/components/WildQuince';
+import CatfishGuide2   from '@/components/CatfishGuide2';
+import SpoonbillWatch  from '@/components/SpoonbillWatch';
+import WildHorseChestnut from '@/components/WildHorseChestnut';
+import PeacockWatch    from '@/components/PeacockWatch';
+import WildMulberry    from '@/components/WildMulberry';
+import CaveFishing     from '@/components/CaveFishing';
+import CranberryGuide  from '@/components/CranberryGuide';
 import { ToastProvider } from '@/components/Toast';
 import '@/App.css';
 
@@ -1080,6 +1088,14 @@ function AppInner() {
         <Route path="/yabani-kayisi"     element={<WildApricot />} />
         <Route path="/batagan-gozu"      element={<GrebeWatch />} />
         <Route path="/yabani-ceviz"      element={<WildWalnut />} />
+        <Route path="/yabani-ayva"       element={<WildQuince />} />
+        <Route path="/yayin-baligi"      element={<CatfishGuide2 />} />
+        <Route path="/kasikci-kusu"      element={<SpoonbillWatch />} />
+        <Route path="/at-kestanesi"      element={<WildHorseChestnut />} />
+        <Route path="/tavus-kusu"        element={<PeacockWatch />} />
+        <Route path="/yabani-dut"        element={<WildMulberry />} />
+        <Route path="/magara-baligi"     element={<CaveFishing />} />
+        <Route path="/yabani-visne"      element={<CranberryGuide />} />
       </Routes>
       {!hideNav && <Navbar />}
     </div>

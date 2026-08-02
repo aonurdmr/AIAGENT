@@ -523,6 +523,13 @@ const TOOLS = [
   { icon: '💧', label: 'Su Teresi', sub: 'Toplama · salata · çay', path: '/su-teresi', accent: '#0891b2' },
   { icon: '🌿', label: 'Akdeniz Bitkiler', sub: 'Kekik · biberiye · lavanta', path: '/akdeniz-bitkiler', accent: '#b45309' },
   { icon: '🍈', label: 'Yabani İncir', sub: 'Hasat · reçel · kurutma', path: '/yabani-incir', accent: '#92400e' },
+  { icon: '🌹', label: 'Yabani Nar', sub: 'Hasat · nar ekşisi · şurup', path: '/yabani-nar', accent: '#be123c' },
+  { icon: '🦅', label: 'Saz Delicesi', sub: 'Tanıma · habitat · sezon', path: '/saz-delicesi', accent: '#92400e' },
+  { icon: '🫒', label: 'Yabani Zeytin', sub: 'Hasat · salamura · yağ', path: '/yabani-zeytin', accent: '#4d7c0f' },
+  { icon: '🌿', label: 'Yabani Anason', sub: 'Tohum · rakı · çay', path: '/yabani-anason', accent: '#7c3aed' },
+  { icon: '🐠', label: 'İskorpit Rehberi', sub: 'Avcılık · güvenlik · tarif', path: '/iskorpit-rehberi', accent: '#c2410c' },
+  { icon: '🍇', label: 'Mürver', sub: 'Çiçek · meyve · şurup', path: '/murver', accent: '#7e22ce' },
+  { icon: '🐝', label: 'Yabani Arı', sub: 'Gözlem · bal · kovan', path: '/yabani-ari', accent: '#d97706' },
 ];
 
 const CATS = [

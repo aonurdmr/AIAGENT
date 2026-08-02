@@ -521,6 +521,13 @@ import ReedWarbler     from '@/components/ReedWarbler';
 import WildCress       from '@/components/WildCress';
 import MediterraneanHerbs from '@/components/MediterraneanHerbs';
 import WildFig         from '@/components/WildFig';
+import WildPomegranate from '@/components/WildPomegranate';
+import MarshHarrier    from '@/components/MarshHarrier';
+import WildOlive       from '@/components/WildOlive';
+import WildAnise       from '@/components/WildAnise';
+import ScorpionFish    from '@/components/ScorpionFish';
+import WildElderberry  from '@/components/WildElderberry';
+import WildHoneybee    from '@/components/WildHoneybee';
 import { ToastProvider } from '@/components/Toast';
 import '@/App.css';
 
@@ -1052,6 +1059,13 @@ function AppInner() {
         <Route path="/su-teresi"         element={<WildCress />} />
         <Route path="/akdeniz-bitkiler"  element={<MediterraneanHerbs />} />
         <Route path="/yabani-incir"      element={<WildFig />} />
+        <Route path="/yabani-nar"        element={<WildPomegranate />} />
+        <Route path="/saz-delicesi"      element={<MarshHarrier />} />
+        <Route path="/yabani-zeytin"     element={<WildOlive />} />
+        <Route path="/yabani-anason"     element={<WildAnise />} />
+        <Route path="/iskorpit-rehberi"  element={<ScorpionFish />} />
+        <Route path="/murver"            element={<WildElderberry />} />
+        <Route path="/yabani-ari"        element={<WildHoneybee />} />
       </Routes>
       {!hideNav && <Navbar />}
     </div>

@@ -434,6 +434,15 @@ const TOOLS = [
   { icon: '🐺', label: 'Kurt Davranışı', sub: 'İzler · ekoloji · güvenlik', path: '/kurt-davranisi', accent: '#9ca3af' },
   { icon: '🐟', label: 'Alabalık Rehberi', sub: 'Doğal av · sezon · pişirme', path: '/alabalik-rehberi', accent: '#2dd4bf' },
   { icon: '🌿', label: 'Yosun Tanımlama', sub: 'Türler · ekoloji · kılavuz', path: '/yosun-tanimlama', accent: '#86efac' },
+  { icon: '🕷️', label: 'Örümcek Rehberi', sub: 'Tanımlama · ekoloji · güvenlik', path: '/orumcek-rehberi', accent: '#a78bfa' },
+  { icon: '🐬', label: 'Yunus Gözlemi', sub: 'Türler · gözlem · etik', path: '/yunus-gozlem', accent: '#38bdf8' },
+  { icon: '🧄', label: 'Yabani Sarımsak', sub: 'Toplama · tanımlama · pişirme', path: '/yabani-sarimsak', accent: '#a3e635' },
+  { icon: '🐟', label: 'Kefal Avı', sub: 'Teknik · yem · pişirme', path: '/kefal-avi', accent: '#93c5fd' },
+  { icon: '🐱', label: 'Vaşak Takibi', sub: 'İzler · ekoloji · gözlem', path: '/vasak-takibi', accent: '#d97706' },
+  { icon: '🦐', label: 'Karides Avı', sub: 'Yöntem · nokta · pişirme', path: '/karides-avi', accent: '#fb7185' },
+  { icon: '🪨', label: 'Jeoloji Yürüyüşü', sub: 'Kayaçlar · fosil · formasyon', path: '/jeoloji-yuruyus', accent: '#d6d3d1' },
+  { icon: '🐍', label: 'Yılan Balığı Avı', sub: 'Teknik · gece · pişirme', path: '/yilan-baligi', accent: '#4ade80' },
+  { icon: '🎵', label: 'Kuş Sesi Rehberi', sub: 'Sesler · tanımlama · etik', path: '/kus-sesi', accent: '#7dd3fc' },
 ];
 
 const CATS = [

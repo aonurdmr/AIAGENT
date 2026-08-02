@@ -432,6 +432,15 @@ import SandDunes       from '@/components/SandDunes';
 import WolfBehavior    from '@/components/WolfBehavior';
 import TroutFarm       from '@/components/TroutFarm';
 import MossIdentify    from '@/components/MossIdentify';
+import SpiderGuide     from '@/components/SpiderGuide';
+import DolphinWatch    from '@/components/DolphinWatch';
+import WildGarlic      from '@/components/WildGarlic';
+import MulletFishing   from '@/components/MulletFishing';
+import LynxTracking    from '@/components/LynxTracking';
+import ShrimpFishing   from '@/components/ShrimpFishing';
+import GeologyHike     from '@/components/GeologyHike';
+import EelFishing      from '@/components/EelFishing';
+import WildBirdCall    from '@/components/WildBirdCall';
 import { ToastProvider } from '@/components/Toast';
 import '@/App.css';
 
@@ -874,6 +883,15 @@ function AppInner() {
         <Route path="/kurt-davranisi"   element={<WolfBehavior />} />
         <Route path="/alabalik-rehberi" element={<TroutFarm />} />
         <Route path="/yosun-tanimlama"  element={<MossIdentify />} />
+        <Route path="/orumcek-rehberi"  element={<SpiderGuide />} />
+        <Route path="/yunus-gozlem"     element={<DolphinWatch />} />
+        <Route path="/yabani-sarimsak"  element={<WildGarlic />} />
+        <Route path="/kefal-avi"        element={<MulletFishing />} />
+        <Route path="/vasak-takibi"     element={<LynxTracking />} />
+        <Route path="/karides-avi"      element={<ShrimpFishing />} />
+        <Route path="/jeoloji-yuruyus"  element={<GeologyHike />} />
+        <Route path="/yilan-baligi"     element={<EelFishing />} />
+        <Route path="/kus-sesi"         element={<WildBirdCall />} />
       </Routes>
       {!hideNav && <Navbar />}
     </div>

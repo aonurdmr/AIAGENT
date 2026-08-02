@@ -500,6 +500,11 @@ const TOOLS = [
   { icon: '🌿', label: 'Yabani Nane', sub: 'Toplama · çay · tıbbi kullanım', path: '/yabani-nane', accent: '#059669' },
   { icon: '🍵', label: 'Doğal Çaylar', sub: 'Bitkiler · demleme · şifa', path: '/dogal-caylar', accent: '#be123c' },
   { icon: '🏖️', label: 'Sahil Kampı', sub: 'Kurulum · aktiviteler · gelgit', path: '/sahil-kampi', accent: '#0891b2' },
+  { icon: '🌿', label: 'Yabani Maydanoz', sub: 'Tanıma · toplama · mutfak', path: '/yabani-maydanoz', accent: '#15803d' },
+  { icon: '🐻', label: 'Boz Ayı', sub: 'Habitat · davranış · güvenlik', path: '/boz-ayi', accent: '#78350f' },
+  { icon: '🌻', label: 'Ayçiçeği Hasadı', sub: 'Hasat · tohum · yağ', path: '/aycicegi-hasadi', accent: '#ca8a04' },
+  { icon: '🌼', label: 'Papatya Toplama', sub: 'Tanıma · çay · tıbbi', path: '/papatya-toplama', accent: '#d97706' },
+  { icon: '🐟', label: 'İstavrit Rehberi', sub: 'Avcılık · pişirme · mevsim', path: '/istavrit-rehberi', accent: '#0369a1' },
 ];
 
 const CATS = [

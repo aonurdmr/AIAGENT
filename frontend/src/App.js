@@ -498,6 +498,11 @@ import AegeanFish     from '@/components/AegeanFish';
 import WildMint       from '@/components/WildMint';
 import TurkishTea     from '@/components/TurkishTea';
 import BeachCamping   from '@/components/BeachCamping';
+import WildParsley    from '@/components/WildParsley';
+import BearWatch      from '@/components/BearWatch';
+import SunflowerHarvest from '@/components/SunflowerHarvest';
+import ChamomilePicking from '@/components/ChamomilePicking';
+import CapelinFishing from '@/components/CapelinFishing';
 import { ToastProvider } from '@/components/Toast';
 import '@/App.css';
 
@@ -1006,6 +1011,11 @@ function AppInner() {
         <Route path="/yabani-nane"      element={<WildMint />} />
         <Route path="/dogal-caylar"     element={<TurkishTea />} />
         <Route path="/sahil-kampi"      element={<BeachCamping />} />
+        <Route path="/yabani-maydanoz"  element={<WildParsley />} />
+        <Route path="/boz-ayi"          element={<BearWatch />} />
+        <Route path="/aycicegi-hasadi"  element={<SunflowerHarvest />} />
+        <Route path="/papatya-toplama"  element={<ChamomilePicking />} />
+        <Route path="/istavrit-rehberi" element={<CapelinFishing />} />
       </Routes>
       {!hideNav && <Navbar />}
     </div>

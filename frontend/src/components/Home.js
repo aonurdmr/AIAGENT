@@ -511,6 +511,14 @@ const TOOLS = [
   { icon: '🌲', label: 'Çam Böceği', sub: 'Tanıma · zarar · kontrol', path: '/cam-bocegi', accent: '#78350f' },
   { icon: '🍐', label: 'Yabani Armut', sub: 'Hasat · reçel · sirke', path: '/yabani-armut', accent: '#854d0e' },
   { icon: '🐱', label: 'Vaşak Gözlemi', sub: 'Habitat · iz · koruma', path: '/vasak-gozu', accent: '#b45309' },
+  { icon: '🍑', label: 'Yabani Erik', sub: 'Hasat · reçel · koruk', path: '/yabani-erik', accent: '#7c3aed' },
+  { icon: '🐦', label: 'Kumkuşu Gözlemi', sub: 'Göç · türler · lokasyon', path: '/kumkusu-gozu', accent: '#0369a1' },
+  { icon: '🌰', label: 'Kestane Rehberi', sub: 'Hasat · közleme · tatlı', path: '/kestane-rehberi', accent: '#78350f' },
+  { icon: '🦦', label: 'Su Samuru', sub: 'Habitat · koruma · iz', path: '/su-samuru', accent: '#0369a1' },
+  { icon: '🌊', label: 'Deniz Çayırları', sub: 'Ekoloji · dalış · koruma', path: '/deniz-cayiri', accent: '#059669' },
+  { icon: '🐦', label: 'Bıldırcın Avı', sub: 'Av · köpek · pişirme', path: '/bildircin-avi', accent: '#ca8a04' },
+  { icon: '🎵', label: 'Karatavuk', sub: 'Tanıma · ötüş · kayıt', path: '/karatavuk', accent: '#1d4ed8' },
+  { icon: '🌿', label: 'Yabani Kişniş', sub: 'Toplama · baharat · tarif', path: '/yabani-kisnis', accent: '#166534' },
 ];
 
 const CATS = [

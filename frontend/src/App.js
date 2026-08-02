@@ -509,6 +509,14 @@ import SeaSnailGuide   from '@/components/SeaSnailGuide';
 import PineBeetle      from '@/components/PineBeetle';
 import WildPear        from '@/components/WildPear';
 import LynxWatch       from '@/components/LynxWatch';
+import WildPlum        from '@/components/WildPlum';
+import SandpiperWatch  from '@/components/SandpiperWatch';
+import WildChestnut    from '@/components/WildChestnut';
+import OtterWatch      from '@/components/OtterWatch';
+import SeaGrassGuide   from '@/components/SeaGrassGuide';
+import QuailHunting    from '@/components/QuailHunting';
+import BlackBirdWatch  from '@/components/BlackBirdWatch';
+import WildCoriander   from '@/components/WildCoriander';
 import { ToastProvider } from '@/components/Toast';
 import '@/App.css';
 
@@ -1028,6 +1036,14 @@ function AppInner() {
         <Route path="/cam-bocegi"        element={<PineBeetle />} />
         <Route path="/yabani-armut"      element={<WildPear />} />
         <Route path="/vasak-gozu"        element={<LynxWatch />} />
+        <Route path="/yabani-erik"       element={<WildPlum />} />
+        <Route path="/kumkusu-gozu"      element={<SandpiperWatch />} />
+        <Route path="/kestane-rehberi"   element={<WildChestnut />} />
+        <Route path="/su-samuru"         element={<OtterWatch />} />
+        <Route path="/deniz-cayiri"      element={<SeaGrassGuide />} />
+        <Route path="/bildircin-avi"     element={<QuailHunting />} />
+        <Route path="/karatavuk"         element={<BlackBirdWatch />} />
+        <Route path="/yabani-kisnis"     element={<WildCoriander />} />
       </Routes>
       {!hideNav && <Navbar />}
     </div>

@@ -1,75 +1,63 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-const SECTIONS = [
-  {
-    id: 'habitat', name: 'Yayın Balığı Habitatı', icon: '🌊', accent: '#06b6d4',
+const TABS = {
+  technique: {
+    title: 'Teknik',
     items: [
-      { t: 'Derin havuz', d: 'Büyük yayın: derin, sakin havuz. Nehir dibinde bekleme.' },
-      { t: 'Batık yapı', d: 'Batık ağaç, köprü altı, beton — saklanma noktası.' },
-      { t: 'Sıcaklık', d: '18-26°C optimal. Soğuk su yavaşlatır, çok sıcak derine gider.' },
-      { t: 'Gece aktivitesi', d: 'Gece daha aktif av — karanlıkta kıyıya yaklaşır.' },
+      { icon: '🎣', t: 'Dip olta', d: 'Yayinbalik dip sever: agir sinker, koku yayilan yem. Gece aktif.' },
+      { icon: '🌙', t: 'Gece avcilik', d: 'Yayinbalik: gece cikip dip arar. Gece 22-02 en verimli saatler.' },
+      { icon: '🍖', t: 'Koku yemi', d: 'Koku yayan yemler: bozulmus et, peynir, kan. Yayinbalik bulur.' },
+      { icon: '💪', t: 'Guc', d: 'Buyuk yayinbalik: 50kg+ olabilir. Sarkin olta, fren sistemi dogrulanmis ol.' },
     ],
   },
-  {
-    id: 'baits', name: 'En Etkili Yemler', icon: '🪝', accent: '#f97316',
+  spots: {
+    title: 'Noktalar',
     items: [
-      { t: 'Canlı balık', d: 'Kalkan veya siraz balık. Büyük kanca, büyük yem — büyük balık.' },
-      { t: 'Sakatat', d: 'Kırmızı et ve sakatat — güçlü koku. Gece avında zirve.' },
-      { t: 'Mısır ve makarna', d: 'Küçük-orta yayın için. Tatlısu kökenli yem.' },
-      { t: 'Wels worm', d: 'Uzun solucan demet. Gece ve alacakaranlıkta.' },
+      { icon: '🌀', t: 'Derin havuz', d: 'Nehir bükumu dip havuzu: yayinbalik gun boyunca burada durur.' },
+      { icon: '🪵', t: 'Batan agac', d: 'Dalgıca batan agac altı: yayinbaligi ilgi ceker, saklanma nokta.' },
+      { icon: '🌡️', t: 'Sicak su', d: 'Gunes goren sığ: yayinbalik sabah burada isinmak ister. Sabah ilk.' },
+      { icon: '🔀', t: 'Akarsu bilesimi', d: 'Iki nehrin birlestigi nokta: yayinbalik yem yogunlugunda bekler.' },
     ],
   },
-  {
-    id: 'tackle', name: 'Donanım', icon: '🎣', accent: '#a78bfa',
-    items: [
-      { t: 'Olta', d: 'Çok güçlü: 80-150lb test misina. Büyük yayın sürükler.' },
-      { t: 'Makara', d: 'Big pit veya bait runner. Fren sistemi kritik.' },
-      { t: 'Kanca', d: 'Büyük, güçlü kanca: 3/0-8/0. Barbsiz mümkünse.' },
-      { t: 'Kurşun', d: 'Ağır: 3-6oz. Akıntılı nehirde daha ağır gerekebilir.' },
-    ],
-  },
-];
+};
 
 export default function CatfishGuide() {
   const navigate = useNavigate();
-  const [sel, setSel] = useState(null);
+  const [tab, setTab] = useState('technique');
+  const data = TABS[tab];
 
   return (
-    <div style={{ background: '#04090e', minHeight: '100vh', color: '#f9fafb', paddingBottom: 100 }}>
+    <div style={{ background: '#04080a', minHeight: '100vh', color: '#f9fafb', paddingBottom: 100 }}>
       <div style={{ padding: '20px 16px 12px' }}>
-        <button onClick={() => navigate(-1)} style={{ background: 'none', border: 'none', color: '#9ca3af', fontSize: 20, cursor: 'pointer', marginBottom: 8 }}>←</button>
-        <div style={{ fontSize: 22, fontWeight: 700 }}>🐠 Yayın Balığı Rehberi</div>
-        <div style={{ fontSize: 13, color: '#9ca3af', marginTop: 2 }}>Habitat · yemler · donanım</div>
+        <button onClick={() => navigate(-1)} style={{ background: 'none', border: 'none', color: '#9ca3af', fontSize: 20, cursor: 'pointer', marginBottom: 8 }}>&#8592;</button>
+        <div style={{ fontSize: 22, fontWeight: 700 }}>🐟 Yayın Balığı Avı</div>
+        <div style={{ fontSize: 13, color: '#9ca3af', marginTop: 2 }}>Teknik · noktalar · gece avcılığı</div>
+      </div>
+
+      <div style={{ display: 'flex', gap: 8, padding: '0 16px', marginBottom: 16 }}>
+        {Object.entries(TABS).map(([k, v]) => (
+          <button key={k} onClick={() => setTab(k)} style={{
+            flex: 1, padding: '8px 0', borderRadius: 10, border: 'none', cursor: 'pointer',
+            background: tab === k ? '#374151' : '#0c1014', color: tab === k ? '#fff' : '#9ca3af', fontWeight: 600, fontSize: 13,
+          }}>{v.title}</button>
+        ))}
       </div>
 
       <div style={{ padding: '0 16px' }}>
-        {SECTIONS.map(s => {
-          const open = sel === s.id;
-          return (
-            <div key={s.id} style={{ marginBottom: 8 }}>
-              <div onClick={() => setSel(open ? null : s.id)} style={{
-                background: '#08121a', borderRadius: open ? '12px 12px 0 0' : 12,
-                padding: '14px 16px', border: `1px solid ${s.accent}33`, cursor: 'pointer',
-              }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-                  <span style={{ fontSize: 26 }}>{s.icon}</span>
-                  <div style={{ fontSize: 14, fontWeight: 700 }}>{s.name}</div>
+        <div style={{ background: '#0c1014', borderRadius: 14, padding: 14, border: '1px solid #37415133' }}>
+          {data.items.map((item, i) => (
+            <div key={i} style={{ marginBottom: 12, paddingBottom: 12, borderBottom: i < data.items.length - 1 ? '1px solid #141a20' : 'none' }}>
+              <div style={{ display: 'flex', gap: 10, alignItems: 'flex-start' }}>
+                <span style={{ fontSize: 22 }}>{item.icon}</span>
+                <div>
+                  <div style={{ fontSize: 13, fontWeight: 700, color: '#9ca3af' }}>{item.t}</div>
+                  <div style={{ fontSize: 12, color: '#d1d5db', marginTop: 2 }}>{item.d}</div>
                 </div>
               </div>
-              {open && (
-                <div style={{ background: '#08121a', borderRadius: '0 0 12px 12px', padding: '0 16px 14px', border: `1px solid ${s.accent}33`, borderTop: 'none' }}>
-                  {s.items.map((item, i) => (
-                    <div key={i} style={{ marginTop: i === 0 ? 10 : 8, paddingTop: i === 0 ? 0 : 8, borderTop: i > 0 ? '1px solid #0c1820' : 'none' }}>
-                      <div style={{ fontSize: 12, fontWeight: 700, color: s.accent }}>{item.t}</div>
-                      <div style={{ fontSize: 11, color: '#d1d5db', marginTop: 2 }}>{item.d}</div>
-                    </div>
-                  ))}
-                </div>
-              )}
             </div>
-          );
-        })}
+          ))}
+        </div>
       </div>
     </div>
   );

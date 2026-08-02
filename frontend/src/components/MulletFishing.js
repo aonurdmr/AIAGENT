@@ -2,59 +2,57 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 const TABS = {
-  technique: {
-    title: 'Teknik',
+  fishing: {
+    title: 'Avcılık',
     items: [
-      { icon: '🎣', t: 'Kefal avı', d: 'Çok zor av: ihtiyatlı balık. Kıl olta, çok küçük iğne, minimal mayt.' },
-      { icon: '🍞', t: 'Yem', d: 'Ekmek hamuru, karpuz kabuğu, yeşil yosun: kefal ot yiyici. Balık yemi işe yaramaz.' },
-      { icon: '🌊', t: 'Teknik', d: 'Çok yavaş çek, ani hareket kaçırır. Yüzey sürükleme: sabırlı bekle.' },
-      { icon: '📍', t: 'Nokta', d: 'Liman ağzı, kanal, deniz girişli bataklık. Sürü halinde beslenirken bul.' },
+      { icon: '🐟', t: 'Kefal', d: 'Mugil cephalus ve Chelon labrosus; saglikli su gostergesi; kiyi bolgelerinde.' },
+      { icon: '🎣', t: 'Yöntemler', d: 'Fanyalı olta, serpme ağ ve deniz kalıbı; kefal en çok ekmek kırıntısı yemi sever.' },
+      { icon: '🌅', t: 'En İyi Saat', d: 'Sabah erken ve akşam saatleri yüzey beslenme aktivitesi en yüksek.' },
+      { icon: '🌊', t: 'Lokasyonlar', d: 'Liman ağızları, bataklık deltalari ve kirlenmiş olmayan iç körfezler.' },
+      { icon: '📏', t: 'Yasal Boyut', d: 'Minimum 20 cm; üst boyut sınırı yok; yoğun balıkçılık bölgelerinde kota.' },
     ],
   },
   cook: {
     title: 'Pişirme',
     items: [
-      { icon: '🔥', t: 'Izgara', d: 'Bütün kefal: zeytinyağı, limon, sarımsak, dereotu. Yüksek ateş 15 dk.' },
-      { icon: '🧂', t: 'Tuzlama', d: 'Lakerda: balık sırtı büyükse tuzla 3-4 hafta. Yağlı kefal uygun.' },
-      { icon: '🥗', t: 'Marine', d: 'Limon suyu + zeytinyağı 30 dk: sebze üzerine. Hafif ve lezzetli.' },
-      { icon: '🐟', t: 'Havyar', d: 'Kefal yumurtası: "botargo" olarak kür et. Lüks ürün, kuru tuzla 3 hafta.' },
+      { icon: '🔥', t: 'Tuzlu Kefal', d: 'Tuz kabuğuna sarılmış fırın kefal; nemini koruyarak mükemmel pişirme.' },
+      { icon: '🥚', t: 'Havyar', d: 'Kefal yumurtası (botargo) tuzlanıp kurutularak Türk-İtalyan lüks ürünü.' },
+      { icon: '🍋', t: 'Zeytinyağlı', d: 'Sarımsak, dereotu ve limon suyu ile ızgara; Ege kıyılarının klasiği.' },
+      { icon: '🧅', t: 'Tencere', d: 'Soğan ve domates ile yavaş pişirme; kılçık erimeye başlar, eti yumuşar.' },
+      { icon: '🫙', t: 'Marine', d: 'Sirke, kekik ve defne yaprağıyla sirkeli kefal; meze olarak servis.' },
     ],
   },
 };
 
 export default function MulletFishing() {
   const navigate = useNavigate();
-  const [tab, setTab] = useState('technique');
+  const [tab, setTab] = useState('fishing');
   const data = TABS[tab];
+  const accent = '#0891b2';
+  const bg = '#000c14';
 
   return (
-    <div style={{ background: '#020810', minHeight: '100vh', color: '#f9fafb', paddingBottom: 100 }}>
-      <div style={{ padding: '20px 16px 12px' }}>
-        <button onClick={() => navigate(-1)} style={{ background: 'none', border: 'none', color: '#9ca3af', fontSize: 20, cursor: 'pointer', marginBottom: 8 }}>&#8592;</button>
-        <div style={{ fontSize: 22, fontWeight: 700 }}>🐟 Kefal Avı</div>
-        <div style={{ fontSize: 13, color: '#9ca3af', marginTop: 2 }}>Teknik · yem · pişirme</div>
-      </div>
-
-      <div style={{ display: 'flex', gap: 8, padding: '0 16px', marginBottom: 16 }}>
-        {Object.entries(TABS).map(([k, v]) => (
-          <button key={k} onClick={() => setTab(k)} style={{
-            flex: 1, padding: '8px 0', borderRadius: 10, border: 'none', cursor: 'pointer',
-            background: tab === k ? '#1d4ed8' : '#040e20', color: tab === k ? '#fff' : '#9ca3af', fontWeight: 600, fontSize: 13,
-          }}>{v.title}</button>
-        ))}
-      </div>
-
-      <div style={{ padding: '0 16px' }}>
-        <div style={{ background: '#040e20', borderRadius: 14, padding: 14, border: '1px solid #1d4ed833' }}>
+    <div style={{ background: bg, minHeight: '100vh', color: '#cffafe', fontFamily: 'system-ui,sans-serif' }}>
+      <div style={{ maxWidth: 480, margin: '0 auto', padding: '0 0 80px' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 12, padding: '18px 16px 10px' }}>
+          <button onClick={() => navigate(-1)} style={{ background: 'none', border: 'none', color: accent, fontSize: 22, cursor: 'pointer' }}>&#8592;</button>
+          <span style={{ fontSize: 22, fontWeight: 700 }}>🐟 Kefal Rehberi</span>
+        </div>
+        <div style={{ display: 'flex', margin: '0 16px 18px', background: '#001828', borderRadius: 10, overflow: 'hidden' }}>
+          {Object.keys(TABS).map(k => (
+            <button key={k} onClick={() => setTab(k)} style={{
+              flex: 1, padding: '10px 0', border: 'none', cursor: 'pointer', fontWeight: 600, fontSize: 14,
+              background: tab === k ? accent : 'transparent',
+              color: tab === k ? '#fff' : '#22d3ee',
+            }}>{TABS[k].title}</button>
+          ))}
+        </div>
+        <div style={{ padding: '0 16px' }}>
           {data.items.map((item, i) => (
-            <div key={i} style={{ marginBottom: 12, paddingBottom: 12, borderBottom: i < data.items.length - 1 ? '1px solid #061428' : 'none' }}>
-              <div style={{ display: 'flex', gap: 10, alignItems: 'flex-start' }}>
-                <span style={{ fontSize: 22 }}>{item.icon}</span>
-                <div>
-                  <div style={{ fontSize: 13, fontWeight: 700, color: '#93c5fd' }}>{item.t}</div>
-                  <div style={{ fontSize: 12, color: '#d1d5db', marginTop: 2 }}>{item.d}</div>
-                </div>
-              </div>
+            <div key={i} style={{ background: '#001e30', borderRadius: 12, padding: '14px 16px', marginBottom: 12, borderLeft: `3px solid ${accent}` }}>
+              <div style={{ fontSize: 20, marginBottom: 6 }}>{item.icon}</div>
+              <div style={{ fontWeight: 700, fontSize: 15, marginBottom: 4 }}>{item.t}</div>
+              <div style={{ fontSize: 13, color: '#67e8f9', lineHeight: 1.5 }}>{item.d}</div>
             </div>
           ))}
         </div>

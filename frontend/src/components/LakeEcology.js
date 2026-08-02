@@ -1,82 +1,61 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-const SECTIONS = [
-  {
-    id: 'zones', name: 'Göl Bölgeleri', icon: '🌊', accent: '#06b6d4',
+const TABS = {
+  life: {
+    title: 'Canlılar',
     items: [
-      { t: 'Kıyı (littoral)', d: 'Sığ, ışıklı, bitki yoğun. Sazan, levrek, yılan balığı.' },
-      { t: 'Açık su (pelagik)', d: 'Orta su. Yüzücü balıklar. Rüzgara açık termal dönüşüm.' },
-      { t: 'Dip (bentik)', d: 'Oksijensiz dip. Yılan balığı ve sazan kış dinlenmesi.' },
-      { t: 'Ötrofikasyon', d: 'Alg patlaması — besin fazlası. Balıkçılığa zarar.' },
-      { t: 'Termoklin', d: 'Yaz: sıcak-soğuk su katmanları arasında balık hareketsizleşir.' },
+      { icon: '🐟', t: 'Balık Faunası', d: 'Sazan, yayın, levrek ve turna göllerimizin en yaygın balık türleridir.' },
+      { icon: '🐸', t: 'Amfibiler', d: 'Kurbağa, kara semender ve su kaplumbağası göl ekosisteminin kritik bileşenidir.' },
+      { icon: '🌿', t: 'Su Bitkileri', d: 'Su sümbülü, nilüfer, saz ve kamış göl su kalitesini düzenler.' },
+      { icon: '🐦', t: 'Kuş Çeşitliliği', d: 'Karabatak, balıkçıl, sakarmeke ve yaban ördeği gölleri yoğun kullanır.' },
+      { icon: '🦟', t: 'Böcek Yaşamı', d: 'Yusufçuk larvaları, su böcekleri ve mayıs sinekleri göl zincirinin temelidir.' },
     ],
   },
-  {
-    id: 'species', name: 'Göl Balıkları', icon: '🐟', accent: '#22c55e',
+  ecology: {
+    title: 'Ekoloji',
     items: [
-      { t: 'Sazan', d: 'Kıyı çamur dip. Yem: mısır, fıstık ezmesi, boile.' },
-      { t: 'Turna', d: 'Bitki arasında pusu. Yapay yem minnow etkili.' },
-      { t: 'Levrek (Tatlısu)', d: 'Grubik av. Spinner ve jig. Yaz akşamları zirve.' },
-      { t: 'Yayın Balığı', d: 'Büyük, gece aktif, dip yem. Gürültü ve titreşim hisseder.' },
-      { t: 'Çipura (Tatlısu)', d: 'Besin zinciri dengesi. Küçük örnekler bırakılmalı.' },
+      { icon: '💧', t: 'Su Kalitesi', d: 'pH 6.5-8.5, çözünmüş oksijen >6 mg/L sağlıklı göl ekosistemi göstergesidir.' },
+      { icon: '🌊', t: 'Tabakalaşma', d: 'Yaz aylarında epilimnion ve hipolimnion arasında termal tabakalaşma oluşur.' },
+      { icon: '🔄', t: 'Besin Döngüsü', d: 'Fitoplankton-zooplankon-balık-kuş zinciri göl enerjisini taşır.' },
+      { icon: '⚠️', t: 'Tehditler', d: 'Ötrofikasyon, tarım kimyasalları ve invasif türler göl ekosistemini tehdit eder.' },
+      { icon: '🌱', t: 'Restorasyon', d: 'Saz ve kamış plantasyonu, balık stoku dengelenmesi ve sediment temizligi yöntemleri kullanılır.' },
     ],
   },
-  {
-    id: 'seasons', name: 'Mevsimsel Davranış', icon: '📅', accent: '#f97316',
-    items: [
-      { t: 'İlkbahar', d: 'Yumurtlama — kıyıya yaklaşır. En aktif av dönemi.' },
-      { t: 'Yaz', d: 'Termoklin oluşur. Sabah-akşam aktif, öğlen derine çekilir.' },
-      { t: 'Sonbahar', d: 'Yemlenme zirvesi. Kış öncesi yağ deposu. İyi av.' },
-      { t: 'Kış', d: 'Dibe inme. Buz altı balıkçılık. Yem hareketi yavaş olmalı.' },
-    ],
-  },
-];
+};
 
 export default function LakeEcology() {
   const navigate = useNavigate();
-  const [sel, setSel] = useState(null);
+  const [tab, setTab] = useState('life');
+  const data = TABS[tab];
+  const accent = '#0284c7';
+  const bg = '#000610';
 
   return (
-    <div style={{ background: '#020c10', minHeight: '100vh', color: '#f9fafb', paddingBottom: 100 }}>
-      <div style={{ padding: '20px 16px 12px' }}>
-        <button onClick={() => navigate(-1)} style={{ background: 'none', border: 'none', color: '#9ca3af', fontSize: 20, cursor: 'pointer', marginBottom: 8 }}>←</button>
-        <div style={{ fontSize: 22, fontWeight: 700 }}>🌊 Göl Ekolojisi</div>
-        <div style={{ fontSize: 13, color: '#9ca3af', marginTop: 2 }}>Göl bölgeleri · balık türleri · mevsimsel davranış</div>
-      </div>
-
-      <div style={{ background: '#030e14', margin: '0 16px 12px', borderRadius: 10, padding: '8px 12px', border: '1px solid #06b6d433' }}>
-        <div style={{ fontSize: 11, color: '#06b6d4', fontWeight: 700 }}>🌊 GÖLLER</div>
-        <div style={{ fontSize: 11, color: '#9ca3af', marginTop: 2 }}>Türkiye 200 000+ doğal ve yapay göl. Her göl ekosistemi kendine özgü — yerel bilgi şart.</div>
-      </div>
-
-      <div style={{ padding: '0 16px' }}>
-        {SECTIONS.map(s => {
-          const open = sel === s.id;
-          return (
-            <div key={s.id} style={{ marginBottom: 8 }}>
-              <div onClick={() => setSel(open ? null : s.id)} style={{
-                background: '#030e14', borderRadius: open ? '12px 12px 0 0' : 12,
-                padding: '14px 16px', border: `1px solid ${s.accent}33`, cursor: 'pointer',
-              }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-                  <span style={{ fontSize: 26 }}>{s.icon}</span>
-                  <div style={{ fontSize: 14, fontWeight: 700 }}>{s.name}</div>
-                </div>
-              </div>
-              {open && (
-                <div style={{ background: '#030e14', borderRadius: '0 0 12px 12px', padding: '0 16px 14px', border: `1px solid ${s.accent}33`, borderTop: 'none' }}>
-                  {s.items.map((item, i) => (
-                    <div key={i} style={{ marginTop: i === 0 ? 10 : 8, paddingTop: i === 0 ? 0 : 8, borderTop: i > 0 ? '1px solid #07141a' : 'none' }}>
-                      <div style={{ fontSize: 12, fontWeight: 700, color: s.accent }}>{item.t}</div>
-                      <div style={{ fontSize: 11, color: '#d1d5db', marginTop: 2 }}>{item.d}</div>
-                    </div>
-                  ))}
-                </div>
-              )}
+    <div style={{ background: bg, minHeight: '100vh', color: '#e0f2fe', fontFamily: 'system-ui,sans-serif' }}>
+      <div style={{ maxWidth: 480, margin: '0 auto', padding: '0 0 80px' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 12, padding: '18px 16px 10px' }}>
+          <button onClick={() => navigate(-1)} style={{ background: 'none', border: 'none', color: accent, fontSize: 22, cursor: 'pointer' }}>&#8592;</button>
+          <span style={{ fontSize: 22, fontWeight: 700 }}>🏞️ Göl Ekolojisi</span>
+        </div>
+        <div style={{ display: 'flex', margin: '0 16px 18px', background: '#001020', borderRadius: 10, overflow: 'hidden' }}>
+          {Object.keys(TABS).map(k => (
+            <button key={k} onClick={() => setTab(k)} style={{
+              flex: 1, padding: '10px 0', border: 'none', cursor: 'pointer', fontWeight: 600, fontSize: 14,
+              background: tab === k ? accent : 'transparent',
+              color: tab === k ? '#fff' : '#38bdf8',
+            }}>{TABS[k].title}</button>
+          ))}
+        </div>
+        <div style={{ padding: '0 16px' }}>
+          {data.items.map((item, i) => (
+            <div key={i} style={{ background: '#001428', borderRadius: 12, padding: '14px 16px', marginBottom: 12, borderLeft: `3px solid ${accent}` }}>
+              <div style={{ fontSize: 20, marginBottom: 6 }}>{item.icon}</div>
+              <div style={{ fontWeight: 700, fontSize: 15, marginBottom: 4 }}>{item.t}</div>
+              <div style={{ fontSize: 13, color: '#7dd3fc', lineHeight: 1.5 }}>{item.d}</div>
             </div>
-          );
-        })}
+          ))}
+        </div>
       </div>
     </div>
   );

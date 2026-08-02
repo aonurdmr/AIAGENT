@@ -2,59 +2,57 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 const TABS = {
-  species: {
-    title: 'Türler',
-    items: [
-      { icon: '🦢', t: 'Tepeli pelikan', d: 'Pelecanus crispus: dünyada en tehlikede. Beyaz, kıvırcık baş. Nesli tehlike.' },
-      { icon: '🌊', t: 'Gri pelikan', d: 'Pelecanus onocrotalus: daha yaygın. Pembe gaga kenarı. Göç kuzeyden.' },
-      { icon: '📍', t: 'Türkiye', d: 'Manyas, Kızılırmak, Gediz delta: pelikan gözlem noktaları. İlkbahar.' },
-      { icon: '🐟', t: 'Avlanma', d: 'Torba ağzıyla kapma: balığı kovalar. Grup koordinasyon davranışı.' },
-    ],
-  },
-  watch: {
+  observe: {
     title: 'Gözlem',
     items: [
-      { icon: '🦺', t: 'Manyas gölü', d: 'Kuş Cenneti Milli Parkı: pelikan üremesi. Mart-Eylül. Tekne turu.' },
-      { icon: '📷', t: 'Fotoğraf', d: 'Uçuşta: teleobjektif 400mm+. Sürü düzenini bekle, tek tık ile. Sabah.' },
-      { icon: '🌅', t: 'En iyi zaman', d: 'Sabah erken ve akşam üstü: ışık ve aktivite en yüksek dönem.' },
-      { icon: '⚠️', t: 'Yuva mesafesi', d: 'Üreme kolonisinden 100m mesafe. Terk etme riski yüksek hassas tür.' },
+      { icon: '🦢', t: 'Pelikan', d: 'Pelecanus onocrotalus ve P. crispus; Turkiye sulak alanlarin gozbebegi.' },
+      { icon: '🌊', t: 'Habitat', d: 'Buyuk gol, lagün ve deltalar; Manyas, Kus Golü ve Gala Golü kritik alanlar.' },
+      { icon: '🤝', t: 'Ortakli Avciligi', d: 'Pelikanlarin V formasyonunda birlesik avlanmasi dogal mucizelerden biridir.' },
+      { icon: '📅', t: 'En Iyi Donem', d: 'Mart-Eylul yukselme ve kuluculuk; kisinda da bazi bireyler kalir.' },
+      { icon: '🔭', t: 'Gözlem Araçları', d: 'Spotting skop ve tripod şart; 50-80x büyütme pelikan kolonisini inceler.' },
+    ],
+  },
+  conservation: {
+    title: 'Koruma',
+    items: [
+      { icon: '⚠️', t: 'Tehdit Durumu', d: 'Kıvırcık pelikan IUCN Hassas; Türkiye üreyen populasyonu küresel önemde.' },
+      { icon: '🌿', t: 'Habitat Kaybı', d: 'Kuş Gölü ve Manyas sulak alanları tarım ve kirlilikle alan kaybı yaşıyor.' },
+      { icon: '🐟', t: 'Balık Çakışması', d: 'Ticari balıkçılarla çatışma yaşanabiliyor; yerel işbirliği çözüm yolu.' },
+      { icon: '📡', t: 'Halkalama', d: 'Kanatına takılan renkli halkalar bireysel takip ve göç araştırmasını sağlar.' },
+      { icon: '🤝', t: 'Gönüllülük', d: 'Kuş Araştırmaları Derneği sayım kamplarına katılım imkanı her yıl sunuluyor.' },
     ],
   },
 };
 
 export default function PelicanWatch() {
   const navigate = useNavigate();
-  const [tab, setTab] = useState('species');
+  const [tab, setTab] = useState('observe');
   const data = TABS[tab];
+  const accent = '#0891b2';
+  const bg = '#000e14';
 
   return (
-    <div style={{ background: '#020a10', minHeight: '100vh', color: '#f9fafb', paddingBottom: 100 }}>
-      <div style={{ padding: '20px 16px 12px' }}>
-        <button onClick={() => navigate(-1)} style={{ background: 'none', border: 'none', color: '#9ca3af', fontSize: 20, cursor: 'pointer', marginBottom: 8 }}>&#8592;</button>
-        <div style={{ fontSize: 22, fontWeight: 700 }}>🦢 Pelikan Gözlemi</div>
-        <div style={{ fontSize: 13, color: '#9ca3af', marginTop: 2 }}>Türler · gözlem · koruma</div>
-      </div>
-
-      <div style={{ display: 'flex', gap: 8, padding: '0 16px', marginBottom: 16 }}>
-        {Object.entries(TABS).map(([k, v]) => (
-          <button key={k} onClick={() => setTab(k)} style={{
-            flex: 1, padding: '8px 0', borderRadius: 10, border: 'none', cursor: 'pointer',
-            background: tab === k ? '#0369a1' : '#031420', color: tab === k ? '#fff' : '#9ca3af', fontWeight: 600, fontSize: 13,
-          }}>{v.title}</button>
-        ))}
-      </div>
-
-      <div style={{ padding: '0 16px' }}>
-        <div style={{ background: '#031420', borderRadius: 14, padding: 14, border: '1px solid #0369a133' }}>
+    <div style={{ background: bg, minHeight: '100vh', color: '#cffafe', fontFamily: 'system-ui,sans-serif' }}>
+      <div style={{ maxWidth: 480, margin: '0 auto', padding: '0 0 80px' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 12, padding: '18px 16px 10px' }}>
+          <button onClick={() => navigate(-1)} style={{ background: 'none', border: 'none', color: accent, fontSize: 22, cursor: 'pointer' }}>&#8592;</button>
+          <span style={{ fontSize: 22, fontWeight: 700 }}>🦢 Pelikan Gözlemi</span>
+        </div>
+        <div style={{ display: 'flex', margin: '0 16px 18px', background: '#001c28', borderRadius: 10, overflow: 'hidden' }}>
+          {Object.keys(TABS).map(k => (
+            <button key={k} onClick={() => setTab(k)} style={{
+              flex: 1, padding: '10px 0', border: 'none', cursor: 'pointer', fontWeight: 600, fontSize: 14,
+              background: tab === k ? accent : 'transparent',
+              color: tab === k ? '#fff' : '#22d3ee',
+            }}>{TABS[k].title}</button>
+          ))}
+        </div>
+        <div style={{ padding: '0 16px' }}>
           {data.items.map((item, i) => (
-            <div key={i} style={{ marginBottom: 12, paddingBottom: 12, borderBottom: i < data.items.length - 1 ? '1px solid #051e30' : 'none' }}>
-              <div style={{ display: 'flex', gap: 10, alignItems: 'flex-start' }}>
-                <span style={{ fontSize: 22 }}>{item.icon}</span>
-                <div>
-                  <div style={{ fontSize: 13, fontWeight: 700, color: '#7dd3fc' }}>{item.t}</div>
-                  <div style={{ fontSize: 12, color: '#d1d5db', marginTop: 2 }}>{item.d}</div>
-                </div>
-              </div>
+            <div key={i} style={{ background: '#002030', borderRadius: 12, padding: '14px 16px', marginBottom: 12, borderLeft: `3px solid ${accent}` }}>
+              <div style={{ fontSize: 20, marginBottom: 6 }}>{item.icon}</div>
+              <div style={{ fontWeight: 700, fontSize: 15, marginBottom: 4 }}>{item.t}</div>
+              <div style={{ fontSize: 13, color: '#67e8f9', lineHeight: 1.5 }}>{item.d}</div>
             </div>
           ))}
         </div>

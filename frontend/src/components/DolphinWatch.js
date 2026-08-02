@@ -2,59 +2,57 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 const TABS = {
-  species: {
-    title: 'Türler',
-    items: [
-      { icon: '🐬', t: 'Şişe burunlu', d: 'Tursiops truncatus: en tanınan. Akdeniz ve Karadeniz. Tekne yaklaşır.' },
-      { icon: '🌊', t: 'Çizgili yunus', d: 'Stenella coeruleoalba: Akdeniz derin açık sular. Hızlı, akrobatik.' },
-      { icon: '🐟', t: 'Murmur', d: 'Phocoena phocoena: Karadeniz\'de. Küçük, çekingen. Tekne kaçar.' },
-      { icon: '🐋', t: 'Kâtil balina', d: 'Grampus griseus: büyük. Ege derin kanallarında nadir gözlem.' },
-    ],
-  },
-  watch: {
+  observe: {
     title: 'Gözlem',
     items: [
-      { icon: '⛵', t: 'Tekne etik', d: 'Hız düşür, motor kapat yak. 50m mesafe koru. Yunus gelirse şans.' },
-      { icon: '📅', t: 'En iyi sezon', d: 'Haziran-Eylül: Akdeniz seyahati. Karadeniz: yıl boyu mümkün.' },
-      { icon: '🔭', t: 'Gözlem noktası', d: 'Foça, Datça, Bodrum: dalyan kanalları. Sabah erken saatler.' },
-      { icon: '📷', t: 'Fotoğraf', d: 'Süreksel fin fotoğrafla: bireysel tanımlama. Araştırmacılara gönder.' },
+      { icon: '🐬', t: 'Türkiye Delfinleri', d: 'Bottlenose, şişman kafa ve ortak delfin; Marmara ve Karadeniz grupları.' },
+      { icon: '🌊', t: 'Habitat', d: 'Açık deniz ve kıyı şeridi; özellikle adalar arası geçiş kanalları aktif bölge.' },
+      { icon: '🚢', t: 'Tekne Turu', d: 'Marmaris, Bodrum, Çeşme ve İstanbul tekneleri delfin izleme turları düzenler.' },
+      { icon: '📅', t: 'En İyi Dönem', d: 'Temmuz-Eylül; deniz düz ve derin mavi; sürüler yüzeye çıkma artar.' },
+      { icon: '📸', t: 'Fotoğraf', d: 'Yüksek hız ve bürst modu; delfin atlaması önceden tahmin edilemez; sabır şart.' },
+    ],
+  },
+  conservation: {
+    title: 'Koruma',
+    items: [
+      { icon: '⚠️', t: 'Tehdit', d: 'Av ağı tuzağı, ses kirliliği ve deniz trafik yoğunluğu başlıca tehditler.' },
+      { icon: '🚫', t: 'Yaklaşma Kuralı', d: 'Tekneyle 50 metre; makinayla yaklaşmayın; delfin yanına gelin bekleyin.' },
+      { icon: '🔊', t: 'Ses Kirliliği', d: 'Motor gürültüsü ve sonar sorunları delfin ekolokasyonunu bozuyor.' },
+      { icon: '📡', t: 'İzleme', d: 'TEMA Vakfı ve TÜDAV hidrofon kaydı ile popülasyon yoğunluğu takip eder.' },
+      { icon: '🤝', t: 'Raporlama', d: 'Denizde ölü delfin gördüğünüzde TÜDAV acil hattına bildirin; veri değerli.' },
     ],
   },
 };
 
 export default function DolphinWatch() {
   const navigate = useNavigate();
-  const [tab, setTab] = useState('species');
+  const [tab, setTab] = useState('observe');
   const data = TABS[tab];
+  const accent = '#0284c7';
+  const bg = '#000810';
 
   return (
-    <div style={{ background: '#010c14', minHeight: '100vh', color: '#f9fafb', paddingBottom: 100 }}>
-      <div style={{ padding: '20px 16px 12px' }}>
-        <button onClick={() => navigate(-1)} style={{ background: 'none', border: 'none', color: '#9ca3af', fontSize: 20, cursor: 'pointer', marginBottom: 8 }}>&#8592;</button>
-        <div style={{ fontSize: 22, fontWeight: 700 }}>🐬 Yunus Gözlemi</div>
-        <div style={{ fontSize: 13, color: '#9ca3af', marginTop: 2 }}>Türler · gözlem · etik</div>
-      </div>
-
-      <div style={{ display: 'flex', gap: 8, padding: '0 16px', marginBottom: 16 }}>
-        {Object.entries(TABS).map(([k, v]) => (
-          <button key={k} onClick={() => setTab(k)} style={{
-            flex: 1, padding: '8px 0', borderRadius: 10, border: 'none', cursor: 'pointer',
-            background: tab === k ? '#0369a1' : '#021828', color: tab === k ? '#fff' : '#9ca3af', fontWeight: 600, fontSize: 13,
-          }}>{v.title}</button>
-        ))}
-      </div>
-
-      <div style={{ padding: '0 16px' }}>
-        <div style={{ background: '#021828', borderRadius: 14, padding: 14, border: '1px solid #0369a133' }}>
+    <div style={{ background: bg, minHeight: '100vh', color: '#e0f2fe', fontFamily: 'system-ui,sans-serif' }}>
+      <div style={{ maxWidth: 480, margin: '0 auto', padding: '0 0 80px' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 12, padding: '18px 16px 10px' }}>
+          <button onClick={() => navigate(-1)} style={{ background: 'none', border: 'none', color: accent, fontSize: 22, cursor: 'pointer' }}>&#8592;</button>
+          <span style={{ fontSize: 22, fontWeight: 700 }}>🐬 Delfin Gözlemi</span>
+        </div>
+        <div style={{ display: 'flex', margin: '0 16px 18px', background: '#001428', borderRadius: 10, overflow: 'hidden' }}>
+          {Object.keys(TABS).map(k => (
+            <button key={k} onClick={() => setTab(k)} style={{
+              flex: 1, padding: '10px 0', border: 'none', cursor: 'pointer', fontWeight: 600, fontSize: 14,
+              background: tab === k ? accent : 'transparent',
+              color: tab === k ? '#fff' : '#38bdf8',
+            }}>{TABS[k].title}</button>
+          ))}
+        </div>
+        <div style={{ padding: '0 16px' }}>
           {data.items.map((item, i) => (
-            <div key={i} style={{ marginBottom: 12, paddingBottom: 12, borderBottom: i < data.items.length - 1 ? '1px solid #032438' : 'none' }}>
-              <div style={{ display: 'flex', gap: 10, alignItems: 'flex-start' }}>
-                <span style={{ fontSize: 22 }}>{item.icon}</span>
-                <div>
-                  <div style={{ fontSize: 13, fontWeight: 700, color: '#38bdf8' }}>{item.t}</div>
-                  <div style={{ fontSize: 12, color: '#d1d5db', marginTop: 2 }}>{item.d}</div>
-                </div>
-              </div>
+            <div key={i} style={{ background: '#001828', borderRadius: 12, padding: '14px 16px', marginBottom: 12, borderLeft: `3px solid ${accent}` }}>
+              <div style={{ fontSize: 20, marginBottom: 6 }}>{item.icon}</div>
+              <div style={{ fontWeight: 700, fontSize: 15, marginBottom: 4 }}>{item.t}</div>
+              <div style={{ fontSize: 13, color: '#7dd3fc', lineHeight: 1.5 }}>{item.d}</div>
             </div>
           ))}
         </div>

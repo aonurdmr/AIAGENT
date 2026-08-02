@@ -2,59 +2,57 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 const TABS = {
-  technique: {
-    title: 'Teknik',
+  fishing: {
+    title: 'Avcılık',
     items: [
-      { icon: '🪱', t: 'Yem', d: 'Solucan en iyi yem. Sazan mırmırı da etkili. Dip çekimi: yılan balığı dipte.' },
-      { icon: '🌙', t: 'Gece avı', d: 'Yılan balığı gece aktif. Kanal ve nehir ağzı: en etkili gece yeri.' },
-      { icon: '🎣', t: 'Teknik', d: 'Yavaş çek, ipimi sallandır. Yılan balığı sert çeker: sert kavrama.' },
-      { icon: '📍', t: 'Nokta', d: 'Bataklık ve saz altı dereleri. Çamurlu dip: yılan balığı burada.' },
+      { icon: '🐍', t: 'Yılan Balığı', d: 'Anguilla anguilla; akarsu ve gol sistemlerinde yasayan gececi uzun balik.' },
+      { icon: '🌙', t: 'Gece Avlanma', d: 'Yilan baligi tamamen gece aktifdir; karanlikta dip oltasi en etkili yontem.' },
+      { icon: '🪱', t: 'Yem', d: 'Solucan, kurbaga ve kucuk baliklar; kokulu yemler gece avciliginida avantaj saglar.' },
+      { icon: '🎣', t: 'Dip Oltasi', d: 'Agir kurşun ve geri tek iğne; dip tutarken sallanmaya müsaade edin.' },
+      { icon: '⚠️', t: 'Koruma Durumu', d: 'Kritik tehlike altında; AB kotaları var; Türkiye mevzuatını kontrol edin.' },
     ],
   },
   cook: {
     title: 'Pişirme',
     items: [
-      { icon: '🔥', t: 'Izgara', d: 'Deri ile bütün: yüksek ateş 8 dk her yüz. Yağlı et: kendi yağında pişer.' },
-      { icon: '🫕', t: 'Tütsüleme', d: 'Soğuk tütsü 12 saat: klasik Avrupa tarifi. Yumuşak, derin tütün tadı.' },
-      { icon: '🍋', t: 'Marine', d: 'Limon + sirke + baharatla: keskin tadı dengeler. Gece beklet.' },
-      { icon: '⚠️', t: 'Kan zehirli', d: 'Yılan balığı kanı zehirlidir: el yıka, göze değdirme. Pişirince zararsız.' },
+      { icon: '🔥', t: 'Izgara', d: 'Bütün yılan balığı ızgarası; derimden gelen yağ kendini marine eder.' },
+      { icon: '🍢', t: 'Şiş', d: 'Deri soyulmuş parçalar şişe dizilir; limon ve biberiye ile mangalda.' },
+      { icon: '🫙', t: 'Füme', d: 'Soğuk tütsüleme 12 saat; füme yılan balığı İskandinavya lezzetinin incisi.' },
+      { icon: '🥘', t: 'Güveç', d: 'Domates, soğan ve baharat ile tencerede; Karadeniz balık güveci tarzı.' },
+      { icon: '🧂', t: 'Temizlik', d: 'Deri kaygan; içli bez veya eldiven ile kavrayıp soyun; özentili bıçak işi.' },
     ],
   },
 };
 
 export default function EelFishing() {
   const navigate = useNavigate();
-  const [tab, setTab] = useState('technique');
+  const [tab, setTab] = useState('fishing');
   const data = TABS[tab];
+  const accent = '#1e3a5f';
+  const bg = '#000610';
 
   return (
-    <div style={{ background: '#020804', minHeight: '100vh', color: '#f9fafb', paddingBottom: 100 }}>
-      <div style={{ padding: '20px 16px 12px' }}>
-        <button onClick={() => navigate(-1)} style={{ background: 'none', border: 'none', color: '#9ca3af', fontSize: 20, cursor: 'pointer', marginBottom: 8 }}>&#8592;</button>
-        <div style={{ fontSize: 22, fontWeight: 700 }}>🐍 Yılan Balığı Avı</div>
-        <div style={{ fontSize: 13, color: '#9ca3af', marginTop: 2 }}>Teknik · gece · pişirme</div>
-      </div>
-
-      <div style={{ display: 'flex', gap: 8, padding: '0 16px', marginBottom: 16 }}>
-        {Object.entries(TABS).map(([k, v]) => (
-          <button key={k} onClick={() => setTab(k)} style={{
-            flex: 1, padding: '8px 0', borderRadius: 10, border: 'none', cursor: 'pointer',
-            background: tab === k ? '#15803d' : '#041008', color: tab === k ? '#fff' : '#9ca3af', fontWeight: 600, fontSize: 13,
-          }}>{v.title}</button>
-        ))}
-      </div>
-
-      <div style={{ padding: '0 16px' }}>
-        <div style={{ background: '#041008', borderRadius: 14, padding: 14, border: '1px solid #15803d33' }}>
+    <div style={{ background: bg, minHeight: '100vh', color: '#dbeafe', fontFamily: 'system-ui,sans-serif' }}>
+      <div style={{ maxWidth: 480, margin: '0 auto', padding: '0 0 80px' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 12, padding: '18px 16px 10px' }}>
+          <button onClick={() => navigate(-1)} style={{ background: 'none', border: 'none', color: '#3b82f6', fontSize: 22, cursor: 'pointer' }}>&#8592;</button>
+          <span style={{ fontSize: 22, fontWeight: 700 }}>🐍 Yılan Balığı</span>
+        </div>
+        <div style={{ display: 'flex', margin: '0 16px 18px', background: '#001228', borderRadius: 10, overflow: 'hidden' }}>
+          {Object.keys(TABS).map(k => (
+            <button key={k} onClick={() => setTab(k)} style={{
+              flex: 1, padding: '10px 0', border: 'none', cursor: 'pointer', fontWeight: 600, fontSize: 14,
+              background: tab === k ? accent : 'transparent',
+              color: tab === k ? '#fff' : '#60a5fa',
+            }}>{TABS[k].title}</button>
+          ))}
+        </div>
+        <div style={{ padding: '0 16px' }}>
           {data.items.map((item, i) => (
-            <div key={i} style={{ marginBottom: 12, paddingBottom: 12, borderBottom: i < data.items.length - 1 ? '1px solid #081a0c' : 'none' }}>
-              <div style={{ display: 'flex', gap: 10, alignItems: 'flex-start' }}>
-                <span style={{ fontSize: 22 }}>{item.icon}</span>
-                <div>
-                  <div style={{ fontSize: 13, fontWeight: 700, color: '#4ade80' }}>{item.t}</div>
-                  <div style={{ fontSize: 12, color: '#d1d5db', marginTop: 2 }}>{item.d}</div>
-                </div>
-              </div>
+            <div key={i} style={{ background: '#001830', borderRadius: 12, padding: '14px 16px', marginBottom: 12, borderLeft: `3px solid ${accent}` }}>
+              <div style={{ fontSize: 20, marginBottom: 6 }}>{item.icon}</div>
+              <div style={{ fontWeight: 700, fontSize: 15, marginBottom: 4 }}>{item.t}</div>
+              <div style={{ fontSize: 13, color: '#93c5fd', lineHeight: 1.5 }}>{item.d}</div>
             </div>
           ))}
         </div>

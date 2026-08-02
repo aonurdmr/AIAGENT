@@ -483,6 +483,10 @@ const TOOLS = [
   { icon: '🌷', label: 'Bahar Çiçekleri', sub: 'Tanıma · gözlem · koruma', path: '/bahar-cicekleri', accent: '#db2777' },
   { icon: '🦃', label: 'Sülün Avı', sub: 'Yöntem · köpek · pişirme', path: '/sulun-avi2', accent: '#7c2d12' },
   { icon: '🌳', label: 'Meşe Ormanı', sub: 'Ekoloji · yararlanma · odun', path: '/mese-ormani', accent: '#713f12' },
+  { icon: '🦅', label: 'Kızıl Şahin', sub: 'Biyoloji · gözlem · koruma', path: '/kizil-sahin', accent: '#a16207' },
+  { icon: '🌸', label: 'Yabani Orkide', sub: 'Tanıma · gözlem · sezon', path: '/yabani-orkide', accent: '#7e22ce' },
+  { icon: '🐟', label: 'Alabalık Rehberi', sub: 'Avcılık · pişirme · akarsu', path: '/alabalik-rehberi', accent: '#0369a1' },
+  { icon: '🐿️', label: 'Sincap Gözlemi', sub: 'Biyoloji · habitat · fotoğraf', path: '/sincap-gozu', accent: '#b45309' },
 ];
 
 const CATS = [

@@ -481,6 +481,10 @@ import MarineEcology  from '@/components/MarineEcology';
 import SpringFlowers  from '@/components/SpringFlowers';
 import PheasantHunt   from '@/components/PheasantHunt';
 import OakForest      from '@/components/OakForest';
+import GoldenEagle    from '@/components/GoldenEagle';
+import WildOrchid     from '@/components/WildOrchid';
+import TroutGuide     from '@/components/TroutGuide';
+import SquirrelWatch  from '@/components/SquirrelWatch';
 import { ToastProvider } from '@/components/Toast';
 import '@/App.css';
 
@@ -972,6 +976,10 @@ function AppInner() {
         <Route path="/bahar-cicekleri"  element={<SpringFlowers />} />
         <Route path="/sulun-avi2"       element={<PheasantHunt />} />
         <Route path="/mese-ormani"      element={<OakForest />} />
+        <Route path="/kizil-sahin"      element={<GoldenEagle />} />
+        <Route path="/yabani-orkide"    element={<WildOrchid />} />
+        <Route path="/alabalik-rehberi" element={<TroutGuide />} />
+        <Route path="/sincap-gozu"      element={<SquirrelWatch />} />
       </Routes>
       {!hideNav && <Navbar />}
     </div>

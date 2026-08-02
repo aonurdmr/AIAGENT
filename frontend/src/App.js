@@ -465,6 +465,15 @@ import BreamFishing    from '@/components/BreamFishing';
 import FoxTracking     from '@/components/FoxTracking';
 import WildNettle      from '@/components/WildNettle';
 import WildSage        from '@/components/WildSage';
+import HazelnutHarvest from '@/components/HazelnutHarvest';
+import MigratoryBirds  from '@/components/MigratoryBirds';
+import WildMushroom    from '@/components/WildMushroom';
+import IbisWatch       from '@/components/IbisWatch';
+import MarshFishing    from '@/components/MarshFishing';
+import AlpineHike      from '@/components/AlpineHike';
+import SeaBassGuide    from '@/components/SeaBassGuide';
+import WildBerry       from '@/components/WildBerry';
+import CampfireCooking from '@/components/CampfireCooking';
 import { ToastProvider } from '@/components/Toast';
 import '@/App.css';
 
@@ -940,6 +949,15 @@ function AppInner() {
         <Route path="/tilki-iz"         element={<FoxTracking />} />
         <Route path="/isirgan-otu"      element={<WildNettle />} />
         <Route path="/adacayi"          element={<WildSage />} />
+        <Route path="/findik-hasadi"    element={<HazelnutHarvest />} />
+        <Route path="/gocmen-kuslar"    element={<MigratoryBirds />} />
+        <Route path="/yabani-mantar"    element={<WildMushroom />} />
+        <Route path="/kelaynak"         element={<IbisWatch />} />
+        <Route path="/bataklık-avi"     element={<MarshFishing />} />
+        <Route path="/alpin-yurus"      element={<AlpineHike />} />
+        <Route path="/levrek-rehberi"   element={<SeaBassGuide />} />
+        <Route path="/yabani-meyveler"  element={<WildBerry />} />
+        <Route path="/kamp-yemekleri"   element={<CampfireCooking />} />
       </Routes>
       {!hideNav && <Navbar />}
     </div>

@@ -467,6 +467,15 @@ const TOOLS = [
   { icon: '🦊', label: 'Tilki İz Takibi', sub: 'İz · gözlem · habitat', path: '/tilki-iz', accent: '#c2410c' },
   { icon: '🌱', label: 'Isırgan Otu', sub: 'Hasat · pişirme · şifa', path: '/isirgan-otu', accent: '#15803d' },
   { icon: '🌿', label: 'Yabani Adaçayı', sub: 'Toplama · kullanım · tıp', path: '/adacayi', accent: '#7c3aed' },
+  { icon: '🌰', label: 'Fındık Hasadı', sub: 'Hasat · kurutma · kullanım', path: '/findik-hasadi', accent: '#92400e' },
+  { icon: '🕊️', label: 'Göçmen Kuşlar', sub: 'İlkbahar · sonbahar · güzergah', path: '/gocmen-kuslar', accent: '#059669' },
+  { icon: '🍄', label: 'Yabani Mantar', sub: 'Tanıma · pişirme · güvenlik', path: '/yabani-mantar', accent: '#854d0e' },
+  { icon: '🦢', label: 'Kelaynak Gözlemi', sub: 'Biyoloji · koruma · Birecik', path: '/kelaynak', accent: '#be185d' },
+  { icon: '🌾', label: 'Bataklık Avcılığı', sub: 'Teknik · türler · sazlık', path: '/bataklık-avi', accent: '#0f766e' },
+  { icon: '🏔️', label: 'Alpin Yürüyüş', sub: 'Rotalar · güvenlik · ekipman', path: '/alpin-yurus', accent: '#1d4ed8' },
+  { icon: '🐟', label: 'Levrek Rehberi', sub: 'Avcılık · pişirme · mevsim', path: '/levrek-rehberi', accent: '#0284c7' },
+  { icon: '🫐', label: 'Yabani Meyveler', sub: 'Toplama · tanıma · kullanım', path: '/yabani-meyveler', accent: '#7c3aed' },
+  { icon: '🔥', label: 'Kamp Ateşi Yemekleri', sub: 'Ateş · tarifler · teknik', path: '/kamp-yemekleri', accent: '#ea580c' },
 ];
 
 const CATS = [

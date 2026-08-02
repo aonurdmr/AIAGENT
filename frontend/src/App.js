@@ -517,6 +517,10 @@ import SeaGrassGuide   from '@/components/SeaGrassGuide';
 import QuailHunting    from '@/components/QuailHunting';
 import BlackBirdWatch  from '@/components/BlackBirdWatch';
 import WildCoriander   from '@/components/WildCoriander';
+import ReedWarbler     from '@/components/ReedWarbler';
+import WildCress       from '@/components/WildCress';
+import MediterraneanHerbs from '@/components/MediterraneanHerbs';
+import WildFig         from '@/components/WildFig';
 import { ToastProvider } from '@/components/Toast';
 import '@/App.css';
 
@@ -1044,6 +1048,10 @@ function AppInner() {
         <Route path="/bildircin-avi"     element={<QuailHunting />} />
         <Route path="/karatavuk"         element={<BlackBirdWatch />} />
         <Route path="/yabani-kisnis"     element={<WildCoriander />} />
+        <Route path="/saz-bulbulu"       element={<ReedWarbler />} />
+        <Route path="/su-teresi"         element={<WildCress />} />
+        <Route path="/akdeniz-bitkiler"  element={<MediterraneanHerbs />} />
+        <Route path="/yabani-incir"      element={<WildFig />} />
       </Routes>
       {!hideNav && <Navbar />}
     </div>

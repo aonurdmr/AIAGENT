@@ -519,6 +519,10 @@ const TOOLS = [
   { icon: '🐦', label: 'Bıldırcın Avı', sub: 'Av · köpek · pişirme', path: '/bildircin-avi', accent: '#ca8a04' },
   { icon: '🎵', label: 'Karatavuk', sub: 'Tanıma · ötüş · kayıt', path: '/karatavuk', accent: '#1d4ed8' },
   { icon: '🌿', label: 'Yabani Kişniş', sub: 'Toplama · baharat · tarif', path: '/yabani-kisnis', accent: '#166534' },
+  { icon: '🐦', label: 'Saz Bülbülü', sub: 'Tanıma · ötüş · türler', path: '/saz-bulbulu', accent: '#65a30d' },
+  { icon: '💧', label: 'Su Teresi', sub: 'Toplama · salata · çay', path: '/su-teresi', accent: '#0891b2' },
+  { icon: '🌿', label: 'Akdeniz Bitkiler', sub: 'Kekik · biberiye · lavanta', path: '/akdeniz-bitkiler', accent: '#b45309' },
+  { icon: '🍈', label: 'Yabani İncir', sub: 'Hasat · reçel · kurutma', path: '/yabani-incir', accent: '#92400e' },
 ];
 
 const CATS = [

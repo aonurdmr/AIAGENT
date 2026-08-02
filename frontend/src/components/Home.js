@@ -545,6 +545,11 @@ const TOOLS = [
   { icon: '🫐', label: 'Yabani Dut', sub: 'Hasat · pekmez · reçel', path: '/yabani-dut', accent: '#7e22ce' },
   { icon: '🔦', label: 'Mağara Balığı', sub: 'Karstik · tür · dalış', path: '/magara-baligi', accent: '#374151' },
   { icon: '🍒', label: 'Yabani Vişne', sub: 'Hasat · likör · sağlık', path: '/yabani-visne', accent: '#be123c' },
+  { icon: '🌻', label: 'Yabani Hardal', sub: 'Tohum · sos · baharat', path: '/yabani-hardal', accent: '#ca8a04' },
+  { icon: '🐦', label: 'Keklik Avı', sub: 'Dağ · köpek · tarif', path: '/keklik-avi', accent: '#92400e' },
+  { icon: '🌿', label: 'Yabani Badem', sub: 'Hasat · süt · ezme', path: '/yabani-badem', accent: '#854d0e' },
+  { icon: '🦩', label: 'Flamingo Gözlemi', sub: 'Tuz Gölü · sürü · renk', path: '/flamingo-gozu', accent: '#db2777' },
+  { icon: '💜', label: 'Yabani Zufa', sub: 'Öksürük · likör · kekik', path: '/yabani-zufa', accent: '#6d28d9' },
 ];
 
 const CATS = [

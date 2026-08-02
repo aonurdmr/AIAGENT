@@ -543,6 +543,11 @@ import PeacockWatch    from '@/components/PeacockWatch';
 import WildMulberry    from '@/components/WildMulberry';
 import CaveFishing     from '@/components/CaveFishing';
 import CranberryGuide  from '@/components/CranberryGuide';
+import WildMustard     from '@/components/WildMustard';
+import ChukarHunting   from '@/components/ChukarHunting';
+import WildAlmond      from '@/components/WildAlmond';
+import FlamingWatch    from '@/components/FlamingWatch';
+import WildHyssop      from '@/components/WildHyssop';
 import { ToastProvider } from '@/components/Toast';
 import '@/App.css';
 
@@ -1096,6 +1101,11 @@ function AppInner() {
         <Route path="/yabani-dut"        element={<WildMulberry />} />
         <Route path="/magara-baligi"     element={<CaveFishing />} />
         <Route path="/yabani-visne"      element={<CranberryGuide />} />
+        <Route path="/yabani-hardal"     element={<WildMustard />} />
+        <Route path="/keklik-avi"        element={<ChukarHunting />} />
+        <Route path="/yabani-badem"      element={<WildAlmond />} />
+        <Route path="/flamingo-gozu"     element={<FlamingWatch />} />
+        <Route path="/yabani-zufa"       element={<WildHyssop />} />
       </Routes>
       {!hideNav && <Navbar />}
     </div>

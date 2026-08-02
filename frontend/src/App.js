@@ -441,6 +441,14 @@ import ShrimpFishing   from '@/components/ShrimpFishing';
 import GeologyHike     from '@/components/GeologyHike';
 import EelFishing      from '@/components/EelFishing';
 import WildBirdCall    from '@/components/WildBirdCall';
+import WildRaspberry   from '@/components/WildRaspberry';
+import SeaBreem        from '@/components/SeaBreem';
+import SalmonFishing   from '@/components/SalmonFishing';
+import TrufflHunt      from '@/components/TrufflHunt';
+import SeagullWatch    from '@/components/SeagullWatch';
+import BatWatch        from '@/components/BatWatch';
+import OctoFishing     from '@/components/OctoFishing';
+import HighlandGrazing from '@/components/HighlandGrazing';
 import { ToastProvider } from '@/components/Toast';
 import '@/App.css';
 
@@ -892,6 +900,14 @@ function AppInner() {
         <Route path="/jeoloji-yuruyus"  element={<GeologyHike />} />
         <Route path="/yilan-baligi"     element={<EelFishing />} />
         <Route path="/kus-sesi"         element={<WildBirdCall />} />
+        <Route path="/yabani-meyvecik"  element={<WildRaspberry />} />
+        <Route path="/cipura-avi"       element={<SeaBreem />} />
+        <Route path="/somon-rehberi"    element={<SalmonFishing />} />
+        <Route path="/truf-avi"         element={<TrufflHunt />} />
+        <Route path="/marti-gozlem"     element={<SeagullWatch />} />
+        <Route path="/yarasa-gozlem"    element={<BatWatch />} />
+        <Route path="/ahtapot-avi"      element={<OctoFishing />} />
+        <Route path="/yayla-ekoloji"    element={<HighlandGrazing />} />
       </Routes>
       {!hideNav && <Navbar />}
     </div>

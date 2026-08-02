@@ -443,6 +443,14 @@ const TOOLS = [
   { icon: '🪨', label: 'Jeoloji Yürüyüşü', sub: 'Kayaçlar · fosil · formasyon', path: '/jeoloji-yuruyus', accent: '#d6d3d1' },
   { icon: '🐍', label: 'Yılan Balığı Avı', sub: 'Teknik · gece · pişirme', path: '/yilan-baligi', accent: '#4ade80' },
   { icon: '🎵', label: 'Kuş Sesi Rehberi', sub: 'Sesler · tanımlama · etik', path: '/kus-sesi', accent: '#7dd3fc' },
+  { icon: '🍓', label: 'Yabani Meyveler', sub: 'Toplama · tanımlama · kullanım', path: '/yabani-meyvecik', accent: '#f9a8d4' },
+  { icon: '🐠', label: 'Çipura Avı', sub: 'Teknik · nokta · pişirme', path: '/cipura-avi', accent: '#7dd3fc' },
+  { icon: '🐟', label: 'Somon Rehberi', sub: 'Habitat · göç · gözlem', path: '/somon-rehberi', accent: '#fda4af' },
+  { icon: '🍄', label: 'Trüf Avı', sub: 'Bulma · mevsim · kullanım', path: '/truf-avi', accent: '#d97706' },
+  { icon: '🐦', label: 'Martı Gözlemi', sub: 'Türler · davranış · fotoğraf', path: '/marti-gozlem', accent: '#22d3ee' },
+  { icon: '🦇', label: 'Yarasa Gözlemi', sub: 'Türler · gözlem · koruma', path: '/yarasa-gozlem', accent: '#c4b5fd' },
+  { icon: '🐙', label: 'Ahtapot Avı', sub: 'Yöntem · tuzak · pişirme', path: '/ahtapot-avi', accent: '#d8b4fe' },
+  { icon: '🏔️', label: 'Yayla Ekolojisi', sub: 'Ekoloji · bitki · yürüyüş', path: '/yayla-ekoloji', accent: '#86efac' },
 ];
 
 const CATS = [

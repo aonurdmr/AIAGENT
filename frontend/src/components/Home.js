@@ -457,6 +457,16 @@ const TOOLS = [
   { icon: '🐟', label: 'Turna Avı', sub: 'Teknik · nokta · pişirme', path: '/turna-avi', accent: '#bef264' },
   { icon: '🦞', label: 'Akdeniz Deniz Ürünleri', sub: 'Ürünler · av · pişirme', path: '/akdeniz-deniz', accent: '#0e7490' },
   { icon: '🌾', label: 'Çayır Ekolojisi', sub: 'Bitkiler · fauna · koruma', path: '/cayir-ekoloji', accent: '#6ee7b7' },
+  { icon: '🦅', label: 'Leylek Göçü', sub: 'Göç · gözlem · rotalar', path: '/leylek-gocu', accent: '#4d7c0f' },
+  { icon: '🦔', label: 'Deniz Kestanesi', sub: 'Bulma · pişirme · mevsim', path: '/deniz-kestanesi', accent: '#9333ea' },
+  { icon: '🦌', label: 'Kızıl Geyik Bağırması', sub: 'Bağırma · gözlem · dönem', path: '/kizil-geyik', accent: '#d97706' },
+  { icon: '🦉', label: 'Puhu Baykuşu', sub: 'Habitat · gözlem · ses', path: '/puhu-baykus', accent: '#b45309' },
+  { icon: '🌿', label: 'Yabani Kekik', sub: 'Toplama · kullanım · kurutma', path: '/yabani-kekik', accent: '#65a30d' },
+  { icon: '🐦', label: 'Karabatak Gözlemi', sub: 'Biyoloji · gözlem · göç', path: '/karabatak', accent: '#0369a1' },
+  { icon: '🐟', label: 'Sazan Avcılığı', sub: 'Teknik · yem · pişirme', path: '/sazan-avi', accent: '#0e7490' },
+  { icon: '🦊', label: 'Tilki İz Takibi', sub: 'İz · gözlem · habitat', path: '/tilki-iz', accent: '#c2410c' },
+  { icon: '🌱', label: 'Isırgan Otu', sub: 'Hasat · pişirme · şifa', path: '/isirgan-otu', accent: '#15803d' },
+  { icon: '🌿', label: 'Yabani Adaçayı', sub: 'Toplama · kullanım · tıp', path: '/adacayi', accent: '#7c3aed' },
 ];
 
 const CATS = [

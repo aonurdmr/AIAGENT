@@ -455,6 +455,16 @@ import FrogGuide       from '@/components/FrogGuide';
 import TigerFishing    from '@/components/TigerFishing';
 import MediterSeaFood  from '@/components/MediterSeaFood';
 import MeadowEcology   from '@/components/MeadowEcology';
+import StorkMigration  from '@/components/StorkMigration';
+import SeaUrchin       from '@/components/SeaUrchin';
+import RedDeerRut      from '@/components/RedDeerRut';
+import EagleOwl        from '@/components/EagleOwl';
+import WildThyme       from '@/components/WildThyme';
+import CormorantWatch  from '@/components/CormorantWatch';
+import BreamFishing    from '@/components/BreamFishing';
+import FoxTracking     from '@/components/FoxTracking';
+import WildNettle      from '@/components/WildNettle';
+import WildSage        from '@/components/WildSage';
 import { ToastProvider } from '@/components/Toast';
 import '@/App.css';
 
@@ -920,6 +930,16 @@ function AppInner() {
         <Route path="/turna-avi"        element={<TigerFishing />} />
         <Route path="/akdeniz-deniz"    element={<MediterSeaFood />} />
         <Route path="/cayir-ekoloji"    element={<MeadowEcology />} />
+        <Route path="/leylek-gocu"      element={<StorkMigration />} />
+        <Route path="/deniz-kestanesi"  element={<SeaUrchin />} />
+        <Route path="/kizil-geyik"      element={<RedDeerRut />} />
+        <Route path="/puhu-baykus"      element={<EagleOwl />} />
+        <Route path="/yabani-kekik"     element={<WildThyme />} />
+        <Route path="/karabatak"        element={<CormorantWatch />} />
+        <Route path="/sazan-avi"        element={<BreamFishing />} />
+        <Route path="/tilki-iz"         element={<FoxTracking />} />
+        <Route path="/isirgan-otu"      element={<WildNettle />} />
+        <Route path="/adacayi"          element={<WildSage />} />
       </Routes>
       {!hideNav && <Navbar />}
     </div>

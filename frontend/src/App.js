@@ -474,6 +474,13 @@ import AlpineHike      from '@/components/AlpineHike';
 import SeaBassGuide    from '@/components/SeaBassGuide';
 import WildBerry       from '@/components/WildBerry';
 import CampfireCooking from '@/components/CampfireCooking';
+import WildRosehip    from '@/components/WildRosehip';
+import TurkishPine    from '@/components/TurkishPine';
+import WildBoar2      from '@/components/WildBoar2';
+import MarineEcology  from '@/components/MarineEcology';
+import SpringFlowers  from '@/components/SpringFlowers';
+import PheasantHunt   from '@/components/PheasantHunt';
+import OakForest      from '@/components/OakForest';
 import { ToastProvider } from '@/components/Toast';
 import '@/App.css';
 
@@ -958,6 +965,13 @@ function AppInner() {
         <Route path="/levrek-rehberi"   element={<SeaBassGuide />} />
         <Route path="/yabani-meyveler"  element={<WildBerry />} />
         <Route path="/kamp-yemekleri"   element={<CampfireCooking />} />
+        <Route path="/kusburnu"         element={<WildRosehip />} />
+        <Route path="/karacam"          element={<TurkishPine />} />
+        <Route path="/yaban-domuzu-iz"  element={<WildBoar2 />} />
+        <Route path="/deniz-ekoloji"    element={<MarineEcology />} />
+        <Route path="/bahar-cicekleri"  element={<SpringFlowers />} />
+        <Route path="/sulun-avi2"       element={<PheasantHunt />} />
+        <Route path="/mese-ormani"      element={<OakForest />} />
       </Routes>
       {!hideNav && <Navbar />}
     </div>

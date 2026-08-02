@@ -1,77 +1,61 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-const SECTIONS = [
-  {
-    id: 'zones', name: 'Nehir Bölgeleri', icon: '🏞️', accent: '#06b6d4',
+const TABS = {
+  life: {
+    title: 'Yasam',
     items: [
-      { t: 'Kaynak (üst bölüm)', d: 'Soğuk, oksijeni yüksek, dar. Alabalık ve çipura habitatı.' },
-      { t: 'Orta nehir', d: 'Geniş, derin havuzlar, akıntı-durgun dönüşümü. Çeşitli tür.' },
-      { t: 'Alt nehir (ağız)', d: 'Geniş, yavaş, çamur dip. Sazan ve yayın balığı. Göç köprüsü.' },
-      { t: 'Güçlü akıntı', d: 'Oksijenli, soğuk. Böcek larvası bol — alabalık beslenme.' },
-      { t: 'Durgun havuz', d: 'Büyük balık dinlenme noktası. Çarpaçıl ve sazan.' },
+      { icon: '🐟', t: 'Balik Cesitliligi', d: 'Alabalik, siraz, kefal ve tatlisu istakozu temiz nehir ekosisteminin gostergesidir.' },
+      { icon: '🦦', t: 'Su Samuru', d: 'Lutra lutra; nehir sagliginin en degerli gostergeci ve koruma altindaki tur.' },
+      { icon: '🐸', t: 'Amfibiler', d: 'Yesilkurbaga, agac kurbagasi ve semender su kalitesine karsi cok hassastir.' },
+      { icon: '🦆', t: 'Su Kuslari', d: 'Dalgıc, su cilvesi ve irmak kizilercigi nehir kenarlarinin tipik sakinleridir.' },
+      { icon: '🦐', t: 'Makroomurgasizlar', d: 'Mayis sinegi larvasi, tassinegi ve amfipod; su kalitesini gosteren bioindikatörler.' },
     ],
   },
-  {
-    id: 'life', name: 'Nehir Canlıları', icon: '🐟', accent: '#22c55e',
+  ecology: {
+    title: 'Ekoloji',
     items: [
-      { t: 'Alabalık', d: 'Üst nehir. Soğuk ve oksijen. Böcek avlama. Kanca tuzağı.' },
-      { t: 'Sazan', d: 'Orta-alt. Çamur dip. Bitki kökü eşeleme. Yaz yemlenme.' },
-      { t: 'Turna', d: 'Bitki kenarı pusu. Her nehir bölümünde. Yırtıcı balık.' },
-      { t: 'Yayın', d: 'Dip, gece aktif. Alt nehir ve derin havuz. Büyük canlı yem.' },
-      { t: 'Kurbaga ve su samuru', d: 'Gösterge tür — temiz su kanıtı. Gözlem değeri yüksek.' },
+      { icon: '💧', t: 'Su Kalitesi', d: 'Asiri fosfat, nitrat ve askili maddeler nehir ekosistemini baskici etkiler.' },
+      { icon: '🌊', t: 'Akim Dinamigi', d: 'Riffler, havuzlar ve gercek yuzeyler farkli habitat ve biyocesitliligi saglar.' },
+      { icon: '🌿', t: 'Riparian Vejetasyon', d: 'Sogut, kavak ve kamislik kenar bitkisi erozyonu onler ve golge saglar.' },
+      { icon: '⚠️', t: 'Tehditler', d: 'Barajlar, tarım kimyasallari ve kum ocaklari nehir ekolojisini tahrip eder.' },
+      { icon: '🔬', t: 'Izleme Yontemleri', d: 'BMWP skoru ile makroomurgasiz topluluk analizi en yaygin biyolojik izleme yontemidir.' },
     ],
   },
-  {
-    id: 'health', name: 'Nehir Sağlığı', icon: '🌿', accent: '#a78bfa',
-    items: [
-      { t: 'Macroinvertebrates', d: 'Zıpzıp, sümüklü böcek larva: temiz suyun biyolojik göstergesi.' },
-      { t: 'Su kalitesi', d: 'Berraklık, koku, yüzey köpüğü — kirlilik sinyali.' },
-      { t: 'Yabancı tür', d: 'Yayın balığı ve çeşitli dışarıdan türler doğal dengeyi bozar.' },
-      { t: 'Kıyı bitkileri', d: 'Söğüt ve alder bant: banka stabilitesi ve gölge — alabalık için şart.' },
-    ],
-  },
-];
+};
 
 export default function RiverEcology() {
   const navigate = useNavigate();
-  const [sel, setSel] = useState(null);
+  const [tab, setTab] = useState('life');
+  const data = TABS[tab];
+  const accent = '#1d4ed8';
+  const bg = '#000410';
 
   return (
-    <div style={{ background: '#020c14', minHeight: '100vh', color: '#f9fafb', paddingBottom: 100 }}>
-      <div style={{ padding: '20px 16px 12px' }}>
-        <button onClick={() => navigate(-1)} style={{ background: 'none', border: 'none', color: '#9ca3af', fontSize: 20, cursor: 'pointer', marginBottom: 8 }}>←</button>
-        <div style={{ fontSize: 22, fontWeight: 700 }}>🏞️ Nehir Ekolojisi</div>
-        <div style={{ fontSize: 13, color: '#9ca3af', marginTop: 2 }}>Nehir bölgeleri · canlılar · sağlık göstergeleri</div>
-      </div>
-
-      <div style={{ padding: '0 16px' }}>
-        {SECTIONS.map(s => {
-          const open = sel === s.id;
-          return (
-            <div key={s.id} style={{ marginBottom: 8 }}>
-              <div onClick={() => setSel(open ? null : s.id)} style={{
-                background: '#040e18', borderRadius: open ? '12px 12px 0 0' : 12,
-                padding: '14px 16px', border: `1px solid ${s.accent}33`, cursor: 'pointer',
-              }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-                  <span style={{ fontSize: 26 }}>{s.icon}</span>
-                  <div style={{ fontSize: 14, fontWeight: 700 }}>{s.name}</div>
-                </div>
-              </div>
-              {open && (
-                <div style={{ background: '#040e18', borderRadius: '0 0 12px 12px', padding: '0 16px 14px', border: `1px solid ${s.accent}33`, borderTop: 'none' }}>
-                  {s.items.map((item, i) => (
-                    <div key={i} style={{ marginTop: i === 0 ? 10 : 8, paddingTop: i === 0 ? 0 : 8, borderTop: i > 0 ? '1px solid #08141e' : 'none' }}>
-                      <div style={{ fontSize: 12, fontWeight: 700, color: s.accent }}>{item.t}</div>
-                      <div style={{ fontSize: 11, color: '#d1d5db', marginTop: 2 }}>{item.d}</div>
-                    </div>
-                  ))}
-                </div>
-              )}
+    <div style={{ background: bg, minHeight: '100vh', color: '#dbeafe', fontFamily: 'system-ui,sans-serif' }}>
+      <div style={{ maxWidth: 480, margin: '0 auto', padding: '0 0 80px' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 12, padding: '18px 16px 10px' }}>
+          <button onClick={() => navigate(-1)} style={{ background: 'none', border: 'none', color: accent, fontSize: 22, cursor: 'pointer' }}>&#8592;</button>
+          <span style={{ fontSize: 22, fontWeight: 700 }}>🏞️ Nehir Ekolojisi</span>
+        </div>
+        <div style={{ display: 'flex', margin: '0 16px 18px', background: '#000c24', borderRadius: 10, overflow: 'hidden' }}>
+          {Object.keys(TABS).map(k => (
+            <button key={k} onClick={() => setTab(k)} style={{
+              flex: 1, padding: '10px 0', border: 'none', cursor: 'pointer', fontWeight: 600, fontSize: 14,
+              background: tab === k ? accent : 'transparent',
+              color: tab === k ? '#fff' : '#60a5fa',
+            }}>{TABS[k].title}</button>
+          ))}
+        </div>
+        <div style={{ padding: '0 16px' }}>
+          {data.items.map((item, i) => (
+            <div key={i} style={{ background: '#001028', borderRadius: 12, padding: '14px 16px', marginBottom: 12, borderLeft: `3px solid ${accent}` }}>
+              <div style={{ fontSize: 20, marginBottom: 6 }}>{item.icon}</div>
+              <div style={{ fontWeight: 700, fontSize: 15, marginBottom: 4 }}>{item.t}</div>
+              <div style={{ fontSize: 13, color: '#93c5fd', lineHeight: 1.5 }}>{item.d}</div>
             </div>
-          );
-        })}
+          ))}
+        </div>
       </div>
     </div>
   );

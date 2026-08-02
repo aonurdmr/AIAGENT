@@ -476,6 +476,13 @@ const TOOLS = [
   { icon: '🐟', label: 'Levrek Rehberi', sub: 'Avcılık · pişirme · mevsim', path: '/levrek-rehberi', accent: '#0284c7' },
   { icon: '🫐', label: 'Yabani Meyveler', sub: 'Toplama · tanıma · kullanım', path: '/yabani-meyveler', accent: '#7c3aed' },
   { icon: '🔥', label: 'Kamp Ateşi Yemekleri', sub: 'Ateş · tarifler · teknik', path: '/kamp-yemekleri', accent: '#ea580c' },
+  { icon: '🌹', label: 'Kuşburnu', sub: 'Hasat · çay · vitamin C', path: '/kusburnu', accent: '#be123c' },
+  { icon: '🌲', label: 'Karaçam Rehberi', sub: 'Ekoloji · yararlanma · koruma', path: '/karacam', accent: '#166534' },
+  { icon: '🐗', label: 'Yaban Domuzu İzleme', sub: 'İz · güvenlik · habitat', path: '/yaban-domuzu-iz', accent: '#78350f' },
+  { icon: '🌊', label: 'Deniz Ekolojisi', sub: 'Yaşam · koruma · tehditler', path: '/deniz-ekoloji', accent: '#0891b2' },
+  { icon: '🌷', label: 'Bahar Çiçekleri', sub: 'Tanıma · gözlem · koruma', path: '/bahar-cicekleri', accent: '#db2777' },
+  { icon: '🦃', label: 'Sülün Avı', sub: 'Yöntem · köpek · pişirme', path: '/sulun-avi2', accent: '#7c2d12' },
+  { icon: '🌳', label: 'Meşe Ormanı', sub: 'Ekoloji · yararlanma · odun', path: '/mese-ormani', accent: '#713f12' },
 ];
 
 const CATS = [

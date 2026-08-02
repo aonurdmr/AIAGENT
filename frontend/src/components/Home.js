@@ -451,6 +451,12 @@ const TOOLS = [
   { icon: '🦇', label: 'Yarasa Gözlemi', sub: 'Türler · gözlem · koruma', path: '/yarasa-gozlem', accent: '#c4b5fd' },
   { icon: '🐙', label: 'Ahtapot Avı', sub: 'Yöntem · tuzak · pişirme', path: '/ahtapot-avi', accent: '#d8b4fe' },
   { icon: '🏔️', label: 'Yayla Ekolojisi', sub: 'Ekoloji · bitki · yürüyüş', path: '/yayla-ekoloji', accent: '#86efac' },
+  { icon: '🦢', label: 'Pelikan Gözlemi', sub: 'Türler · gözlem · koruma', path: '/pelikan-gozlem', accent: '#7dd3fc' },
+  { icon: '🐗', label: 'Domuz Ekolojisi', sub: 'Ekoloji · davranış · izler', path: '/domuz-ekoloji', accent: '#fdba74' },
+  { icon: '🐸', label: 'Kurbağa Rehberi', sub: 'Türler · ekoloji · ses', path: '/kurbaga-rehberi', accent: '#4ade80' },
+  { icon: '🐟', label: 'Turna Avı', sub: 'Teknik · nokta · pişirme', path: '/turna-avi', accent: '#bef264' },
+  { icon: '🦞', label: 'Akdeniz Deniz Ürünleri', sub: 'Ürünler · av · pişirme', path: '/akdeniz-deniz', accent: '#0e7490' },
+  { icon: '🌾', label: 'Çayır Ekolojisi', sub: 'Bitkiler · fauna · koruma', path: '/cayir-ekoloji', accent: '#6ee7b7' },
 ];
 
 const CATS = [

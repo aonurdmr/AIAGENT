@@ -449,6 +449,12 @@ import SeagullWatch    from '@/components/SeagullWatch';
 import BatWatch        from '@/components/BatWatch';
 import OctoFishing     from '@/components/OctoFishing';
 import HighlandGrazing from '@/components/HighlandGrazing';
+import PelicanWatch    from '@/components/PelicanWatch';
+import WildBoarBehavior from '@/components/WildBoarBehavior';
+import FrogGuide       from '@/components/FrogGuide';
+import TigerFishing    from '@/components/TigerFishing';
+import MediterSeaFood  from '@/components/MediterSeaFood';
+import MeadowEcology   from '@/components/MeadowEcology';
 import { ToastProvider } from '@/components/Toast';
 import '@/App.css';
 
@@ -908,6 +914,12 @@ function AppInner() {
         <Route path="/yarasa-gozlem"    element={<BatWatch />} />
         <Route path="/ahtapot-avi"      element={<OctoFishing />} />
         <Route path="/yayla-ekoloji"    element={<HighlandGrazing />} />
+        <Route path="/pelikan-gozlem"   element={<PelicanWatch />} />
+        <Route path="/domuz-ekoloji"    element={<WildBoarBehavior />} />
+        <Route path="/kurbaga-rehberi"  element={<FrogGuide />} />
+        <Route path="/turna-avi"        element={<TigerFishing />} />
+        <Route path="/akdeniz-deniz"    element={<MediterSeaFood />} />
+        <Route path="/cayir-ekoloji"    element={<MeadowEcology />} />
       </Routes>
       {!hideNav && <Navbar />}
     </div>

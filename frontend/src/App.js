@@ -485,6 +485,13 @@ import GoldenEagle    from '@/components/GoldenEagle';
 import WildOrchid     from '@/components/WildOrchid';
 import TroutGuide     from '@/components/TroutGuide';
 import SquirrelWatch  from '@/components/SquirrelWatch';
+import WildBoar3      from '@/components/WildBoar3';
+import WildLavender   from '@/components/WildLavender';
+import HedgehogGuide  from '@/components/HedgehogGuide';
+import AnchovyCooking from '@/components/AnchovyCooking';
+import BlackSeaFish   from '@/components/BlackSeaFish';
+import ForestSurvival from '@/components/ForestSurvival';
+import MountainGoatWatch from '@/components/MountainGoatWatch';
 import { ToastProvider } from '@/components/Toast';
 import '@/App.css';
 
@@ -980,6 +987,13 @@ function AppInner() {
         <Route path="/yabani-orkide"    element={<WildOrchid />} />
         <Route path="/alabalik-rehberi" element={<TroutGuide />} />
         <Route path="/sincap-gozu"      element={<SquirrelWatch />} />
+        <Route path="/yaban-domuzu-av"  element={<WildBoar3 />} />
+        <Route path="/yabani-lavanta"   element={<WildLavender />} />
+        <Route path="/kirpi-rehberi"    element={<HedgehogGuide />} />
+        <Route path="/hamsi-rehberi"    element={<AnchovyCooking />} />
+        <Route path="/karadeniz-balık"  element={<BlackSeaFish />} />
+        <Route path="/orman-hayatta"    element={<ForestSurvival />} />
+        <Route path="/yaban-kecisi"     element={<MountainGoatWatch />} />
       </Routes>
       {!hideNav && <Navbar />}
     </div>

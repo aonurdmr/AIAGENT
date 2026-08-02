@@ -1,66 +1,61 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-const SECTIONS = [
-  {
-    id: 'shelter', name: 'Barınak', icon: '⛺', accent: '#60a5fa',
+const TABS = {
+  gear: {
+    title: 'Ekipman',
     items: [
-      { t: 'Dört mevsim cadır', d: '4 mevsim cadır: kar yuku tasir, fırtına direnci yuksek. Geodezik yapı tercih.' },
-      { t: 'Yer secimi', d: 'Kar yagisi bekliyorsa ruzgar altına al, agac alti kacin (kar yuku). Cevre koruma.' },
-      { t: 'Uyku tulumu', d: '-15C veya daha soguga uygun. Tuy dolgu, nem yonetimi kritik. Mumlu bag.' },
-      { t: 'Isi yalitim', d: 'Zemin soguk emer: R-5 ustu mat zorunlu. Sisman mat veya hava yatagı, ust uste.' },
+      { icon: '🏕️', t: 'Çadir Secimi', d: '4-mevsim veya kar cıpası ile guclendirilmis codir; kar altinda dayanikli olmali.' },
+      { icon: '🛌', t: 'Uyku Tulumu', d: '-15 C veya alti derecelendirmeli tulumlarda yuksek loft tuy dolgu gereklidir.' },
+      { icon: '🔥', t: 'Isıtma', d: 'Propan veya butan yanıcı ile calistirilabilen kamp sobasi; karbon monoksit uyarisi.' },
+      { icon: '🧤', t: 'Giyim', d: 'Baz kat+orta kat+dis katman sistemi; pamuk kesinlikle kullanilmaz.' },
+      { icon: '💧', t: 'Su Yonetimi', d: 'Su pisirmeli olarak altin; buz seyahat sırasında cozundurulmeli.' },
     ],
   },
-  {
-    id: 'survival', name: 'Hayatta Kalma', icon: '🔥', accent: '#f97316',
+  tips: {
+    title: 'Taktikler',
     items: [
-      { t: 'Isi yonetimi', d: 'Sogukta ter: olumcul. Katman sistemi: icten dısa nefes alan, yalıtan, koruyan.' },
-      { t: 'Su teminati', d: 'Kar eritme: 1L kar = ~0.1L su. Yakıt tuketimi yuksek. Termos ile sicak tut.' },
-      { t: 'Donma belirtileri', d: 'Titreme durdu mu: tehlike! Uyusma, renk degisimi: hemen sicaga git.' },
-      { t: 'Kaza plani', d: 'Biri daima haberdar olsun. GPS konumunu paylasın. Acil bivak canta her zaman.' },
+      { icon: '❄️', t: 'Kar Hendegi', d: 'Cıkar altinda kar hendegi kaz; ruzgar koruması saglar ve nemden korur.' },
+      { icon: '🌡️', t: 'Hipotermiden Korunma', d: 'Titreme ve kari kars kalmak belirtisidir; hemen sicak icecek ve katmanlama.' },
+      { icon: '👢', t: 'Ayakkabi', d: 'Yalitimli bot ve guvenilir krampon gune kıyı karda kaymayi onler.' },
+      { icon: '☀️', t: 'Gunduz Kamp', d: 'Sicaklik gunduz yuksek oldugunda ekipman kurutmak icin en iyi firsattir.' },
+      { icon: '🍲', t: 'Enerji Beslenme', d: 'Sogukta kaloriye ihtiyac artar; pişirilmis yemekler ve yuksekcalori atistirmalik.' },
     ],
   },
-];
+};
 
 export default function WinterCamping() {
   const navigate = useNavigate();
-  const [sel, setSel] = useState(null);
+  const [tab, setTab] = useState('gear');
+  const data = TABS[tab];
+  const accent = '#1e40af';
+  const bg = '#000414';
 
   return (
-    <div style={{ background: '#02060e', minHeight: '100vh', color: '#f9fafb', paddingBottom: 100 }}>
-      <div style={{ padding: '20px 16px 12px' }}>
-        <button onClick={() => navigate(-1)} style={{ background: 'none', border: 'none', color: '#9ca3af', fontSize: 20, cursor: 'pointer', marginBottom: 8 }}>←</button>
-        <div style={{ fontSize: 22, fontWeight: 700 }}>❄️ Kış Kampçılığı</div>
-        <div style={{ fontSize: 13, color: '#9ca3af', marginTop: 2 }}>Barınak · ısı yönetimi · hayatta kalma</div>
-      </div>
-
-      <div style={{ padding: '0 16px' }}>
-        {SECTIONS.map(s => {
-          const open = sel === s.id;
-          return (
-            <div key={s.id} style={{ marginBottom: 8 }}>
-              <div onClick={() => setSel(open ? null : s.id)} style={{
-                background: '#060e1a', borderRadius: open ? '12px 12px 0 0' : 12,
-                padding: '14px 16px', border: `1px solid ${s.accent}33`, cursor: 'pointer',
-              }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-                  <span style={{ fontSize: 26 }}>{s.icon}</span>
-                  <div style={{ fontSize: 14, fontWeight: 700 }}>{s.name}</div>
-                </div>
-              </div>
-              {open && (
-                <div style={{ background: '#060e1a', borderRadius: '0 0 12px 12px', padding: '0 16px 14px', border: `1px solid ${s.accent}33`, borderTop: 'none' }}>
-                  {s.items.map((item, i) => (
-                    <div key={i} style={{ marginTop: i === 0 ? 10 : 8, paddingTop: i === 0 ? 0 : 8, borderTop: i > 0 ? '1px solid #0c1828' : 'none' }}>
-                      <div style={{ fontSize: 12, fontWeight: 700, color: s.accent }}>{item.t}</div>
-                      <div style={{ fontSize: 11, color: '#d1d5db', marginTop: 2 }}>{item.d}</div>
-                    </div>
-                  ))}
-                </div>
-              )}
+    <div style={{ background: bg, minHeight: '100vh', color: '#dbeafe', fontFamily: 'system-ui,sans-serif' }}>
+      <div style={{ maxWidth: 480, margin: '0 auto', padding: '0 0 80px' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 12, padding: '18px 16px 10px' }}>
+          <button onClick={() => navigate(-1)} style={{ background: 'none', border: 'none', color: accent, fontSize: 22, cursor: 'pointer' }}>&#8592;</button>
+          <span style={{ fontSize: 22, fontWeight: 700 }}>❄️ Kış Kampı</span>
+        </div>
+        <div style={{ display: 'flex', margin: '0 16px 18px', background: '#000e28', borderRadius: 10, overflow: 'hidden' }}>
+          {Object.keys(TABS).map(k => (
+            <button key={k} onClick={() => setTab(k)} style={{
+              flex: 1, padding: '10px 0', border: 'none', cursor: 'pointer', fontWeight: 600, fontSize: 14,
+              background: tab === k ? accent : 'transparent',
+              color: tab === k ? '#fff' : '#60a5fa',
+            }}>{TABS[k].title}</button>
+          ))}
+        </div>
+        <div style={{ padding: '0 16px' }}>
+          {data.items.map((item, i) => (
+            <div key={i} style={{ background: '#001228', borderRadius: 12, padding: '14px 16px', marginBottom: 12, borderLeft: `3px solid ${accent}` }}>
+              <div style={{ fontSize: 20, marginBottom: 6 }}>{item.icon}</div>
+              <div style={{ fontWeight: 700, fontSize: 15, marginBottom: 4 }}>{item.t}</div>
+              <div style={{ fontSize: 13, color: '#93c5fd', lineHeight: 1.5 }}>{item.d}</div>
             </div>
-          );
-        })}
+          ))}
+        </div>
       </div>
     </div>
   );

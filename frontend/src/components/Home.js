@@ -487,6 +487,13 @@ const TOOLS = [
   { icon: '🌸', label: 'Yabani Orkide', sub: 'Tanıma · gözlem · sezon', path: '/yabani-orkide', accent: '#7e22ce' },
   { icon: '🐟', label: 'Alabalık Rehberi', sub: 'Avcılık · pişirme · akarsu', path: '/alabalik-rehberi', accent: '#0369a1' },
   { icon: '🐿️', label: 'Sincap Gözlemi', sub: 'Biyoloji · habitat · fotoğraf', path: '/sincap-gozu', accent: '#b45309' },
+  { icon: '🐗', label: 'Yaban Domuzu Avı', sub: 'Avcılık · silah · pişirme', path: '/yaban-domuzu-av', accent: '#7f1d1d' },
+  { icon: '💜', label: 'Yabani Lavanta', sub: 'Toplama · kullanım · aromaterapi', path: '/yabani-lavanta', accent: '#7c3aed' },
+  { icon: '🦔', label: 'Kirpi Rehberi', sub: 'Biyoloji · gözlem · koruma', path: '/kirpi-rehberi', accent: '#92400e' },
+  { icon: '🐟', label: 'Hamsi Rehberi', sub: 'Avcılık · pişirme · sezon', path: '/hamsi-rehberi', accent: '#0e7490' },
+  { icon: '🌊', label: 'Karadeniz Balıkları', sub: 'Türler · avcılık · sezon', path: '/karadeniz-balık', accent: '#1e3a5f' },
+  { icon: '🌲', label: 'Orman Hayatta Kalma', sub: 'Beceriler · acil durum · su', path: '/orman-hayatta', accent: '#166534' },
+  { icon: '🐐', label: 'Yaban Keçisi Gözlemi', sub: 'Biyoloji · habitat · koruma', path: '/yaban-kecisi', accent: '#374151' },
 ];
 
 const CATS = [

@@ -129,6 +129,19 @@ class ChatSessionCreate(BaseModel):
     name: str
     agent_type: str
 
+class CustomSkill(BaseModel):
+    model_config = ConfigDict(extra="ignore")
+
+    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    agent_type: str
+    name: str
+    description: str
+    created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
+
+class CustomSkillCreate(BaseModel):
+    name: str
+    description: str
+
 class ImageGenerationRequest(BaseModel):
     prompt: str
     agent_session_id: Optional[str] = None
@@ -279,6 +292,37 @@ async def get_messages(session_id: str):
         message = parse_from_mongo(message)
     
     return messages
+
+@api_router.post("/agents/{agent_type}/skills", response_model=CustomSkill)
+async def add_skill(agent_type: str, input: CustomSkillCreate):
+    """Add a custom skill to an agent"""
+    if agent_type not in AGENTS_CONFIG:
+        raise HTTPException(status_code=404, detail="Agent not found")
+
+    skill = CustomSkill(agent_type=agent_type, **input.model_dump())
+    skill_dict = prepare_for_mongo(skill.model_dump())
+    await db.custom_skills.insert_one(skill_dict)
+    return skill
+
+@api_router.get("/agents/{agent_type}/skills", response_model=List[CustomSkill])
+async def get_skills(agent_type: str):
+    """Get all custom skills for an agent"""
+    if agent_type not in AGENTS_CONFIG:
+        raise HTTPException(status_code=404, detail="Agent not found")
+
+    skills = await db.custom_skills.find(
+        {"agent_type": agent_type}, {"_id": 0}
+    ).sort("created_at", 1).to_list(1000)
+
+    return [parse_from_mongo(s) for s in skills]
+
+@api_router.delete("/agents/{agent_type}/skills/{skill_id}")
+async def delete_skill(agent_type: str, skill_id: str):
+    """Delete a custom skill"""
+    result = await db.custom_skills.delete_one({"id": skill_id, "agent_type": agent_type})
+    if result.deleted_count == 0:
+        raise HTTPException(status_code=404, detail="Skill not found")
+    return {"message": "Skill deleted successfully"}
 
 @api_router.post("/generate-image", response_model=ImageGenerationResponse)
 async def generate_image(input: ImageGenerationRequest):

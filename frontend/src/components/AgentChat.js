@@ -15,13 +15,18 @@ const AgentChat = ({ agents }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [sessionId, setSessionId] = useState(existingSessionId);
   const [sessionName, setSessionName] = useState('');
+  const [showSkillPanel, setShowSkillPanel] = useState(false);
+  const [customSkills, setCustomSkills] = useState([]);
+  const [newSkillName, setNewSkillName] = useState('');
+  const [newSkillDesc, setNewSkillDesc] = useState('');
+  const [isAddingSkill, setIsAddingSkill] = useState(false);
   const messagesEndRef = useRef(null);
 
   const agent = agents[agentType];
 
   const agentIcons = {
     research: "fa-search",
-    design: "fa-palette", 
+    design: "fa-palette",
     content: "fa-pen-nib",
     code: "fa-code",
     planner: "fa-calendar-alt",
@@ -37,7 +42,7 @@ const AgentChat = ({ agents }) => {
     research: "from-blue-500/20 to-cyan-500/20",
     design: "from-purple-500/20 to-pink-500/20",
     content: "from-green-500/20 to-emerald-500/20",
-    code: "from-orange-500/20 to-red-500/20", 
+    code: "from-orange-500/20 to-red-500/20",
     planner: "from-indigo-500/20 to-blue-500/20",
     publisher: "from-pink-500/20 to-rose-500/20",
     report: "from-yellow-500/20 to-amber-500/20",
@@ -59,8 +64,52 @@ const AgentChat = ({ agents }) => {
     scrollToBottom();
   }, [messages]);
 
+  useEffect(() => {
+    if (agentType) {
+      fetchCustomSkills();
+    }
+  }, [agentType]);
+
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  const fetchCustomSkills = async () => {
+    try {
+      const response = await axios.get(`${API}/agents/${agentType}/skills`);
+      setCustomSkills(response.data);
+    } catch (error) {
+      console.error('Error fetching skills:', error);
+    }
+  };
+
+  const addSkill = async (e) => {
+    e.preventDefault();
+    if (!newSkillName.trim() || !newSkillDesc.trim()) return;
+
+    setIsAddingSkill(true);
+    try {
+      const response = await axios.post(`${API}/agents/${agentType}/skills`, {
+        name: newSkillName.trim(),
+        description: newSkillDesc.trim()
+      });
+      setCustomSkills(prev => [...prev, response.data]);
+      setNewSkillName('');
+      setNewSkillDesc('');
+    } catch (error) {
+      console.error('Error adding skill:', error);
+    } finally {
+      setIsAddingSkill(false);
+    }
+  };
+
+  const deleteSkill = async (skillId) => {
+    try {
+      await axios.delete(`${API}/agents/${agentType}/skills/${skillId}`);
+      setCustomSkills(prev => prev.filter(s => s.id !== skillId));
+    } catch (error) {
+      console.error('Error deleting skill:', error);
+    }
   };
 
   const createNewSession = async () => {
@@ -69,7 +118,6 @@ const AgentChat = ({ agents }) => {
         name: `${agent?.name} - ${new Date().toLocaleString('tr-TR')}`,
         agent_type: agentType
       });
-      
       setSessionId(response.data.id);
       setSessionName(response.data.name);
     } catch (error) {
@@ -79,7 +127,6 @@ const AgentChat = ({ agents }) => {
 
   const loadMessages = async () => {
     if (!sessionId) return;
-    
     try {
       const response = await axios.get(`${API}/chat/${sessionId}/messages`);
       setMessages(response.data);
@@ -108,7 +155,6 @@ const AgentChat = ({ agents }) => {
         agent_type: agentType,
         content: currentMessage
       });
-
       setMessages(prev => [...prev, response.data]);
     } catch (error) {
       console.error('Error sending message:', error);
@@ -143,14 +189,14 @@ const AgentChat = ({ agents }) => {
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-4">
-              <Link 
-                to="/" 
+              <Link
+                to="/"
                 className="glass-button p-2 rounded-lg hover:bg-slate-700/50 transition-all"
                 data-testid="back-to-dashboard-btn"
               >
                 <i className="fas fa-arrow-left text-emerald-400"></i>
               </Link>
-              
+
               <div className="flex items-center gap-3">
                 <div className={`w-10 h-10 rounded-full bg-gradient-to-br ${agentColors[agentType]} border border-emerald-400/30 flex items-center justify-center`}>
                   <i className={`fas ${agentIcons[agentType]} text-emerald-400`}></i>
@@ -164,12 +210,25 @@ const AgentChat = ({ agents }) => {
               </div>
             </div>
 
-            <div className="flex items-center gap-2">
-              <span className="text-xs text-slate-500">
-                {messages.length} mesaj
-              </span>
-              <div className="w-2 h-2 bg-emerald-400 rounded-full animate-pulse"></div>
-              <span className="text-xs text-emerald-400">Aktif</span>
+            <div className="flex items-center gap-3">
+              <div className="hidden sm:flex items-center gap-2">
+                <span className="text-xs text-slate-500">{messages.length} mesaj</span>
+                <div className="w-2 h-2 bg-emerald-400 rounded-full animate-pulse"></div>
+                <span className="text-xs text-emerald-400">Aktif</span>
+              </div>
+
+              {/* Mobile Skill Button */}
+              <button
+                onClick={() => setShowSkillPanel(true)}
+                className="skill-add-btn flex items-center gap-2 px-3 py-2 rounded-lg"
+                data-testid="open-skill-panel-btn"
+              >
+                <i className="fas fa-plus-circle text-emerald-400"></i>
+                <span className="text-sm font-medium text-emerald-400 hidden sm:inline">Skill Ekle</span>
+                {customSkills.length > 0 && (
+                  <span className="skill-badge">{customSkills.length}</span>
+                )}
+              </button>
             </div>
           </div>
         </div>
@@ -178,14 +237,14 @@ const AgentChat = ({ agents }) => {
       {/* Chat Container */}
       <div className="container mx-auto px-4 py-6 max-w-4xl">
         <div className="chat-container rounded-2xl border border-slate-700/50 min-h-[calc(100vh-200px)] flex flex-col">
-          
+
           {/* Agent Info Banner */}
           {messages.length === 0 && (
             <div className="p-8 text-center border-b border-slate-700/50" data-testid="agent-welcome-banner">
               <div className={`w-20 h-20 rounded-full bg-gradient-to-br ${agentColors[agentType]} border border-emerald-400/30 flex items-center justify-center mx-auto mb-4`}>
                 <i className={`fas ${agentIcons[agentType]} text-3xl text-emerald-400`}></i>
               </div>
-              
+
               <h2 className="text-2xl font-bold text-emerald-400 mb-2">
                 {agent.name} ile Sohbet
               </h2>
@@ -197,8 +256,21 @@ const AgentChat = ({ agents }) => {
                 {agent.capabilities.map((capability, idx) => (
                   <div key={idx} className="glass-card p-4 rounded-lg">
                     <div className="flex items-center gap-3">
-                      <div className="w-2 h-2 bg-emerald-400 rounded-full"></div>
+                      <div className="w-2 h-2 bg-emerald-400 rounded-full flex-shrink-0"></div>
                       <span className="text-slate-300 text-sm">{capability}</span>
+                    </div>
+                  </div>
+                ))}
+
+                {/* Custom Skills in Welcome Banner */}
+                {customSkills.map((skill) => (
+                  <div key={skill.id} className="glass-card p-4 rounded-lg border border-cyan-400/20">
+                    <div className="flex items-start gap-3">
+                      <div className="w-2 h-2 bg-cyan-400 rounded-full flex-shrink-0 mt-1.5"></div>
+                      <div className="text-left">
+                        <span className="text-cyan-300 text-sm font-medium block">{skill.name}</span>
+                        <span className="text-slate-400 text-xs">{skill.description}</span>
+                      </div>
                     </div>
                   </div>
                 ))}
@@ -215,7 +287,6 @@ const AgentChat = ({ agents }) => {
                 style={{ animationDelay: `${index * 0.05}s` }}
               >
                 <div className={`max-w-[80%] ${message.role === 'user' ? 'message-bubble user' : 'message-bubble assistant'} p-4`}>
-                  
                   {message.role === 'assistant' && (
                     <div className="flex items-center gap-2 mb-2">
                       <div className={`w-6 h-6 rounded-full bg-gradient-to-br ${agentColors[agentType]} border border-emerald-400/30 flex items-center justify-center`}>
@@ -236,7 +307,6 @@ const AgentChat = ({ agents }) => {
               </div>
             ))}
 
-            {/* Loading indicator */}
             {isLoading && (
               <div className="flex justify-start">
                 <div className="message-bubble assistant p-4">
@@ -292,6 +362,145 @@ const AgentChat = ({ agents }) => {
           </div>
         </div>
       </div>
+
+      {/* Mobile Skill Panel - Bottom Sheet */}
+      {showSkillPanel && (
+        <div
+          className="skill-panel-overlay"
+          onClick={() => setShowSkillPanel(false)}
+          data-testid="skill-panel-overlay"
+        >
+          <div
+            className="skill-panel"
+            onClick={(e) => e.stopPropagation()}
+            data-testid="skill-panel"
+          >
+            {/* Panel Handle (mobile drag indicator) */}
+            <div className="flex justify-center mb-4">
+              <div className="w-10 h-1 bg-slate-600 rounded-full"></div>
+            </div>
+
+            {/* Panel Header */}
+            <div className="flex items-center justify-between mb-6">
+              <div className="flex items-center gap-3">
+                <div className={`w-10 h-10 rounded-full bg-gradient-to-br ${agentColors[agentType]} border border-emerald-400/30 flex items-center justify-center`}>
+                  <i className={`fas ${agentIcons[agentType]} text-emerald-400`}></i>
+                </div>
+                <div>
+                  <h3 className="font-semibold text-emerald-400 text-lg">{agent.name}</h3>
+                  <p className="text-slate-400 text-xs">Skill Yönetimi</p>
+                </div>
+              </div>
+              <button
+                onClick={() => setShowSkillPanel(false)}
+                className="glass-button p-2 rounded-lg"
+                data-testid="close-skill-panel-btn"
+              >
+                <i className="fas fa-times text-slate-400"></i>
+              </button>
+            </div>
+
+            {/* Add Skill Form */}
+            <div className="glass-card p-4 mb-6 rounded-xl border border-emerald-400/20">
+              <h4 className="text-sm font-semibold text-emerald-400 mb-4 flex items-center gap-2">
+                <i className="fas fa-plus-circle"></i>
+                Yeni Skill Ekle
+              </h4>
+              <form onSubmit={addSkill} className="space-y-3" data-testid="add-skill-form">
+                <input
+                  type="text"
+                  value={newSkillName}
+                  onChange={(e) => setNewSkillName(e.target.value)}
+                  placeholder="Skill adı (örn: Python Analizi)"
+                  className="ai-input w-full px-4 py-3 text-sm"
+                  maxLength={60}
+                  data-testid="skill-name-input"
+                />
+                <textarea
+                  value={newSkillDesc}
+                  onChange={(e) => setNewSkillDesc(e.target.value)}
+                  placeholder="Açıklama (örn: Python kod analizi ve optimizasyonu)"
+                  className="ai-input w-full px-4 py-3 text-sm resize-none"
+                  rows={2}
+                  maxLength={150}
+                  data-testid="skill-desc-input"
+                />
+                <button
+                  type="submit"
+                  disabled={isAddingSkill || !newSkillName.trim() || !newSkillDesc.trim()}
+                  className="ai-button w-full py-3 flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed text-sm font-medium"
+                  data-testid="add-skill-btn"
+                >
+                  {isAddingSkill ? (
+                    <>
+                      <i className="fas fa-spinner fa-spin"></i>
+                      Ekleniyor...
+                    </>
+                  ) : (
+                    <>
+                      <i className="fas fa-check-circle"></i>
+                      Skill Ekle
+                    </>
+                  )}
+                </button>
+              </form>
+            </div>
+
+            {/* Existing Skills */}
+            <div>
+              <h4 className="text-sm font-semibold text-slate-300 mb-3 flex items-center gap-2">
+                <i className="fas fa-list-ul text-emerald-400"></i>
+                Mevcut Skilller
+                {customSkills.length > 0 && (
+                  <span className="skill-badge">{customSkills.length}</span>
+                )}
+              </h4>
+
+              {/* Built-in capabilities */}
+              <div className="space-y-2 mb-3">
+                {agent.capabilities.map((cap, idx) => (
+                  <div key={idx} className="flex items-center gap-3 p-3 rounded-lg bg-slate-800/50">
+                    <div className="w-2 h-2 bg-emerald-400 rounded-full flex-shrink-0"></div>
+                    <span className="text-slate-300 text-sm flex-1">{cap}</span>
+                    <span className="text-xs text-slate-600 bg-slate-700/50 px-2 py-0.5 rounded-full">Varsayılan</span>
+                  </div>
+                ))}
+              </div>
+
+              {/* Custom skills */}
+              {customSkills.length === 0 ? (
+                <div className="text-center py-6 text-slate-500 text-sm" data-testid="no-custom-skills">
+                  <i className="fas fa-puzzle-piece text-2xl mb-2 block opacity-40"></i>
+                  Henüz özel skill eklenmedi
+                </div>
+              ) : (
+                <div className="space-y-2 max-h-48 overflow-y-auto" data-testid="custom-skills-list">
+                  {customSkills.map((skill) => (
+                    <div
+                      key={skill.id}
+                      className="flex items-start gap-3 p-3 rounded-lg bg-cyan-400/5 border border-cyan-400/20"
+                      data-testid={`skill-item-${skill.id}`}
+                    >
+                      <div className="w-2 h-2 bg-cyan-400 rounded-full flex-shrink-0 mt-1.5"></div>
+                      <div className="flex-1 min-w-0">
+                        <span className="text-cyan-300 text-sm font-medium block truncate">{skill.name}</span>
+                        <span className="text-slate-400 text-xs">{skill.description}</span>
+                      </div>
+                      <button
+                        onClick={() => deleteSkill(skill.id)}
+                        className="text-red-400/60 hover:text-red-400 transition-colors flex-shrink-0 p-1"
+                        data-testid={`delete-skill-${skill.id}`}
+                      >
+                        <i className="fas fa-trash-alt text-xs"></i>
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
